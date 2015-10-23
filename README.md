@@ -1,4 +1,4 @@
-# cPanel Extended v 3.0.1
+# cPanel Extended v 3.0.2
 cPanel Extended automates accounts provisioning and allows your clients to manage their web hosting accounts in the Blesta client area! The module eliminates the necessity of logging in to cPanel as it relocates many of its functionalities and advantages directly to your Blesta.
 
 Your clients will no longer need to leave your website! Everything they need to manage their accounts, websites and services effectively will be found in one place - your client area. With cPanel Extended your customers will be able to manage their FTP accounts, domains, email accounts, databases, applications, SSL certificates and many more. 

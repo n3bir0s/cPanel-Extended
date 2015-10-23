@@ -1,6 +1,6 @@
 <?php
 /**
- * cPanel Extended for Blesta
+ * cPanel Extended for Blesta 
  *
  * @package blesta
  * @subpackage blesta.components.modules.cpanelextended
