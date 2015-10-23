@@ -1,0 +1,21 @@
+		<div class="row">
+			<div class="col-md-12">
+				<?php $this->Form->create($this->uri.'changequota', array('class' => 'changeQuotaSubmit', 'data-do' => 'changequota', 'id' => 'ftpChangeQuota')); ?>
+				<?php $this->Form->fieldHidden('username', $_GET['username']); ?>
+				<div class="form-group">
+					<?php $this->Form->label($this->_('Cpe.label.account', true));?><br />
+					<?php $this->Html->_($this->currentUser);?>
+				</div>
+				<div class="form-group">
+					<?php
+					$this->Form->label($this->_('Cpe.label.quota', true));
+					$this->Form->fieldText('newquota', $this->Html->ifSet($this->post['newquota'], $this->currentQuota), array('class' => "form-control", 'placeholder' => $this->_('Cpe.misc.quotaholder', true)));
+					?>
+				</div>
+				<div class="pull-right martop10">
+					<button type="submit" class="btn btn-default"><i class="fa fa-plus-circle"></i> <?php $this->_('Cpe.button.save'); ?></button>
+					<button type="button" class="btn btn-default hideFormBox"><i class="fa fa-times"></i> <?php $this->_('Cpe.label.close'); ?></button>
+				</div>
+				<?php $this->Form->end(); ?>
+			</div>
+		</div>

@@ -1,0 +1,17 @@
+		
+		<div class="row">
+			<div class="col-md-12">
+				<?php $this->Form->create($this->uri.'changeprivileges', array('class' => 'cpanelExtendedAjaxExecute')); ?>
+				<div class="form-group">
+					<?php $this->Form->label($this->_('Cpe.label.username', true));?><br />
+					<?php $this->Html->_($this->username); ?>
+				</div>
+				<div class="pull-right">
+					<button type="submit" class="btn btn-danger deleteuserfromdb cpExtendedSubmit" data-action="<?php echo $this->Html->safe($this->uri.'deleteuserfromdb?database='.$this->database.'&dbusername='.$this->username); ?>"><i class="fa fa-ban"></i> <?php $this->_('Cpe.label.deletedbfromuser'); ?></button>
+					<a href="#" class="btn btn-default hideFormBox"><i class="fa fa-times"></i> <?php $this->_('Cpe.label.close'); ?></a>
+				</div>
+				<?php $this->Form->fieldHidden('database', $this->database); ?>
+				<?php $this->Form->fieldHidden('dbusername', $this->username); ?>
+				<?php $this->Form->end(); ?> 
+			</div>
+		</div>

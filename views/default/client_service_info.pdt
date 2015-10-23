@@ -1,0 +1,33 @@
+	<div class="table-responsive">
+		<table class="table table-curved table-striped">
+			<thead>
+				<tr>
+					<th><i class="fa fa-share fa-flip-vertical"></i></th>
+					<th><?php $this->_("Cpe.service_info.username");?></th>
+					<th><?php $this->_("Cpe.service_info.password");?></th>
+					<th><?php $this->_("Cpe.service_info.server");?></th>
+					<th><?php $this->_("Cpe.service_info.options");?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td></td>
+					<td><?php $this->Html->_($service_fields->cpanel_username);?></td>
+					<td><?php $this->Html->_($service_fields->cpanel_password);?></td>
+					<td><?php $this->Html->_($module_row->meta->host_name);?></td>
+					<td>
+						<?php
+						$this->Form->create($this->Html->safe("https://" . $this->Html->ifSet($module_row->meta->host_name) . ":2083/login/"), array('target' => "_blank"));
+						$this->Form->fieldHidden("user", $this->Html->ifSet($service_fields->cpanel_username));
+						$this->Form->fieldHidden("pass", $this->Html->ifSet($service_fields->cpanel_password));
+						?>
+						<button type="submit" class="btn btn-default btn-sm"><i class="fa fa-sign-in"></i> <?php $this->_("Cpe.service_info.option_login");?></button>
+						<?php
+						$this->Form->end();
+						?>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	

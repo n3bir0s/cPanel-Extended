@@ -1,0 +1,55 @@
+	
+	
+	<?php $this->Form->create($this->uri.'edit', array('class' => 'cpanelExtendedAjaxExecute', 'data-do' => 'edit')); ?>
+	<div class="table-responsive">
+		<table class="table table-curved table-striped">
+			<thead>
+				<tr>
+					<th><?php $this->_('Cpe.label.minute'); ?></th>
+					<th><?php $this->_('Cpe.label.hour'); ?></th>
+					<th><?php $this->_('Cpe.label.day'); ?></th>
+					<th><?php $this->_('Cpe.label.month'); ?></th>
+					<th><?php $this->_('Cpe.label.weekday'); ?></th>
+					<th><?php $this->_('Cpe.label.commonsettings'); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr> 
+					<td>
+						<?php $this->Form->fieldText('jobminute', $this->Html->ifSet($this->post['jobminute'], $this->job->minute), array('class' => "form-control cronCommonSettingMinute")); ?>
+					</td>
+					<td>
+						<?php $this->Form->fieldText('jobhour', $this->Html->ifSet($this->post['jobhour'], $this->job->hour), array('class' => "form-control cronCommonSettingHour")); ?>
+					</td>
+					<td>
+						<?php $this->Form->fieldText('jobday', $this->Html->ifSet($this->post['jobday'], $this->job->day), array('class' => "form-control cronCommonSettingDay")); ?>
+					</td>
+					<td>
+						<?php $this->Form->fieldText('jobmonth', $this->Html->ifSet($this->post['jobmonth'], $this->job->month), array('class' => "form-control cronCommonSettingMonth")); ?>
+					</td>
+					<td>
+						<?php $this->Form->fieldText('jobweekday', $this->Html->ifSet($this->post['jobweekday'], $this->job->weekday), array('class' => "form-control cronCommonSettingWeekDay")); ?>
+					</td>
+					<td style="width:25%";>
+						<?php $this->Form->fieldSelect("common_settings", $this->Html->ifSet($common_settings['all']), "", array('class' => "cronCommonSetting form-control"));?>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="6"><?php $this->_('Cpe.label.command'); ?></td>
+				</tr>
+				<tr>
+					<td colspan="6">
+					<?php $this->Form->fieldText('command', $this->Html->ifSet($this->post['command'], $this->job->command), array('class' => "form-control")); ?>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="pull-right">
+			<button type="submit" class="btn btn-default"><i class="fa fa-check-square-o"></i> <?php $this->_('Cpe.button.save'); ?></button>
+			<a href="#" class="btn btn-default hideFormBox"><i class="fa fa-times"></i> <?php $this->_('Cpe.label.close'); ?></a>
+		</div>
+	</div>
+	
+    <?php $this->Form->fieldHidden('line', $this->line); ?>
+<?php $this->Form->end(); ?>    
+

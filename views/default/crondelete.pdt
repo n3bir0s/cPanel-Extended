@@ -1,0 +1,13 @@
+		
+		<div class="errorscontainer marbot10 martop10"></div>
+		<div class="row">
+			<div class="col-md-12">
+				<?php $this->Form->create($this->uri.'delete', array('class' => 'cpanelExtendedAjaxExecute', 'data-do' => 'delete')); ?>
+				<div class="pull-right martop10">
+					<button type="submit" class="btn btn-danger"><i class="fa fa-ban"></i> <?php $this->_('Cpe.button.delete'); ?></button>
+					<a href="#" class="btn btn-default hideFormBox"><i class="fa fa-times"></i> <?php $this->_('Cpe.label.close'); ?></a>
+				</div>
+				<?php $this->Form->fieldHidden('line', $this->line); ?>
+				<?php $this->Form->end(); ?>  
+			</div>
+		</div>

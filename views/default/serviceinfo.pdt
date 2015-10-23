@@ -1,0 +1,11 @@
+<!--<link rel="stylesheet" type="text/css" href="<?php echo $this->view_dir; ?>css/cpanelextended.css">
+
+<div class="empty_section">
+    <div class="empty_box">
+        <h3>Manage account:</h3>
+        <div class="clear"></div>
+        <a href="" class="btn">FTP Accounts</a>
+        <div class="clear"></div>
+        <h3>Login to:</h3>
+    </div>
+</div>-->

@@ -1,0 +1,18 @@
+<?php $this->Form->create(); ?>
+	<div class="form-group">
+		<?php
+		$this->Form->label($this->_('Cpe.label.crtfile', true));
+		$this->Form->fieldTextarea('keyfile', $this->Html->ifSet($this->data->crt), array('class' => "form-control selectAll"));
+		?>
+	</div>
+	<div class="form-group">
+		<?php
+		$this->Form->label($this->_('Cpe.label.keyfile', true));
+		$this->Form->fieldTextarea('keyfile', $this->Html->ifSet($this->data->key), array('class' => "form-control selectAll"));
+		?>
+	</div>
+	
+	<div class="pull-right">
+		<a href="#" class="btn btn-default hideFormBox"><i class="fa fa-times"></i> <?php $this->_('Cpe.label.close'); ?></a>
+	</div>
+<?php $this->Form->end(); ?>

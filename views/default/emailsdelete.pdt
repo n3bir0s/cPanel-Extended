@@ -1,0 +1,17 @@
+
+		<div class="row">
+			<div class="col-md-12">
+				<?php $this->Form->create($this->uri.'delete', array('class' => 'cpanelExtendedAjaxExecute', 'data-do' => 'delete')); ?>
+				<div class="form-group">
+					<?php $this->Form->label($this->_('Cpe.label.account', true));?><br />
+					<?php $this->Html->_($this->username); ?>
+				</div>
+				<div class="pull-right martop10">
+					<button type="submit" class="btn btn-danger" style="margin-left: 70px;"><i class="fa fa-ban"></i> <?php $this->_('Cpe.button.deleteemail'); ?></button>
+					<a href="#" class="btn btn-default hideFormBox"><i class="fa fa-times"></i> <?php $this->_('Cpe.label.close'); ?></a>
+				</div>
+				<?php $this->Form->fieldHidden('emailusername', $this->username); ?>
+				<?php $this->Form->fieldHidden('emaildomain', $this->domain); ?>
+				<?php $this->Form->end(); ?>    
+			</div>
+		</div>

@@ -1,0 +1,19 @@
+
+		<div class="errorscontainer marbot10 martop10"></div>
+		<div class="row">
+			<div class="col-md-12">
+				<?php $this->Form->create($this->uri.'delete', array('class' => 'deleteFtpSubmit', 'data-do' => 'delete')); ?>
+				<?php $this->Form->fieldHidden('destroy', 0); ?>
+				<?php $this->Form->fieldHidden('username', $this->username); ?>
+				<div class="form-group">
+					<?php $this->Form->label($this->_('Cpe.label.account', true));?><br />
+					<?php $this->Html->_($this->username); ?>
+				</div>
+				<div class="pull-right">
+					<button type="submit" class="btn btn-danger"><i class="fa fa-ban"></i> <?php $this->_('Cpe.button.deleteacct'); ?></button>
+					<button type="submit" class="btn btn-danger"><i class="fa fa-ban"></i> <?php $this->_('Cpe.button.destroyacct'); ?></button>
+					<button type="button" class="btn btn-default hideFormBox"><i class="fa fa-times"></i> <?php $this->_('Cpe.label.close'); ?></a>
+                </div>
+				<?php $this->Form->end(); ?>   
+			</div>
+		</div>
