@@ -2,7 +2,7 @@
 
 				<link rel="stylesheet" href="<?php echo $this->view_dir;?>css/gauge.min-v2.0.0.css">
 				<script src="<?php echo $this->view_dir;?>javascript/gauge.min.js"></script>
-				
+
           <?php
           	global $img_url;
             $api_key = 'decd546b9159161f';
@@ -15,7 +15,7 @@
 					?>
 
 			<div class="row">
-				<div class="col-md-8">
+				<div class="col-md-7">
 					<center><h5><?php $this->_("Cpe.tab_client_stats.usage_title");?></h5></center>
 					<div class="row">
 						<div class="col-md-6">
@@ -42,7 +42,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-5">
 					<center><h5><?php $this->_("Cpe.titles.preview");?></h5></center>
 					<img class="img-responsive" src="<?= $img_url; ?>">
 				</div>
@@ -154,7 +154,7 @@
 	var opts = {
 	  lines: 32, //The number of lines to draw
 	  angle: 0.15, //The length of each line
-	  lineWidth: 0.37, //The line thickness
+	  lineWidth: 0.30, //The line thickness
 	  pointer: {
 	    length: 0.9, //The radius of the inner circle
 	    strokeWidth: 0.035, //The rotation offset
@@ -176,7 +176,7 @@
 	var bandwidth_opts = {
 		lines: 32, //The number of lines to draw
 		angle: 0.15, //The length of each line
-		lineWidth: 0.37, //The line thickness
+		lineWidth: 0.30, //The line thickness
 		pointer: {
 			length: 0.9, //The radius of the inner circle
 			strokeWidth: 0.035, //The rotation offset
