@@ -15,7 +15,7 @@
 					?>
 
 			<div class="row">
-				<div class="col-md-7">
+				<div class="col-md-12 col-lg-7">
 					<center><h5><?php $this->_("Cpe.tab_client_stats.usage_title");?></h5></center>
 					<div class="row">
 						<div class="col-md-6">
@@ -42,7 +42,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-5">
+				<div class="col-lg-5 hidden-md hidden-sm hidden-xs">
 					<center><h5><?php $this->_("Cpe.titles.preview");?></h5></center>
 					<img class="img-responsive" src="<?= $img_url; ?>">
 				</div>
