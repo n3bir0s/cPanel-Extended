@@ -168,7 +168,7 @@
 	};
 	var target = document.getElementById('disk_usage'); // your canvas element
 	var gauge = new Gauge(target).setOptions(opts);
-	gauge.maxValue = <?php if(empty($this->stats->disk_usage['limit'])){echo $this->stats->disk_usage['used'];} else {echo $this->stats->disk_usage['limit'];} ?>; // set max gauge value
+	gauge.maxValue = <?php if(empty($this->stats->disk_usage['limit'])){ echo $this->stats->disk_usage['used']; } else { echo $this->stats->disk_usage['limit']; } ?>; // set max gauge value
 	gauge.animationSpeed = 25; // set animation speed (32 is default value)
 	gauge.set(<?php if(empty($this->stats->disk_usage['used'])){echo'0';} else {echo $this->stats->disk_usage['used'];} ?>); // set actual value
 
@@ -190,7 +190,7 @@
 	};
 	var bandwidth = document.getElementById('bandwidth'); // your canvas element
 	var bandwidth_gauge = new Gauge(bandwidth).setOptions(bandwidth_opts);
-	bandwidth_gauge.maxValue = <?php if(empty($this->stats->bandwidth_usage['limit'])){echo $this->stats->bandwidth_usage['used'];}else{echo $this->stats->bandwidth_usage['limit'];} ?>; // set max gauge value
+	bandwidth_gauge.maxValue = <?php if(empty($this->stats->bandwidth_usage['limit'])){ echo round($this->stats->bandwidth_usage['used'], 0); }else{ echo $this->stats->bandwidth_usage['limit']; } ?>; // set max gauge value
 	bandwidth_gauge.animationSpeed = 25; // set animation speed (32 is default value)
 	bandwidth_gauge.set(<?= round($this->stats->bandwidth_usage['used'], 0); ?>); // set actual value
 </script>
