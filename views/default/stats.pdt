@@ -1,141 +1,148 @@
-<?php echo $this->commonHeader; ?>
+			<?php echo $this->commonHeader; ?>
 
-<script src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/raphael.2.1.0.min.js"></script>
-<script src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/justgage.1.0.1.min.js"></script>
-				<style>
-					#web_cap{height: 200px; border: 1px solid #ddd;}
-					@media (max-width: 745px) { #image_web{padding-top: 20px;border-top: 1px solid #ccc;margin-top: 20px;} }
-					@media (max-width: 1776px) { #content_gauges{text-align: center;} }
-					@media (max-width: 750px) { #web_cap{position: relative; top: auto; right: auto; width: 100%; height: auto; border: none;} #web_cap_title{display: block;} }
-					.shortcut{display: inline-block; padding: 10px; text-align: center; color: #058; width: 160px; text-decoration: none; vertical-align: top;}
-				</style>
+				<link rel="stylesheet" href="<?php echo $this->view_dir;?>css/gauge.min-v2.0.0.css">
+				<script src="<?php echo $this->view_dir;?>javascript/gauge.min.js"></script>
 				
           <?php
-          
           	global $img_url;
-          	
             $api_key = 'decd546b9159161f';
-			$f = json_decode(file_get_contents('https://api.page2images.com/restfullink?p2i_url=http://'.$this->stats->account_info->acct[0]->domain.'&p2i_key='.$api_key), true);
-			
-			if($f['status'] == 'finished'){
-				$img_url = str_replace("http:","https:", $f['image_url']);
-			} else {
-				$img_url = str_replace('client/',"",$this->base_uri).'components/modules/cpanelextended/views/default/images/not-available.jpg';
-			}				
-		?>
+						$f = json_decode(file_get_contents('https://api.page2images.com/restfullink?p2i_url=http://'.$this->stats->account_info->acct[0]->domain.'&p2i_key='.$api_key), true);
+						if($f['status'] == 'finished'){
+							$img_url = str_replace("http:","https:", $f['image_url']);
+						} else {
+							$img_url = str_replace('client/', "", $this->view_dir.'images/not-available.jpg');
+						}
+					?>
 
-<div id="content_gauges">
-<div style="display: inline-block; vertical-align: top;">
-	<h4><?php $this->_("Cpe.tab_client_stats.usage_title");?></h4><hr style="width: 98%;">
-<div style="text-align: center;">
-	<div id="disk_usage" class="150x160px" style="width: 200px; display: inline-block; margin-right: 25px; margin-left: 25px; margin-top: 20px;"></div>
-	<div id="bandwidth" class="150x160px" style="width: 200px; display: inline-block; margin-right: 25px; margin-left: 25px; margin-top: 20px;"></div>
+			<div class="row">
+				<div class="col-md-8">
+					<center><h5><?php $this->_("Cpe.tab_client_stats.usage_title");?></h5></center>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="gauge" data-plugin="gauge" data-value="2190" data-max-value="3000">
+								<canvas id="disk_usage" width="200" height="150"></canvas>
+							</div>
+							<center>
+								<div class="text-stats">
+									<h4><?php if(empty($this->stats->disk_usage['used'])){echo'0';} else {echo $this->stats->disk_usage['used'];} ?> MB /</h4> <h5><?php if(empty($this->stats->disk_usage['limit'])){echo 'Unlimited';} else {echo $this->stats->disk_usage['limit'];} ?> MB</h5>
+								</div>
+								<h5><?php echo $this->Html->safe($this->_("Cpe.tab_client_stats.disk_title", true));?></h5>
+							</center>
+						</div>
+						<div class="col-md-6">
+							<div class="gauge" data-plugin="gauge" data-value="2190" data-max-value="3000">
+								<canvas id="bandwidth" width="200" height="150"></canvas>
+							</div>
+							<center>
+								<div class="text-stats">
+									<h4><?= round($this->stats->bandwidth_usage['used'], 0); ?> MB /</h4> <h5><?php if(empty($this->stats->bandwidth_usage['limit'])){echo 'Unlimited';}else{echo $this->stats->bandwidth_usage['limit'];} ?> MB</h5>
+								</div>
+								<h5><?php echo $this->Html->safe($this->_("Cpe.tab_client_stats.bandwidth_title", true))?></h5>
+							</center>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<center><h5><?php $this->_("Cpe.titles.preview");?></h5></center>
+					<img class="img-responsive" src="<?= $img_url; ?>">
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-</div>
-<div style="display: inline-block; vertical-align: top; margin-bottom: 10px;" id="image_web">
-	<h4><?php $this->_("Cpe.titles.preview");?></h4><hr>
-	<img src="<?= $img_url; ?>" id="web_cap">
-</div>
-</div>
+
+<div id="client_services_manage" class="panel panel-blesta content_section">
+	<div class="panel-heading">
+		<h3 class="panel-title"><?php $this->_('Cpe.titles.shorcuts'); ?></h3>
+	</div>
+	<div class="panel_content">
+		<div class="panel-body">
+			<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>ftpaccounts/">
+				<div class="shortcut">
+					<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/FTP-accounts.png">
+					<br><font><?php $this->_("Cpe.subtitles.ftp.list");?></font>
+				</div>
+			</a>
+
+			<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>databases/">
+				<div class="shortcut">
+					<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/sql.png">
+					<br><font><?php $this->_("Cpe.databases");?></font>
+				</div>
+			</a>
+
+			<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>emails/">
+				<div class="shortcut">
+					<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/mail-service-control.png">
+					<br><font><?php $this->_("Cpe.emails");?></font>
+				</div>
+			</a>
+
+			<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>emailForwarder/">
+				<div class="shortcut">
+					<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/forwarders.png">
+					<br><font><?php $this->_("Cpe.emailforwarder");?></font>
+				</div>
+			</a>
+
+			<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>cron/">
+				<div class="shortcut">
+					<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/cron.png">
+					<br><font><?php $this->_("Cpe.cron");?></font>
+				</div>
+			</a>
+
+			<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>zoneeditor/">
+				<div class="shortcut">
+					<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/dns.png">
+					<br><font><?php $this->_("Cpe.dns_zone");?></font>
+				</div>
+			</a>
+
+			<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>subdomains/">
+				<div class="shortcut">
+					<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/subdomains.png">
+					<br><font><?php $this->_("Cpe.subdomains");?></font>
+				</div>
+			</a>
+
+			<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>ssl/">
+				<div class="shortcut">
+					<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/ssl.png">
+					<br><font><?php $this->_("Cpe.ssl");?></font>
+				</div>
+			</a>
 
 		</div>
 	</div>
 </div>
 
 <div id="client_services_manage" class="panel panel-blesta content_section">
-					<div class="panel-heading">
-						<h3 class="panel-title"><?php $this->_('Cpe.titles.shorcuts'); ?></h3>
-					</div>
-					<div class="panel_content">
-			<div class="panel-body">
-	<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>ftpaccounts/">
-		<div class="shortcut">
-			<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/FTP-accounts.png">
-			<br><font><?php $this->_("Cpe.subtitles.ftp.list");?></font>
-		</div>
-	</a>
-
-	<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>databases/">
-		<div class="shortcut">
-			<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/sql.png">
-			<br><font><?php $this->_("Cpe.databases");?></font>
-		</div>
-	</a>
-
-	<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>emails/">
-		<div class="shortcut">
-			<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/mail-service-control.png">
-			<br><font><?php $this->_("Cpe.emails");?></font>
-		</div>
-	</a>
-
-	<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>emailForwarder/">
-		<div class="shortcut">
-			<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/forwarders.png">
-			<br><font><?php $this->_("Cpe.emailforwarder");?></font>
-		</div>
-	</a>
-
-	<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>cron/">
-		<div class="shortcut">
-			<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/cron.png">
-			<br><font><?php $this->_("Cpe.cron");?></font>
-		</div>
-	</a>
-
-	<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>zoneeditor/">
-		<div class="shortcut">
-			<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/dns.png">
-			<br><font><?php $this->_("Cpe.dns_zone");?></font>
-		</div>
-	</a>
-
-	<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>subdomains/">
-		<div class="shortcut">
-			<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/subdomains.png">
-			<br><font><?php $this->_("Cpe.subdomains");?></font>
-		</div>
-	</a>
-
-	<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>ssl/">
-		<div class="shortcut">
-			<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/ssl.png">
-			<br><font><?php $this->_("Cpe.ssl");?></font>
-		</div>
-	</a>
-
-		</div>
+	<div class="panel-heading">
+		<h3 class="panel-title"><?php $this->_('Cpe.titles.stats'); ?></h3>
 	</div>
-</div>
-
-<div id="client_services_manage" class="panel panel-blesta content_section">
-					<div class="panel-heading">
-						<h3 class="panel-title"><?php $this->_('Cpe.titles.stats'); ?></h3>
-					</div>
-					<div class="panel_content">
-			<div class="panel-body">
-
-	<div class="table-responsive">
-		<table class="table table-curved table-striped">
-			<thead>
-				<tr>
-					<th style="width: 50%;"><?php $this->_("Cpe.tab_client_stats.info_heading.field");?></th>
-					<th><?php $this->_("Cpe.tab_client_stats.info_heading.value");?></th>
-				</tr>
-			</thead>
-			<tbody>
-			<?php
-			$keys = array("domain", "user", "email", "ip", "plan", "theme", "maxftp", "maxpop", "maxsql", "maxsub", "maxparked", "maxaddons", "startdate");
-			foreach ($keys as $i => $key) : if (isset($this->stats->account_info->acct[0]->{$key})): ?>
-					<tr>
-						<td><?php $this->_("Cpe.tab_client_stats.info." . $key);?></td>
-						<td><?php $this->Html->_($this->stats->account_info->acct[0]->{$key});?></td>
-					</tr>              
-			<?php endif; endforeach; ?>
-			</tbody>
-		</table>
-	</div>
-	
+	<div class="panel_content">
+		<div class="panel-body">
+			<div class="table-responsive">
+				<table class="table table-curved table-striped">
+					<thead>
+						<tr>
+							<th style="width: 50%;"><?php $this->_("Cpe.tab_client_stats.info_heading.field");?></th>
+							<th><?php $this->_("Cpe.tab_client_stats.info_heading.value");?></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php
+					$keys = array("domain", "user", "email", "ip", "plan", "theme", "maxftp", "maxpop", "maxsql", "maxsub", "maxparked", "maxaddons", "startdate");
+					foreach ($keys as $i => $key) : if (isset($this->stats->account_info->acct[0]->{$key})): ?>
+							<tr>
+								<td><?php $this->_("Cpe.tab_client_stats.info." . $key);?></td>
+								<td><?php $this->Html->_($this->stats->account_info->acct[0]->{$key});?></td>
+							</tr>
+					<?php endif; endforeach; ?>
+					</tbody>
+				</table>
+			</div>
 		<div class="clearfix"></div>
 
 <div style="float: right;">
@@ -143,37 +150,51 @@
 </div>
 
 <script>
-  var g = new JustGage({
-    id: "disk_usage",
-    value: <?php if(empty($this->stats->disk_usage['used'])){echo'0';} else {echo $this->stats->disk_usage['used'];} ?>,
-    min: 0,
-    max: <?php if(empty($this->stats->disk_usage['limit'])){echo'1';} else {echo $this->stats->disk_usage['limit'];} ?>,
-    title: "<?php echo $this->Html->safe($this->_("Cpe.tab_client_stats.disk_title", true));?>",
-    gaugeWidthScale: 0.3,
-    label: "Megabytes",
-        levelColors: [
-          "#3daee9",
-          "#3daee9",
-          "#3daee9"
-        ]          
-  });
+/**** Disk Usage Gauge ****/
+	var opts = {
+	  lines: 32, //The number of lines to draw
+	  angle: 0.15, //The length of each line
+	  lineWidth: 0.37, //The line thickness
+	  pointer: {
+	    length: 0.9, //The radius of the inner circle
+	    strokeWidth: 0.035, //The rotation offset
+	    color: '#9fa3a7' //Fill color
+	  },
+	  limitMax: 'true',
+	  colorStart: '#1eb5ea', //Colors
+	  colorStop: '#1eb5ea',
+	  strokeColor: '#e6ebf1', //Background
+	  generateGradient: true
+	};
+	var target = document.getElementById('disk_usage'); // your canvas element
+	var gauge = new Gauge(target).setOptions(opts);
+	gauge.maxValue = <?php if(empty($this->stats->disk_usage['limit'])){echo $this->stats->disk_usage['used'];} else {echo $this->stats->disk_usage['limit'];} ?>; // set max gauge value
+	gauge.animationSpeed = 25; // set animation speed (32 is default value)
+	gauge.set(<?php if(empty($this->stats->disk_usage['used'])){echo'0';} else {echo $this->stats->disk_usage['used'];} ?>); // set actual value
 
-  var g = new JustGage({
-    id: "bandwidth",
-    value: <?= round($this->stats->bandwidth_usage['used'], 0); ?>,
-    min: 0,
-    max: <?php if(empty($this->stats->bandwidth_usage['limit'])){echo'1';}else{echo $this->stats->bandwidth_usage['limit'];} ?>,
-    title: "<?php echo $this->Html->safe($this->_("Cpe.tab_client_stats.bandwidth_title", true))?>",
-    gaugeWidthScale: 0.3,
-    label: "Megabytes",
-        levelColors: [
-          "#3daee9",
-          "#3daee9",
-          "#3daee9"
-        ]          
-  });
+	/**** Bandwidth Usage Gauge ****/
+	var bandwidth_opts = {
+		lines: 32, //The number of lines to draw
+		angle: 0.15, //The length of each line
+		lineWidth: 0.37, //The line thickness
+		pointer: {
+			length: 0.9, //The radius of the inner circle
+			strokeWidth: 0.035, //The rotation offset
+			color: '#9fa3a7' //Fill color
+		},
+		limitMax: 'true',
+		colorStart: '#1eb5ea', //Colors
+		colorStop: '#1eb5ea',
+		strokeColor: '#e6ebf1', //Background
+		generateGradient: true
+	};
+	var bandwidth = document.getElementById('bandwidth'); // your canvas element
+	var bandwidth_gauge = new Gauge(bandwidth).setOptions(bandwidth_opts);
+	bandwidth_gauge.maxValue = <?php if(empty($this->stats->bandwidth_usage['limit'])){echo $this->stats->bandwidth_usage['used'];}else{echo $this->stats->bandwidth_usage['limit'];} ?>; // set max gauge value
+	bandwidth_gauge.animationSpeed = 25; // set animation speed (32 is default value)
+	bandwidth_gauge.set(<?= round($this->stats->bandwidth_usage['used'], 0); ?>); // set actual value
 </script>
-	
+
 <!--[if lt IE 9]><script type="text/javascript" src="<?php echo $this->Html->safe(VENDORWEBDIR . "jqplot/excanvas.min.js");?>"></script><![endif]-->
 <script type="text/javascript" src="<?php echo $this->Html->safe(VENDORWEBDIR . "jqplot/jquery.jqplot.min.js");?>"></script>
 <script type="text/javascript" src="<?php echo $this->Html->safe(VENDORWEBDIR . "jqplot/plugins/jqplot.pieRenderer.min.js");?>"></script>

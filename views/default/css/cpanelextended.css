@@ -1,3 +1,8 @@
+/*!
+ * CyanDark Styles v4.0.0
+ * Copyright 2012-2016 CyanDark, Inc.
+ */
+
 p.quote {
   font-style: italic;
   float: left;
@@ -31,21 +36,9 @@ span.error {
 .table_sec .icon {
   width: auto !important;
 }
-
 .withleftmargin {
   margin-left: 15px !important;
 }
-
-/* ------------------------------------------
- * CSS3 GITHUB BUTTONS (Nicolas Gallagher)
- * Licensed under Unlicense
- * http://github.com/necolas/css3-github-buttons
- * --------------------------------------- */
-
-
-/* =============================================================================
-   Base Button
-   ========================================================================== */
 .cpebutton {
   position: relative;
   overflow: visible;
@@ -100,17 +93,10 @@ span.error {
   background-image: -o-linear-gradient(#3072b3, #599bdc);
   background-image: linear-gradient(#3072b3, #599bdc);
 }
-/* overrides extra padding on button elements in Firefox */
 .cpebutton::-moz-focus-inner {
   padding: 0;
   border: 0;
 }
-
-
-/* =============================================================================
-   Button icons
-   ========================================================================== */
-
 .cpebutton.icon:before {
     content: "";
     position: relative;
@@ -121,7 +107,6 @@ span.error {
     margin: 0 0.75em 0 -0.25em;
     background: url(../images/button-icons.png) 0 99px no-repeat;
 }
-
 .cpebutton.arrowup.icon:before { background-position: 0 0; }
 .cpebutton.arrowup.icon:hover:before,
 .cpebutton.arrowup.icon:focus:before,
@@ -277,25 +262,12 @@ span.error {
 .cpebutton.user.icon:focus:before,
 .cpebutton.user.icon:active:before { background-position: -12px -360px; }
 
-
-/* =============================================================================
-   Button extensions
-   ========================================================================== */
-
-/* Primary button
-   ========================================================================== */
-
 .cpebutton.primary {
     font-weight: bold;
 }
-
-/* Danger button
-   ========================================================================== */
-
 .cpebutton.danger {
     color: #900;
 }
-
 .cpebutton.danger:hover,
 .cpebutton.danger:focus,
 .cpebutton.danger:active {
@@ -309,7 +281,6 @@ span.error {
     background-image: -o-linear-gradient(#dc5f59, #b33630);
     background-image: linear-gradient(#dc5f59, #b33630);
 }
-
 .cpebutton.danger:active,
 .cpebutton.danger.active {
     border-color: #a0302a;
@@ -321,40 +292,18 @@ span.error {
     background-image: -o-linear-gradient(#b33630, #dc5f59);
     background-image: linear-gradient(#b33630, #dc5f59);
 }
-
-/* Pill button
-   ========================================================================== */
-
 .cpebutton.pill {
     border-radius: 50em;
 }
-
-/* Disabled button
-   ========================================================================== */
-
 .cpebutton.disable {
     opacity: 0.5;
 }
-
-/* Big button
-   ========================================================================== */
-
 .cpebutton.big {
     font-size: 14px;
 }
-
 .cpebutton.big.icon:before {
     top: 0;
 }
-
-
-/* =============================================================================
-   Button groups
-   ========================================================================== */
-
-/* Standard group
-   ========================================================================== */
-
 .cpebutton-group {
     display: inline-block;
     list-style: none;
@@ -364,58 +313,46 @@ span.error {
     zoom: 1;
     *display: inline;
 }
-
 .cpebutton + .cpebutton,
 .cpebutton + .cpebutton-group,
 .cpebutton-group + .cpebutton,
 .cpebutton-group + .cpebutton-group {
     margin-left: 15px;
 }
-
 .cpebutton-group li {
     float: left;
     padding: 0;
     margin: 0;
 }
-
 .cpebutton-group .cpebutton {
     float: left;
     margin-left: -1px;
 }
-
 .cpebutton-group > .cpebutton:not(:first-child):not(:last-child),
 .cpebutton-group li:not(:first-child):not(:last-child) .cpebutton {
     border-radius: 0;
 }
-
 .cpebutton-group > .cpebutton:first-child,
 .cpebutton-group li:first-child .cpebutton {
     margin-left: 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
-
 .cpebutton-group > .cpebutton:last-child,
 .cpebutton-group li:last-child > .cpebutton {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
-
-/* Minor group
-   ========================================================================== */
-
 .cpebutton-group.minor-group .cpebutton {
     border: 1px solid #d4d4d4;
     text-shadow: none;
     background-image: none;
     background-color: #fff;
 }
-
 .cpebutton-group.minor-group .cpebutton:hover,
 .cpebutton-group.minor-group .cpebutton:focus {
     background-color: #599bdc;
 }
-
 .cpebutton-group.minor-group .cpebutton:active,
 .cpebutton-group.minor-group .cpebutton.active {
     background-color: #3072b3;
@@ -424,12 +361,27 @@ span.error {
 .cpebutton-group.minor-group .cpebutton.icon:before {
     opacity: 0.8;
 }
-
-/* =============================================================================
-   Button container (mixing buttons and groups, e.g., nav bar)
-   ========================================================================== */
-
 .cpebutton-container .cpebutton,
 .cpebutton-container .cpebutton-group {
     vertical-align: top;
+}
+@media (max-width: 1776px) {
+	#content_gauges{
+		text-align: center;
+	}
+}
+.shortcut{
+	display: inline-block;
+	padding: 10px;
+	text-align: center;
+	color: #058; width: 160px;
+	text-decoration: none;
+	vertical-align: top;
+}
+.text-stats h4, .text-stats h5{
+	display: inline-block;
+	color: #ddd;
+}
+.btn{
+	margin-bottom: 10px !important;
 }
