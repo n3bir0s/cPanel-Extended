@@ -86,7 +86,8 @@
 	?>
 
 		<h4><?php $this->_('Cpe.softaculous'); ?></h4>
-		<hr />
+		<p><?php $this->_('Cpe.softaculous.description'); ?></p>
+		<div class="clearfix"></div>
 
 	<div id="install_form">
 		<?php $this->Form->create($this->uri.'create'); ?>

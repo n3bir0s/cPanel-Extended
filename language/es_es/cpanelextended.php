@@ -36,6 +36,7 @@ $lang['Cpe.webdisk.add'] = "Añadir WebDisk";
 $lang['Cpe.description.webdisk'] = "Crear una cuenta de WebDisk para gestionar, navegar, cargar y descargar los archivos en su servidor web. Los WebDisks están en relación con el directorio inicial de la cuenta.";
 $lang['Cpe.webdisk.perms'] = "Permisos";
 $lang['Cpe.loginto.description'] = "Cambia instantaneamente desde nuestro panel de control a cPanel para administrar tu cuenta de hosting.";
+$lang['Cpe.softaculous.description'] = "Instala aplicaciones web de manera automatica y en tan solo un clic.";
 
 // Sections
 $lang['Cpe.stats'] = "Estadística";
