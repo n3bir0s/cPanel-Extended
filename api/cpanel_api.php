@@ -1,5 +1,4 @@
 <?php
-
 /**
  * A class that handle connections to cPanel API
  * It's also checking if the JSON response is valid
