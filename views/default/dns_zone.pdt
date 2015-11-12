@@ -38,20 +38,55 @@
 		<?php
 			foreach($response['cpanelresult']['data'] as $entry) {
 			//Show CNAME Records
-			if(preg_match("/CNAME/i", $entry['type']) && isset($entry['name'])) {
+			if($entry['type'] == 'CNAME' && isset($entry['name'])) {
 		?>
 				<tr><td><?= $entry['ttl']; ?></td><td><?= $entry['name']; ?></td><td><?= $entry['cname']; ?></td><td><?= $entry['type']; ?></td><td><?= $entry['class']; ?></td><td><a href="?delete=<?= $entry['line']; ?>" class="btn btn-default"><i class="fa fa-trash-o"></i> <?= Language::_("Cpe.add_row.remove_name_server", true); ?></a></td></tr>
 		<?php
 			}
+			//Show NS Records
+			if($entry['type'] == 'NS' && isset($entry['name'])) {
+		?>
+				<tr><td><?= $entry['ttl']; ?></td><td><?= $entry['name']; ?></td><td><?= $entry['nsdname']; ?></td><td><?= $entry['type']; ?></td><td><?= $entry['class']; ?></td><td><a href="?delete=<?= $entry['line']; ?>" class="btn btn-default"><i class="fa fa-trash-o"></i> <?= Language::_("Cpe.add_row.remove_name_server", true); ?></a></td></tr>
+		<?php
+			}
+			//Show MX Records
+			if($entry['type'] == 'MX' && isset($entry['name'])) {
+		?>
+				<tr><td><?= $entry['preference']; ?></td><td><?= $entry['name']; ?></td><td><?= $entry['exchange']; ?></td><td><?= $entry['type']; ?></td><td><?= $entry['class']; ?></td><td><a href="?deletemx=<?= $entry['exchange']; ?>&pref=<?= $entry['preference']; ?>" class="btn btn-default"><i class="fa fa-trash-o"></i> <?= Language::_("Cpe.add_row.remove_name_server", true); ?></a></td></tr>
+		<?php
+			}
+			//Show TXT Records
+			if($entry['type'] == 'TXT' && isset($entry['name'])) {
+		?>
+				<tr><td><?= $entry['ttl']; ?></td><td><?= $entry['name']; ?></td><td><input class="form-control" value="<?= $entry['txtdata']; ?>" disabled/></td><td><?= $entry['type']; ?></td><td><?= $entry['class']; ?></td><td><a href="?delete=<?= $entry['line']; ?>" class="btn btn-default"><i class="fa fa-trash-o"></i> <?= Language::_("Cpe.add_row.remove_name_server", true); ?></a></td></tr>
+		<?php
+			}
+			//Show AAAA Records
+			if($entry['type'] == 'AAAA' && isset($entry['name'])) {
+		?>
+				<tr><td><?= $entry['ttl']; ?></td><td><?= $entry['name']; ?></td><td><?= $entry['record']; ?></td><td><?= $entry['type']; ?></td><td><?= $entry['class']; ?></td><td><a href="?delete=<?= $entry['line']; ?>" class="btn btn-default"><i class="fa fa-trash-o"></i> <?= Language::_("Cpe.add_row.remove_name_server", true); ?></a></td></tr>
+		<?php
+			}
 			//Show A Records
-			if(!preg_match("/RAW/i", $entry['type']) && isset($entry['name']) && isset($entry['address'])) {
+			if($entry['type'] == 'A' && isset($entry['name']) && isset($entry['address'])) {
 		?>
 				<tr><td><?= $entry['ttl']; ?></td><td><?= $entry['name']; ?></td><td><?= $entry['record']; ?></td><td><?= $entry['type']; ?></td><td><?= $entry['class']; ?></td><td><a href="?delete=<?= $entry['line']; ?>" class="btn btn-default"><i class="fa fa-trash-o"></i> <?= Language::_("Cpe.add_row.remove_name_server", true); ?></a></td></tr>
 		<?php
 			}
 		}
 		?>
-			<tr><?php $this->Form->create('', array('id' => 'dns_zone')); ?><td><input type="text" name="ttl" value="14400" id="ttl" class="form-control"></td><td><input type="text" name="name" value="" id="name" class="form-control"></td><td><input type="text" name="record" value="" id="record" class="form-control"></td><td><select name="type" id="type" class="form-control"><option value="A">A</option><option value="CNAME">CNAME</option></select></td><td><div style=" margin-top: 7px; "><b>IN</b></div></td><td><button type="submit" class="btn btn-default"><i class="fa fa-plus-circle"></i> <?= Language::_("Cpe.button.save", true); ?></button></td><?php $this->Form->end(); ?></tr>
+			<tr><?php $this->Form->create('', array('id' => 'dns_zone')); ?><td><input type="text" name="ttl" value="14400" id="ttl" class="form-control"></td><td><input type="text" name="name" value="" id="name" class="form-control"></td><td><input type="text" name="record" value="" id="record" class="form-control"></td><td><select name="type" id="type" class="form-control"><option value="A">A</option><option value="AAAA">AAAA</option><option value="CNAME">CNAME</option><option value="MX">MX</option><option value="TXT">TXT</option></select></td><td><div style=" margin-top: 7px; "><b>IN</b></div></td><td><button type="submit" class="btn btn-default"><i class="fa fa-plus-circle"></i> <?= Language::_("Cpe.button.save", true); ?></button></td><?php $this->Form->end(); ?></tr>
 			</tbody>
 		</table>
 	</div>
+	<script>
+	$('#type').change(function(){
+		if($(this).val() == 'MX'){
+			$('#name').attr('disabled', 'disabled');
+			$('#ttl').attr('value', '1');
+		} else {
+			$('#name').removeAttr('disabled');
+			$('#ttl').attr('value', '14400');
+		}
+	});
+	</script>

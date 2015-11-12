@@ -13,7 +13,7 @@ class cpanelextended extends Module {
 	/**
 	 * @var string The version of this module
 	 */
-	private static $version = "3.0.3";
+	private static $version = "3.0.4";
 	/**
 	 * @var string The authors of this module
 	 */
@@ -1627,7 +1627,7 @@ class cpanelextended extends Module {
 	public function zoneeditor($package, $service, array $get = null, array $post = null, array $files = null) {
 		global $out;
 		//Add DNS
-		if(isset($post['ttl']) && isset($post['name']) && isset($post['record']) && isset($post['type'])) {
+		if(isset($post['ttl']) && isset($post['name']) && isset($post['record']) && isset($post['type']) && !($post['type'] == 'MX')) {
 			$row            = $this->getModuleRow();
 			$fields         = $this->serviceFieldsToObject($service->fields);
 			$service_fields = $this->serviceFieldsToObject($service->fields);
@@ -1639,13 +1639,30 @@ class cpanelextended extends Module {
 				'type' => $post['type'],
 				'address' => $post['record'],
 				'cname' => $post['record'],
+				'txtdata' => $post['record'],
 				'ttl' => $post['ttl'],
 				'class' => "IN"
 			);
 			$this->log($row->meta->host_name . "|sendApi2Request", serialize($params), "input", true);
 			$response = $this->parseResponse($api->sendApi2Request("ZoneEdit", "add_zone_record", $params));
-
 		}
+
+		//Add MX
+		if (isset($post['ttl']) && isset($post['record']) && isset($post['type']) && $post['type'] == 'MX'){
+			$row            = $this->getModuleRow();
+			$fields         = $this->serviceFieldsToObject($service->fields);
+			$service_fields = $this->serviceFieldsToObject($service->fields);
+			$api            = $this->getApiByMeta($row->meta, $fields);
+			$stats          = new stdClass();
+			$params         = array(
+				'domain' => $service_fields->cpanel_domain,
+				'exchange' => $post['record'],
+				'priority' => $post['ttl']
+			);
+			$this->log($row->meta->host_name . "|sendApi2Request", serialize($params), "input", true);
+			$response = $this->parseResponse($api->sendApi2Request("Email", "addmx", $params));
+		}
+
 		//Delete Zone
 		if(isset($_GET['delete'])) {
 			$row            = $this->getModuleRow();
@@ -1660,6 +1677,23 @@ class cpanelextended extends Module {
 			$this->log($row->meta->host_name . "|sendApi2Request", serialize($params), "input", true);
 			$response = $this->parseResponse($api->sendApi2Request("ZoneEdit", "remove_zone_record", $params));
 		}
+
+		//Delete MX
+		if(isset($_GET['deletemx']) && isset($_GET['pref'])) {
+			$row            = $this->getModuleRow();
+			$fields         = $this->serviceFieldsToObject($service->fields);
+			$service_fields = $this->serviceFieldsToObject($service->fields);
+			$api            = $this->getApiByMeta($row->meta, $fields);
+			$stats          = new stdClass();
+			$params         = array(
+				'domain' => $service_fields->cpanel_domain,
+				'exchange' => $_GET['deletemx'],
+				'preference' => $_GET['pref']
+			);
+			$this->log($row->meta->host_name . "|sendApi2Request", serialize($params), "input", true);
+			$response = $this->parseResponse($api->sendApi2Request("Email", "delmx", $params));
+		}
+
 		$row            = $this->getModuleRow();
 		$fields         = $this->serviceFieldsToObject($service->fields);
 		$service_fields = $this->serviceFieldsToObject($service->fields);
