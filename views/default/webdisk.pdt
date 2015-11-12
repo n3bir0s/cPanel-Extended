@@ -1,8 +1,27 @@
-<?php echo $this->commonHeader; ?>
+<?php
+//  CyanDark Incorporated
+//  Copyright (c) 2012-2016 CyanDark, Inc. All Rights Reserved.
+//
+//  This software is furnished under a license and may be used and copied
+//  only  in  accordance  with  the  terms  of such  license and with the
+//  inclusion of the above copyright notice.  This software  or any other
+//  copies thereof may not be provided or otherwise made available to any
+//  other person.  No title to and  ownership of the  software is  hereby
+//  transferred.
+//
+//  You may not reverse  engineer, decompile, defeat  license  encryption
+//  mechanisms, or  disassemble this software product or software product
+//  license. CyanDark may terminate this license if you don't comply with
+//  any of the  terms  and conditions  set  forth in our end user license
+//  agreement (EULA).  In such event, licensee  agrees to return licensor
+//  or  destroy all copies  of  software  upon termination of the license
+
+echo $this->commonHeader;
+?>
 <style>.alert-danger{ display: none; }</style>
 		<?php
-			
-		if(isset($_GET['delete'])){			
+
+		if(isset($_GET['delete'])){
 			if(preg_match("/success/i", $response_del)){
 				echo'
 					<div class="alert alert-success alert-dismissable" style="margin-bottom: 15px;">
@@ -27,10 +46,10 @@
 			}
 		}
 		?>
-			
+
 	<h4><?php $this->_('Cpe.webdisk'); ?></h4>
 	<p><?php $this->_('Cpe.description.webdisk'); ?></p>
-	
+
 	<hr />
 	<h4><?php $this->_('Cpe.webdisk.add'); ?></h4>
 	<div class="errorscontainer marbot10 martop10"></div>
@@ -38,25 +57,25 @@
 		<div class="col-md-12">
 		<?php $this->Form->create($this->uri.'create'); ?>
 			<div class="form-group">
-				<?php 
+				<?php
 				$this->Form->label($this->_('Cpe.th.domain', true), 'domain');
 				$this->Form->fieldText('domain', $this->Html->ifSet($this->post['domain']), array('id' => 'domain', 'class' => "form-control", 'value' => $fields->cpanel_domain));
 				?>
 			</div>
 			<div class="form-group">
-				<?php 
+				<?php
 				$this->Form->label($this->_('Cpe.label.username', true), 'user');
 				$this->Form->fieldText('user', $this->Html->ifSet($this->post['user']), array('id' => 'user', 'class' => "form-control"));
 				?>
 			</div>
 			<div class="form-group">
-				<?php 
+				<?php
 				$this->Form->label($this->_('Cpe.label.password', true), 'password');
 				$this->Form->fieldPassword('password', array('style' => 'float: left;', 'id' => 'password', 'class' => "form-control"));
 				?>
 			</div>
 			<div class="form-group" style=" margin-top: 15px; ">
-				<?php 
+				<?php
 				$this->Form->label($this->_('Cpe.label.directory', true), 'homedir'); ?>
 				<code>/home/<?php $this->Html->_($this->fields->cpanel_username); ?>/public_html/</code>
 				<?php
@@ -77,7 +96,7 @@
 			<?php $this->Form->end(); ?>
 		</div>
 	</div>
-	
+
 	<hr />
 	<h4>WebDisk Accounts</h4>
 	<div class="table-responsive">

@@ -1,5 +1,22 @@
-	
-	
+<?php
+//  CyanDark Incorporated
+//  Copyright (c) 2012-2016 CyanDark, Inc. All Rights Reserved.
+//
+//  This software is furnished under a license and may be used and copied
+//  only  in  accordance  with  the  terms  of such  license and with the
+//  inclusion of the above copyright notice.  This software  or any other
+//  copies thereof may not be provided or otherwise made available to any
+//  other person.  No title to and  ownership of the  software is  hereby
+//  transferred.
+//
+//  You may not reverse  engineer, decompile, defeat  license  encryption
+//  mechanisms, or  disassemble this software product or software product
+//  license. CyanDark may terminate this license if you don't comply with
+//  any of the  terms  and conditions  set  forth in our end user license
+//  agreement (EULA).  In such event, licensee  agrees to return licensor
+//  or  destroy all copies  of  software  upon termination of the license
+?>
+		
 	<div class="heading options space">
 		<h5><?php $this->_("Cpanel.tab_client_stats.info_title");?></h5>
 	</div>
@@ -31,7 +48,7 @@
 		</div>
 		<div class="clear"></div>
 	</div>
-	
+
 	<div class="heading options space">
 		<h5><?php $this->_("Cpanel.tab_client_stats.usage_title");?></h5>
 	</div>
@@ -39,16 +56,16 @@
 		<div id="graph_bandwidth" style="float: left; width: 50%;"></div>
 		<div id="graph_disk" style="float: left; width: 50%;"></div>
 	</div>
-	
+
 <!--[if lt IE 9]><script type="text/javascript" src="<?php echo $this->Html->safe(VENDORWEBDIR . "jqplot/excanvas.min.js");?>"></script><![endif]-->
 <script type="text/javascript" src="<?php echo $this->Html->safe(VENDORWEBDIR . "jqplot/jquery.jqplot.min.js");?>"></script>
 <script type="text/javascript" src="<?php echo $this->Html->safe(VENDORWEBDIR . "jqplot/plugins/jqplot.pieRenderer.min.js");?>"></script>
 
 <script type="text/javascript">
 	$(document).blestaSetHeadTag("link", {media:"screen", type:"text/css", rel:"stylesheet", href: "<?php echo $this->Html->safe(VENDORWEBDIR . "jqplot/jquery.jqplot.min.css");?>"});
-	
+
 	$(document).ready(function() {
-		
+
 		var bandwidth_data = [
 			['<?php echo $this->Html->safe($this->_("Cpanel.tab_client_stats.bandwidth_heading.used", true, $stats->bandwidth_usage['used']));?>', <?php echo $this->Html->safe($stats->bandwidth_usage['used']);?>],
 			['<?php echo $this->Html->safe($this->_("Cpanel.tab_client_stats.bandwidth_heading.unused", true, $stats->bandwidth_usage['limit']-$stats->bandwidth_usage['used']));?>', <?php echo $this->Html->safe($stats->bandwidth_usage['limit']-$stats->bandwidth_usage['used']);?>],
@@ -57,10 +74,10 @@
 			['<?php echo $this->Html->safe($this->_("Cpanel.tab_client_stats.disk_heading.used", true, $stats->disk_usage['used']));?>', <?php echo $this->Html->safe($stats->disk_usage['used']);?>],
 			['<?php echo $this->Html->safe($this->_("Cpanel.tab_client_stats.disk_heading.unused", true, $stats->disk_usage['limit']-$stats->disk_usage['used']));?>', <?php echo $this->Html->safe($stats->disk_usage['limit']-$stats->disk_usage['used']);?>],
 		];
-		
+
 		var bandwidth = plotGraph('graph_bandwidth', [bandwidth_data], '<?php echo $this->Html->safe($this->_("Cpanel.tab_client_stats.bandwidth_title", true));?>');
 		var disk = plotGraph('graph_disk', [disk_data], '<?php echo $this->Html->safe($this->_("Cpanel.tab_client_stats.disk_title", true));?>');
-		
+
 		function plotGraph(name, data, title) {
 			return $.jqplot(name, data, {
 				seriesColors: ["#a80000", "#6ab31d"],

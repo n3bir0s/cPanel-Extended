@@ -1,4 +1,22 @@
-	
+<?php
+//  CyanDark Incorporated
+//  Copyright (c) 2012-2016 CyanDark, Inc. All Rights Reserved.
+//
+//  This software is furnished under a license and may be used and copied
+//  only  in  accordance  with  the  terms  of such  license and with the
+//  inclusion of the above copyright notice.  This software  or any other
+//  copies thereof may not be provided or otherwise made available to any
+//  other person.  No title to and  ownership of the  software is  hereby
+//  transferred.
+//
+//  You may not reverse  engineer, decompile, defeat  license  encryption
+//  mechanisms, or  disassemble this software product or software product
+//  license. CyanDark may terminate this license if you don't comply with
+//  any of the  terms  and conditions  set  forth in our end user license
+//  agreement (EULA).  In such event, licensee  agrees to return licensor
+//  or  destroy all copies  of  software  upon termination of the license
+?>
+
 	<div class="title_row first">
 		<h3><?php $this->_("Cpanel.tab_stats.info_title");?></h3>
 	</div>
@@ -27,7 +45,7 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<div class="title_row">
 		<h3><?php $this->_("Cpanel.tab_stats.bandwidth_title");?></h3>
 	</div>
@@ -43,11 +61,11 @@
 				<tr>
 					<td><?php $this->_("Cpanel.tab_stats.bandwidth_value", false, $this->Html->ifSet($stats->bandwidth_usage['used']));?></td>
 					<td><?php $this->_(($this->Html->ifSet($stats->bandwidth_usage['limit']) == 0 ? "Cpanel.tab_stats.bandwidth_unlimited" : "Cpanel.tab_stats.bandwidth_value"), false, $this->Html->ifSet($stats->bandwidth_usage['limit']));?></td>
-				</tr>			
+				</tr>
 			</tbody>
 		</table>
 	</div>
-	
+
 	<div class="title_row">
 		<h3><?php $this->_("Cpanel.tab_stats.disk_title");?></h3>
 	</div>
