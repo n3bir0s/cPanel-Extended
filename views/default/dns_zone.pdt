@@ -1,6 +1,27 @@
+<?php
+//  CyanDark Incorporated
+//  Copyright (c) 2012-2016 CyanDark, Inc. All Rights Reserved.
+//
+//  This software is furnished under a license and may be used and copied
+//  only  in  accordance  with  the  terms  of such  license and with the
+//  inclusion of the above copyright notice.  This software  or any other
+//  copies thereof may not be provided or otherwise made available to any
+//  other person.  No title to and  ownership of the  software is  hereby
+//  transferred.
+//
+//  You may not reverse  engineer, decompile, defeat  license  encryption
+//  mechanisms, or  disassemble this software product or software product
+//  license. CyanDark may terminate this license if you don't comply with
+//  any of the  terms  and conditions  set  forth in our end user license
+//  agreement (EULA).  In such event, licensee  agrees to return licensor
+//  or  destroy all copies  of  software  upon termination of the license
+
+	echo $this->commonHeader;
+?>
+
 		<h4><?= Language::_("Cpe.dns_zone", true); ?></h4>
 		<p><?= Language::_("Cpe.description.dns_zone", true); ?></p>
-	<div class="table-responsive" style="margin-top: 20px;">
+	<div class="table-responsive" id="dns_zone_editor" style="margin-top: 20px;">
 		<table class="table table-curved table-striped">
 			<thead>
 				<tr>
@@ -16,17 +37,17 @@
 
 		<?php
 			foreach($response['cpanelresult']['data'] as $entry) {
-			//Show CNAME Records 
+			//Show CNAME Records
 			if(preg_match("/CNAME/i", $entry['type']) && isset($entry['name'])) {
 		?>
 				<tr><td><?= $entry['ttl']; ?></td><td><?= $entry['name']; ?></td><td><?= $entry['cname']; ?></td><td><?= $entry['type']; ?></td><td><?= $entry['class']; ?></td><td><a href="?delete=<?= $entry['line']; ?>" class="btn btn-default"><i class="fa fa-trash-o"></i> <?= Language::_("Cpe.add_row.remove_name_server", true); ?></a></td></tr>
 		<?php
-			} 
+			}
 			//Show A Records
 			if(!preg_match("/RAW/i", $entry['type']) && isset($entry['name']) && isset($entry['address'])) {
 		?>
 				<tr><td><?= $entry['ttl']; ?></td><td><?= $entry['name']; ?></td><td><?= $entry['record']; ?></td><td><?= $entry['type']; ?></td><td><?= $entry['class']; ?></td><td><a href="?delete=<?= $entry['line']; ?>" class="btn btn-default"><i class="fa fa-trash-o"></i> <?= Language::_("Cpe.add_row.remove_name_server", true); ?></a></td></tr>
-		<?php	
+		<?php
 			}
 		}
 		?>

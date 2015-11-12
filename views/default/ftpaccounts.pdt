@@ -1,9 +1,28 @@
-<?php echo $this->commonHeader; ?>
-<?php echo $this->jsScripts; ?>
+<?php
+//  CyanDark Incorporated
+//  Copyright (c) 2012-2016 CyanDark, Inc. All Rights Reserved.
+//
+//  This software is furnished under a license and may be used and copied
+//  only  in  accordance  with  the  terms  of such  license and with the
+//  inclusion of the above copyright notice.  This software  or any other
+//  copies thereof may not be provided or otherwise made available to any
+//  other person.  No title to and  ownership of the  software is  hereby
+//  transferred.
+//
+//  You may not reverse  engineer, decompile, defeat  license  encryption
+//  mechanisms, or  disassemble this software product or software product
+//  license. CyanDark may terminate this license if you don't comply with
+//  any of the  terms  and conditions  set  forth in our end user license
+//  agreement (EULA).  In such event, licensee  agrees to return licensor
+//  or  destroy all copies  of  software  upon termination of the license
+
+	echo $this->commonHeader;
+	echo $this->jsScripts;
+?>
 
 	<h4><?php $this->_('Cpe.titles.ftp'); ?></h4>
 	<p><?php $this->_('Cpe.description.ftp'); ?></p>
-	
+
 	<hr />
 	<h4><?php $this->_('Cpe.subtitles.ftp.create'); ?></h4>
 	<div class="errorscontainer marbot10 martop10"></div>
@@ -11,13 +30,13 @@
 		<div class="col-md-12">
 			<?php $this->Form->create($this->uri.'create', array('id' => 'createFtpAccount')); ?>
 			<div class="form-group">
-				<?php 
+				<?php
 				$this->Form->label($this->_('Cpe.label.username', true), 'ftpusername');
 				$this->Form->fieldText('ftpusername', $this->Html->ifSet($this->post['username']), array('id' => 'ftpUsername', 'class' => "form-control"));
 				?>
 			</div>
 			<div class="form-group">
-				<?php 
+				<?php
 				$this->Form->label($this->_('Cpe.label.password', true), 'ftppassword');
 				$this->Form->fieldPassword('ftppassword', array('style' => 'float: left;', 'id' => 'ftppassword', 'class' => "form-control"));
 				?>
@@ -26,13 +45,13 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="form-group">
-				<?php 
+				<?php
 				$this->Form->label($this->_('Cpe.label.passwordconfirm', true), 'ftppasswordconfirm');
 				$this->Form->fieldPassword('ftppasswordconfirm', array('id' => 'ftppasswordconfirm', 'class' => "form-control"));
 				?>
 			</div>
 			<div class="form-group">
-				<?php 
+				<?php
 				$this->Form->label($this->_('Cpe.label.directory', true), 'directory'); ?>
 				<code>/home/<?php $this->Html->_($this->fields->cpanel_username); ?>/</code>
 				<?php
@@ -40,7 +59,7 @@
 				?>
 			</div>
 			<div class="form-group">
-				<?php 
+				<?php
 				$this->Form->label($this->_('Cpe.label.quota', true) . " " . $this->_('Cpe.misc.quotahint', true), 'ftpquota');
 				$this->Form->fieldText('ftpquota', $this->Html->ifSet($this->post['ftpquota'], 0), array('id' => 'ftpQuota', 'class' => "form-control", 'style' => 'width: 50px;'));
 				?>
@@ -52,7 +71,7 @@
 			<?php $this->Form->end(); ?>
 		</div>
 	</div>
-	
+
 	<hr />
 	<h4><?php $this->_('Cpe.subtitles.ftp.list'); ?></h4>
 	<div class="table-responsive">
@@ -85,11 +104,11 @@
 								<li class="divider"></li>
 								<li><a class="deleteFtp" href="<?php echo $this->Html->safe($this->uri .'delete/?username='.$account->login); ?>"><i class="fa fa-ban"></i> <?php $this->_('Cpe.button.delete'); ?></a></li>
 							</ul>
-                        </div> 
+                        </div>
                     </td>
                 </tr>
                 <tr class="expand_details modifyData" style="display: none;">
-                    <td class="subtable" colspan="5"> 
+                    <td class="subtable" colspan="5">
                     </td>
                 </tr>
                 <?php endif; endforeach; ?>
@@ -106,11 +125,11 @@
                     <td>
                         <div class="btn-group">
                             <a class="btn btn-default btn-sm changeFtpQuota" href="<?php echo $this->Html->safe($this->uri.'changequota/?currentQuota='.$account->diskquota.'&username='.$account->login);?>"><i class="fa fa-cog"></i> <?php $this->_('Cpe.button.changequota'); ?></a>
-                        </div> 
+                        </div>
                     </td>
                 </tr>
                 <tr class="expand_details modifyData" style="display: none;">
-                    <td class="subtable" colspan="5"> 
+                    <td class="subtable" colspan="5">
                     </td>
                 </tr>
                 <?php endif; endforeach; ?>

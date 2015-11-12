@@ -383,5 +383,10 @@ span.error {
 	color: #ddd;
 }
 .btn{
-	margin-bottom: 10px !important;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+#dns_zone_editor .table .btn{
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
 }

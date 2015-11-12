@@ -1,6 +1,6 @@
 <?php
 /**
- * cPanel Extended for Blesta 
+ * cPanel Extended for Blesta
  *
  * @package blesta
  * @subpackage blesta.components.modules.cpanelextended
@@ -13,7 +13,7 @@ class cpanelextended extends Module {
 	/**
 	 * @var string The version of this module
 	 */
-	private static $version = "3.0.2";
+	private static $version = "3.0.3";
 	/**
 	 * @var string The authors of this module
 	 */
