@@ -35,6 +35,7 @@ $lang['Cpe.webdisk'] = "WebDisk";
 $lang['Cpe.webdisk.add'] = "Añadir WebDisk";
 $lang['Cpe.description.webdisk'] = "Crear una cuenta de WebDisk para gestionar, navegar, cargar y descargar los archivos en su servidor web. Los WebDisks están en relación con el directorio inicial de la cuenta.";
 $lang['Cpe.webdisk.perms'] = "Permisos";
+$lang['Cpe.loginto.description'] = "Cambia instantaneamente desde nuestro panel de control a cPanel para administrar tu cuenta de hosting.";
 
 // Sections
 $lang['Cpe.stats'] = "Estadística";
@@ -47,7 +48,7 @@ $lang['Cpe.parkeddomains']   = "Dominios Aparcados";
 $lang['Cpe.addondomains']   = "Dominios Adicionales";
 $lang['Cpe.cron']   = "Cron";
 $lang['Cpe.ssl']   = "Administración de SSL";
-$lang['Cpe.loginto']   = "Iniciar Sesión";
+$lang['Cpe.loginto']   = "Cambiar a";
 $lang['Cpe.dns_zone'] = "Editor de Zona DNS";
 
 // Section titles
@@ -60,7 +61,7 @@ $lang['Cpe.titles.parkeddomains']   = "Dominios aparcados";
 $lang['Cpe.titles.addondomains']   = "Dominios Adicionales";
 $lang['Cpe.titles.cron']   = "Gestión Cron Jobs";
 $lang['Cpe.titles.ssl']   = "Gestión SSL";
-$lang['Cpe.titles.loginto']   = "Iniciar Sesión";
+$lang['Cpe.titles.loginto']   = "Cambiar a";
 
 // Section descriptions
 $lang['Cpe.description.ftp'] = "Las cuentas FTP le permiten acceder a los archivos de su sitio web a través de un protocolo llamado FTP. Necesitará un programa de FTP de terceros para acceder a sus archivos. Puede acceder a través de FTP ingresando.";

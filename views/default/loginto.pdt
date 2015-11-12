@@ -19,51 +19,60 @@
 	echo $this->commonHeader;
 ?>
 
-	<div class="form-group">
-		<form method="post" action="<?php echo $this->Html->safe(sprintf('https://%s:2083/login/', $this->server->meta->host_name)); ?>" target="_blank">
-			<input type="hidden" name="user" value="<?php $this->Html->_($this->fields->cpanel_username); ?>">
-			<input type="hidden" name="pass" value="<?php $this->Html->_($this->fields->cpanel_password); ?>">
-			<button class="btn btn-default btn-block" type="submit"><i class="fa fa-cogs"></i> cPanel</button>
-		</form>
+	<h4><?php $this->_('Cpe.titles.loginto'); ?></h4>
+	<p><?php $this->_('Cpe.loginto.description'); ?></p>
+	<div class="clearfix"></div>
+	<div class="row">
+		<div class="col-md-6">
+			<form method="post" action="<?php echo $this->Html->safe(sprintf('https://%s:2083/login/', $this->server->meta->host_name)); ?>" target="_blank">
+				<input type="hidden" name="user" value="<?php $this->Html->_($this->fields->cpanel_username); ?>">
+				<input type="hidden" name="pass" value="<?php $this->Html->_($this->fields->cpanel_password); ?>">
+				<button class="btn btn-default btn-block" type="submit"><i class="fa fa-cogs"></i> cPanel</button>
+			</form>
+		</div>
+		<div class="col-md-6">
+			<form method="post" action="<?php echo $this->Html->safe(sprintf('https://%s:2083/login/', $this->server->meta->host_name)); ?>" target="_blank">
+				<input type="hidden" name="user" value="<?php $this->Html->_($this->fields->cpanel_username); ?>">
+				<input type="hidden" name="pass" value="<?php $this->Html->_($this->fields->cpanel_password); ?>">
+				<input type="hidden" name="goto_uri" value="/frontend/x3/sql/PhpMyAdmin.html">
+				<button class="btn btn-default btn-block" type="submit"><i class="fa fa-database"></i> phpMyAdmin</button>
+			</form>
+		</div>
 	</div>
-	<div class="form-group">
-		<form method="post" action="<?php echo $this->Html->safe(sprintf('https://%s:2083/login/', $this->server->meta->host_name)); ?>" target="_blank">
-			<input type="hidden" name="user" value="<?php $this->Html->_($this->fields->cpanel_username); ?>">
-			<input type="hidden" name="pass" value="<?php $this->Html->_($this->fields->cpanel_password); ?>">
-			<input type="hidden" name="goto_uri" value="/frontend/x3/sql/PhpMyAdmin.html">
-			<button class="btn btn-default btn-block" type="submit"><i class="fa fa-database"></i> phpMyAdmin</button>
-		</form>
+	<div class="row">
+		<div class="col-md-6">
+			<form method="post" action="<?php echo $this->Html->safe(sprintf('https://%s:2096/login/', $this->server->meta->host_name)); ?>" target="_blank">
+				<input type="hidden" name="user" value="<?php $this->Html->_($this->fields->cpanel_username); ?>">
+				<input type="hidden" name="pass" value="<?php $this->Html->_($this->fields->cpanel_password); ?>">
+				<button class="btn btn-default btn-block" type="submit"><i class="fa fa-envelope"></i> Webmail</button>
+			</form>
+		</div>
+		<div class="col-md-6">
+			<form method="post" action="<?php echo $this->Html->safe(sprintf('https://%s:2083/login/', $this->server->meta->host_name)); ?>" target="_blank">
+				<input type="hidden" name="user" value="<?php $this->Html->_($this->fields->cpanel_username); ?>">
+				<input type="hidden" name="pass" value="<?php $this->Html->_($this->fields->cpanel_password); ?>">
+				<input type="hidden" name="goto_uri" value="/frontend/paper_lantern/filemanager/index.html?showhidden=1&dir=/public_html">
+				<button class="btn btn-default btn-block" type="submit"><i class="fa fa-cloud"></i> File Manager</button>
+			</form>
+		</div>
 	</div>
-	<div class="form-group">
-		<form method="post" action="<?php echo $this->Html->safe(sprintf('https://%s:2096/login/', $this->server->meta->host_name)); ?>" target="_blank">
-			<input type="hidden" name="user" value="<?php $this->Html->_($this->fields->cpanel_username); ?>">
-			<input type="hidden" name="pass" value="<?php $this->Html->_($this->fields->cpanel_password); ?>">
-			<button class="btn btn-default btn-block" type="submit"><i class="fa fa-envelope"></i> Webmail</button>
-		</form>
-	</div>
-	<div class="form-group">
-		<form method="post" action="<?php echo $this->Html->safe(sprintf('https://%s:2083/login/', $this->server->meta->host_name)); ?>" target="_blank">
-			<input type="hidden" name="user" value="<?php $this->Html->_($this->fields->cpanel_username); ?>">
-			<input type="hidden" name="pass" value="<?php $this->Html->_($this->fields->cpanel_password); ?>">
-			<input type="hidden" name="goto_uri" value="/frontend/paper_lantern/filemanager/index.html?showhidden=1&dir=/public_html">
-			<button class="btn btn-default btn-block" type="submit"><i class="fa fa-cloud"></i> File Manager</button>
-		</form>
-	</div>
-	<div class="form-group">
-		<form method="post" action="<?php echo $this->Html->safe(sprintf('https://%s:2083/login/', $this->server->meta->host_name)); ?>" target="_blank">
-			<input type="hidden" name="user" value="<?php $this->Html->_($this->fields->cpanel_username); ?>">
-			<input type="hidden" name="pass" value="<?php $this->Html->_($this->fields->cpanel_password); ?>">
-			<input type="hidden" name="goto_uri" value="/frontend/x3/softaculous/index.live.php">
-			<button class="btn btn-default btn-block" type="submit"><i class="fa fa-download"></i> Softaculous</button>
-		</form>
-	</div>
-	<?php if($this->vars['package']->meta->type == 'reseller'){ ?>
-	<div class="form-group">
-		<form method="post" action="<?php echo $this->Html->safe(sprintf('https://%s:2087/login/', $this->server->meta->host_name)); ?>" target="_blank">
-			<input type="hidden" name="user" value="<?php $this->Html->_($this->fields->cpanel_username); ?>">
-			<input type="hidden" name="pass" value="<?php $this->Html->_($this->fields->cpanel_password); ?>">
-			<button class="btn btn-default btn-block" type="submit"><i class="fa fa-cog"></i> Web Host Manager</button>
-		</form>
+	<div class="row">
+		<div class="col-md-6">
+			<form method="post" action="<?php echo $this->Html->safe(sprintf('https://%s:2083/login/', $this->server->meta->host_name)); ?>" target="_blank">
+				<input type="hidden" name="user" value="<?php $this->Html->_($this->fields->cpanel_username); ?>">
+				<input type="hidden" name="pass" value="<?php $this->Html->_($this->fields->cpanel_password); ?>">
+				<input type="hidden" name="goto_uri" value="/frontend/x3/softaculous/index.live.php">
+				<button class="btn btn-default btn-block" type="submit"><i class="fa fa-download"></i> Softaculous</button>
+			</form>
+		</div>
+		<?php if($this->vars['package']->meta->type == 'reseller'){ ?>
+		<div class="col-md-6">
+			<form method="post" action="<?php echo $this->Html->safe(sprintf('https://%s:2087/login/', $this->server->meta->host_name)); ?>" target="_blank">
+				<input type="hidden" name="user" value="<?php $this->Html->_($this->fields->cpanel_username); ?>">
+				<input type="hidden" name="pass" value="<?php $this->Html->_($this->fields->cpanel_password); ?>">
+				<button class="btn btn-default btn-block" type="submit"><i class="fa fa-cog"></i> Web Host Manager</button>
+			</form>
+		</div>
 	</div>
 	<?php } ?>
 

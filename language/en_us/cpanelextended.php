@@ -35,6 +35,7 @@ $lang['Cpe.webdisk'] = "WebDisk";
 $lang['Cpe.webdisk.add'] = "Add WebDisk";
 $lang['Cpe.description.webdisk'] = "Create a Web Disk account to manage, navigate, upload, and download the files on your web server. Web Disks are relative to your account’s home directory.";
 $lang['Cpe.webdisk.perms'] = "Permissions";
+$lang['Cpe.loginto.description'] = "Switch instantly from our control panel to cPanel for manage your hosting account.";
 
 // Sections
 $lang['Cpe.stats'] = "Statistics";
@@ -47,7 +48,7 @@ $lang['Cpe.parkeddomains']   = "Parked Domains";
 $lang['Cpe.addondomains']   = "Addon Domains";
 $lang['Cpe.cron']   = "Cron";
 $lang['Cpe.ssl']   = "SSL Management";
-$lang['Cpe.loginto']   = "Log In To";
+$lang['Cpe.loginto']   = "Switch";
 $lang['Cpe.dns_zone'] = "DNS Zone Editor";
 
 // Section titles
@@ -60,7 +61,7 @@ $lang['Cpe.titles.parkeddomains']   = "Parked Domains";
 $lang['Cpe.titles.addondomains']   = "Addon Domains";
 $lang['Cpe.titles.cron']   = "Cron Jobs Management";
 $lang['Cpe.titles.ssl']   = "SSL Management";
-$lang['Cpe.titles.loginto']   = "Log In To";
+$lang['Cpe.titles.loginto']   = "Switch";
 
 // Section descriptions
 $lang['Cpe.description.ftp'] = "FTP accounts allow you to access your website's files through a protocol called FTP. You will need a third-party FTP program to access your files. You can log into via FTP by entering.";
