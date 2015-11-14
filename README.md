@@ -1,6 +1,6 @@
 # cPanel Extended v 3.0.4
 
-<b>New!</b> Now with MX, AAAA and TXT Support.
+<b>New!</b> Now with MX, AAAA and TXT Support. Compatible with Blesta 3.6.1
 
 cPanel Extended automates accounts provisioning and allows your clients to manage their web hosting accounts in the Blesta client area! The module eliminates the necessity of logging in to cPanel as it relocates many of its functionalities and advantages directly to your Blesta.
 
