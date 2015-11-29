@@ -20,4 +20,4 @@ There are many reasons to invest in this gorgeous module and we presented you on
 <li>Preview of the Hosted Site</li>
 <li>Change Password from Blesta</li>
 </ul>
-<b>Note:</b> This module its based in the cPanel Extended Module of ModulesGarden.
+<b>Note:</b> Remember, Rename the folder to "cpanelextended" before to upload.
