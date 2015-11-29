@@ -1,0 +1,76 @@
+<?php
+//  CyanDark Incorporated
+//  Copyright (c) 2012-2016 CyanDark, Inc. All Rights Reserved.
+//
+//  This software is furnished under a license and may be used and copied
+//  only  in  accordance  with  the  terms  of such  license and with the
+//  inclusion of the above copyright notice.  This software  or any other
+//  copies thereof may not be provided or otherwise made available to any
+//  other person.  No title to and  ownership of the  software is  hereby
+//  transferred.
+//
+//  You may not reverse  engineer, decompile, defeat  license  encryption
+//  mechanisms, or  disassemble this software product or software product
+//  license. CyanDark may terminate this license if you don't comply with
+//  any of the  terms  and conditions  set  forth in our end user license
+//  agreement (EULA).  In such event, licensee  agrees to return licensor
+//  or  destroy all copies  of  software  upon termination of the license
+
+	echo $this->commonHeader;
+?>
+
+	<h4><?php $this->_('Cpe.ssh'); ?></h4>
+	<p><?php $this->_('Cpe.description.ssh'); ?></p>
+	<div class="clearfix"></div>
+	<hr />
+
+	<h4><?php $this->_('Cpe.subtitles.ssh.authkey'); ?></h4>
+	<div class="errorscontainer marbot10 martop10"></div>
+	<div class="row">
+		<div class="col-md-12">
+			<?php $this->Form->create(); ?>
+			<div class="form-group">
+				<?php
+				$this->Form->label($this->_('Cpe.label.keyfiles', true), 'keyfiles');
+				?>
+				<?php
+				$this->Form->fieldText('keyfiles', $this->Html->ifSet($this->post['keyfiles']), array('id' => 'keyfiles', 'class' => "form-control"));
+				?>
+			</div>
+			<div class="clearfix"></div>
+			<div class="pull-right">
+				<button type="submit" class="btn btn-default"><i class="fa fa-plus-circle"></i> <?php $this->_('Cpe.subtitles.ssh.authkey'); ?></button>
+			</div>
+			<?php $this->Form->end(); ?>
+		</div>
+	</div>
+
+	<hr />
+
+	<h4><?php $this->_('Cpe.subtitles.ssh.importkey'); ?></h4>
+	<div class="errorscontainer marbot10 martop10"></div>
+	<div class="row">
+		<div class="col-md-12">
+			<?php $this->Form->create(); ?>
+			<div class="form-group">
+				<?php $this->Form->label($this->_('Cpe.label.keyname', true), 'keyname'); ?>
+				<?php $this->Form->fieldText('keyname', $this->Html->ifSet($this->post['keyname']), array('class' => "form-control"));?>
+				<div class="clearfix"></div>
+			</div>
+			<div class="form-group">
+				<?php $this->Form->label($this->_('Cpe.label.password', true), 'keypassphrase'); ?>
+        <?php $this->Form->fieldText('keypassphrase', $this->Html->ifSet($this->post['keypassphrase']), array('id' => 'keypassphrase', 'class' => "form-control")); ?>
+				<div class="clearfix"></div>
+			</div>
+			<div class="form-group">
+				<?php $this->Form->label($this->_('Cpe.label.keyfiles', true), 'keyfile'); ?>
+				<?php $this->Form->fieldText('keyfile', $this->Html->ifSet($this->post['keyfile']), array('id' => 'keyfile', 'class' => "form-control")); ?>
+			</div>
+			<div class="pull-right">
+				<button type="submit" class="btn btn-default"><i class="fa fa-plus-circle"></i> <?php $this->_('Cpe.subtitles.ssh.importkey'); ?></button>
+			</div>
+			<?php $this->Form->end(); ?>
+		</div>
+	</div>
+
+<?php echo $this->jsScripts; ?>

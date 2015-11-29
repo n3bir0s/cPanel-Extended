@@ -16,35 +16,52 @@
 //  agreement (EULA).  In such event, licensee  agrees to return licensor
 //  or  destroy all copies  of  software  upon termination of the license
 ?>
-	<div class="table-responsive">
-		<table class="table table-curved table-striped">
-			<thead>
-				<tr>
-					<th><i class="fa fa-share fa-flip-vertical"></i></th>
-					<th><?php $this->_("Cpe.service_info.username");?></th>
-					<th><?php $this->_("Cpe.service_info.password");?></th>
-					<th><?php $this->_("Cpe.service_info.server");?></th>
-					<th><?php $this->_("Cpe.service_info.options");?></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td></td>
-					<td><?php $this->Html->_($service_fields->cpanel_username);?></td>
-					<td><?php $this->Html->_($service_fields->cpanel_password);?></td>
-					<td><?php $this->Html->_($module_row->meta->host_name);?></td>
-					<td>
-						<?php
-						$this->Form->create($this->Html->safe("https://" . $this->Html->ifSet($module_row->meta->host_name) . ":2083/login/"), array('target' => "_blank"));
-						$this->Form->fieldHidden("user", $this->Html->ifSet($service_fields->cpanel_username));
-						$this->Form->fieldHidden("pass", $this->Html->ifSet($service_fields->cpanel_password));
-						?>
-						<button type="submit" class="btn btn-default btn-sm"><i class="fa fa-sign-in"></i> <?php $this->_("Cpe.service_info.option_login");?></button>
-						<?php
-						$this->Form->end();
-						?>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+
+<link rel="stylesheet" type="text/css" href="<?php echo $this->view_dir;?>css/cpanelextended.css">
+<div class="row no-space">
+	<div class="col-md-3 col-sm-3 col-xs-3 col-lg-2">
+		<a href="<?= $service_uri; ?>details/">
+			<div class="icon-panel">
+				<img src="<?php echo $this->view_dir;?>images/icons/info.png">
+				<span><?php $this->_("Cpe.details");?></span>
+			</div>
+		</a>
 	</div>
+	<div class="col-md-3 col-sm-3 col-xs-3 col-lg-2">
+		<a href="<?= $service_uri; ?>dashboard/">
+			<div class="icon-panel">
+				<img src="<?php echo $this->view_dir;?>images/icons/settings.png">
+				<span><?php $this->_("Cpe.dashboard");?></span>
+			</div>
+		</a>
+	</div>
+	<div class="col-md-3 col-sm-3 col-xs-3 col-lg-2">
+		<a href="<?= $service_uri; ?>changepass/">
+			<div class="icon-panel">
+				<img src="<?php echo $this->view_dir;?>images/icons/password.png">
+				<span><?php $this->_("Cpe.changepass");?></span>
+			</div>
+		</a>
+	</div>
+	<div class="col-md-3 col-sm-3 col-xs-3 col-lg-2">
+		<form method="post" id="file_manager" action="<?= $this->Html->safe("https://" . $this->Html->ifSet($module_row->meta->host_name) . ":2083/login/"); ?>" target="_blank">
+			<input type="hidden" name="user" value="<?= $this->Html->ifSet($service_fields->cpanel_username); ?>">
+			<input type="hidden" name="pass" value="<?= $this->Html->ifSet($service_fields->cpanel_password); ?>">
+			<input type="hidden" name="goto_uri" value="/frontend/paper_lantern/filemanager/index.html?showhidden=1&dir=/public_html">
+		</form>
+		<div class="icon-panel" onclick="$('#file_manager').submit();">
+			<img src="<?php echo $this->view_dir;?>images/icons/folder.png">
+			<span><?php $this->_("Cpe.label.filemanager");?></span>
+		</div>
+	</div>
+	<div class="col-md-3 col-sm-3 col-xs-3 col-lg-2">
+		<form method="post" id="cpanel" action="<?= $this->Html->safe("https://" . $this->Html->ifSet($module_row->meta->host_name) . ":2083/login/"); ?>" target="_blank">
+			<input type="hidden" name="user" value="<?= $this->Html->ifSet($service_fields->cpanel_username); ?>">
+			<input type="hidden" name="pass" value="<?= $this->Html->ifSet($service_fields->cpanel_password); ?>">
+		</form>
+		<div class="icon-panel" onclick="$('#cpanel').submit();">
+			<img src="<?php echo $this->view_dir;?>images/icons/cpanel.png">
+			<span><?php $this->_("Cpe.loginto");?></span>
+		</div>
+	</div>
+</div>

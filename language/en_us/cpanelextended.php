@@ -39,18 +39,25 @@ $lang['Cpe.loginto.description'] = "Switch instantly from our control panel to c
 $lang['Cpe.softaculous.description'] = "Install web applications automatically and with one click.";
 
 // Sections
+$lang['Cpe.dashboard'] = "Dashboard";
+$lang['Cpe.details'] = "Details";
 $lang['Cpe.stats'] = "Statistics";
-$lang['Cpe.ftp']   = "FTP Accounts";
-$lang['Cpe.databases']   = "Databases";
-$lang['Cpe.emails']   = "Emails";
-$lang['Cpe.emailforwarder']   = "Email Forwarders";
-$lang['Cpe.subdomains']   = "Subdomains";
-$lang['Cpe.parkeddomains']   = "Parked Domains";
-$lang['Cpe.addondomains']   = "Addon Domains";
-$lang['Cpe.cron']   = "Cron";
-$lang['Cpe.ssl']   = "SSL Management";
-$lang['Cpe.loginto']   = "Switch";
+$lang['Cpe.changepass'] = "Change Password";
+$lang['Cpe.ftp'] = "FTP Accounts";
+$lang['Cpe.databases'] = "Databases";
+$lang['Cpe.remotedatabase'] = "Remote MySQL";
+$lang['Cpe.emails'] = "E-Mails";
+$lang['Cpe.webmail'] = "Webmail";
+$lang['Cpe.emailforwarder'] = "E-Mail Forwarders";
+$lang['Cpe.subdomains'] = "Subdomains";
+$lang['Cpe.parkeddomains'] = "Parked Domains";
+$lang['Cpe.addondomains'] = "Addon Domains";
+$lang['Cpe.cron'] = "Cron Jobs";
+$lang['Cpe.ssh'] = "SSH Access";
+$lang['Cpe.ssl'] = "SSL Management";
+$lang['Cpe.loginto'] = "Switch";
 $lang['Cpe.dns_zone'] = "DNS Zone Editor";
+
 
 // Section titles
 $lang['Cpe.titles.stats'] = "Statistics For The Account";
@@ -65,6 +72,7 @@ $lang['Cpe.titles.ssl']   = "SSL Management";
 $lang['Cpe.titles.loginto']   = "Switch";
 
 // Section descriptions
+$lang['Cpe.description.ssh'] = "SSH, or Secure Shell, is a protocol used to securely log onto remote systems. It is the most common way to access remote Linux and Unix-like servers, such as VPS instances.";
 $lang['Cpe.description.ftp'] = "FTP accounts allow you to access your website's files through a protocol called FTP. You will need a third-party FTP program to access your files. You can log into via FTP by entering.";
 $lang['Cpe.description.databases'] = "MySQL Databases allow you to store lots of information in an easy to access manner. The databases themselves are not easily read by humans. MySQL databases are required by many web applications including some bulletin boards, content management systems, and others. To use a database, you'll need to create it. Only MySQL Users (different than mail or other users) that have privileges to access a database can read from or write to that database.";
 $lang['Cpe.description.emails'] = "In this area you can manage the email accounts associated with your domains.";
@@ -82,6 +90,11 @@ $lang['Cpe.description.dns_zone'] = "Create and edit zone records to control how
 
 
 // Section subtitles
+$lang['Cpe.subtitles.nameservers.pointip'] = "You can point your domain to: ";
+$lang['Cpe.subtitles.details.site'] = "Site Details";
+$lang['Cpe.subtitles.details.mail'] = "E-mail Details";
+$lang['Cpe.subtitles.details.ftp'] = "FTP Details";
+$lang['Cpe.subtitles.details.cpanel'] = "cPanel Details";
 $lang['Cpe.subtitles.ftp.create'] = "Add FTP Accounts";
 $lang['Cpe.subtitles.ftp.list'] = "List FTP Accounts";
 $lang['Cpe.subtitles.email.create'] = "Add Email Accounts";
@@ -91,6 +104,12 @@ $lang['Cpe.subtitles.db.dblist'] = "Current Databases List";
 $lang['Cpe.subtitles.db.usercreate'] = "Add New MySQL User";
 $lang['Cpe.subtitles.db.userlist'] = "Current Users List";
 $lang['Cpe.subtitles.db.addusertodb'] = "Add User To Database";
+$lang['Cpe.subtitles.db.remote'] = "Remote MySQL";
+$lang['Cpe.subtitles.db.addhost'] = "Adds a Host to use with Remote MySQL";
+$lang['Cpe.subtitles.db.currenthosts'] = "Current Hosts";
+$lang['Cpe.subtitles.ssh.authkey'] = "Authorize Key";
+$lang['Cpe.subtitles.ssh.importkey'] = "Import Key";
+$lang['Cpe.subtitles.ssh.listkey'] = "Authorized Keys";
 $lang['Cpe.subtitles.subdomain.create'] = "Create Subdomain";
 $lang['Cpe.subtitles.subdomain.list'] = "Subdomains List";
 $lang['Cpe.subtitles.parkeddomain.create'] = "Create a New Parked Domain";
@@ -146,6 +165,34 @@ $lang['Cpe.button.deletesubdomain'] = "Delete Subdomain";
 $lang['Cpe.button.deleteparked'] = "Delete Parked Domain";
 
 // Labels
+$lang['Cpe.label.files'] = "Files";
+$lang['Cpe.label.filemanager'] = "File Manager";
+$lang['Cpe.label.advanced'] = "Advanced";
+$lang['Cpe.label.nameservers'] = "Nameservers";
+$lang['Cpe.label.ipaddress'] = "IP Address";
+$lang['Cpe.label.server'] = "Server";
+$lang['Cpe.label.webmailaddress'] = "Webmail Address";
+$lang['Cpe.label.mailhost'] = "POP3/IMAP Host";
+$lang['Cpe.label.pop3port'] = "POP3 Port";
+$lang['Cpe.label.imapport'] = "IMAP Port";
+$lang['Cpe.label.smtpport'] = "IMAP Port";
+$lang['Cpe.label.imapportssl'] = "IMAP Port (SSL)";
+$lang['Cpe.label.pop3portssl'] = "POP3 Port (SSL)";
+$lang['Cpe.label.smtpportssl'] = "SMTP Port (SSL)";
+$lang['Cpe.label.yourusername'] = "Your E-mail Address";
+$lang['Cpe.label.yourpassword'] = "Your E-mail Password";
+$lang['Cpe.label.ftphost'] = "FTP Host";
+$lang['Cpe.label.ftpip'] = "FTP IP";
+$lang['Cpe.label.ftpport'] = "FTP Port";
+$lang['Cpe.label.cpaneladdress'] = "cPanel Address";
+$lang['Cpe.label.addhost'] = "Add Host";
+$lang['Cpe.label.keyname'] = "Key Name";
+$lang['Cpe.label.privatekey'] = "Private Key";
+$lang['Cpe.label.keypassphrase'] = "Passphrase";
+$lang['Cpe.label.publickey'] = "Public Key";
+$lang['Cpe.label.keyfiles'] = "The SSH key's filename.";
+$lang['Cpe.label.authorized'] = "Authorized";
+$lang['Cpe.label.deauthorized'] = "Deauthorized";
 $lang['Cpe.label.username'] = "Username";
 $lang['Cpe.label.password'] = "Password";
 $lang['Cpe.label.passwordconfirm'] = "Confirm Password";
@@ -270,6 +317,10 @@ $lang['Cpe.saturday'] = "Saturday";
 
 // Table Headers
 $lang['Cpe.th.login'] = "Login";
+$lang['Cpe.th.creationdate'] = "Creation Date";
+$lang['Cpe.th.file'] = "File";
+$lang['Cpe.th.name'] = "Name";
+$lang['Cpe.th.status'] = "Status";
 $lang['Cpe.th.path'] = "Path";
 $lang['Cpe.th.quota'] = "Quota";
 $lang['Cpe.th.diskusage'] = "Disk Usage";
@@ -292,6 +343,7 @@ $lang['Cpe.th.weekday'] = "Week Day";
 $lang['Cpe.th.command'] = "Command";
 $lang['Cpe.th.domain'] = "Domain";
 $lang['Cpe.th.expire'] = "Expire Date";
+$lang['Cpe.th.host'] = "Host";
 
 // Misc
 $lang['Cpe.misc.genpasswordtext'] = "Your generated password is: ";

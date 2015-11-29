@@ -1,0 +1,246 @@
+<?php
+//  CyanDark Incorporated
+//  Copyright (c) 2012-2016 CyanDark, Inc. All Rights Reserved.
+//
+//  This software is furnished under a license and may be used and copied
+//  only  in  accordance  with  the  terms  of such  license and with the
+//  inclusion of the above copyright notice.  This software  or any other
+//  copies thereof may not be provided or otherwise made available to any
+//  other person.  No title to and  ownership of the  software is  hereby
+//  transferred.
+//
+//  You may not reverse  engineer, decompile, defeat  license  encryption
+//  mechanisms, or  disassemble this software product or software product
+//  license. CyanDark may terminate this license if you don't comply with
+//  any of the  terms  and conditions  set  forth in our end user license
+//  agreement (EULA).  In such event, licensee  agrees to return licensor
+//  or  destroy all copies  of  software  upon termination of the license
+
+	echo $this->commonHeader;
+?>
+			<div class="alert alert-primary" role="alert">
+				<?php $this->_("Cpe.subtitles.nameservers.pointip");?><strong><?= $stats->account_info->acct[0]->ip; ?></strong>
+			</div>
+			<div class="table-responsive">
+				<table class="table table-curved table-striped">
+					<thead>
+						<tr>
+							<th style="width: 50%;"><?php $this->_("Cpe.label.nameservers");?></th>
+							<th><?php $this->_("Cpe.label.ipaddress");?></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach ($nameservers as $nameserver){ ?>
+						<tr>
+							<td><?= $nameserver; ?></td>
+							<td><?= gethostbyname($nameserver); ?></td>
+						</tr>
+					<?php } ?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="client_services_manage" class="panel panel-blesta content_section">
+	<div class="panel-heading">
+		<h3 class="panel-title"><?php $this->_('Cpe.subtitles.details.site'); ?></h3>
+	</div>
+	<div class="panel_content">
+		<div class="panel-body">
+			<div class="table-responsive">
+				<table class="table table-curved table-striped">
+					<thead>
+						<tr>
+							<th style="width: 50%;"><?php $this->_("Cpe.tab_client_stats.info_heading.field");?></th>
+							<th><?php $this->_("Cpe.tab_client_stats.info_heading.value");?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><?php $this->_("Cpe.label.domain");?></td>
+							<td><?= $stats->account_info->acct[0]->domain; ?></td>
+						</tr>
+						<tr>
+							<td><?php $this->_("Cpe.label.ipaddress");?></td>
+							<td><?= $stats->account_info->acct[0]->ip; ?></td>
+						</tr>
+						<tr>
+							<td><?php $this->_("Cpe.label.server");?></td>
+							<td><?= $server; ?></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div id="client_services_manage" class="panel panel-blesta content_section">
+	<div class="panel-heading">
+		<h3 class="panel-title"><?php $this->_('Cpe.subtitles.details.mail'); ?></h3>
+	</div>
+	<div class="panel_content">
+		<div class="panel-body">
+			<div class="table-responsive">
+				<table class="table table-curved table-striped">
+					<thead>
+						<tr>
+							<th style="width: 50%;"><?php $this->_("Cpe.tab_client_stats.info_heading.field");?></th>
+							<th><?php $this->_("Cpe.tab_client_stats.info_heading.value");?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><?php $this->_("Cpe.label.webmailaddress");?></td>
+							<td><a href="http://<?= $stats->account_info->acct[0]->domain; ?>/webmail/">http://<?= $stats->account_info->acct[0]->domain; ?>/webmail/</a></td>
+						</tr>
+						<tr>
+							<td><?php $this->_("Cpe.label.mailhost");?></td>
+							<td>mail.<?= $stats->account_info->acct[0]->domain; ?></td>
+						</tr>
+						<tr>
+							<td><?php $this->_("Cpe.label.username");?></td>
+							<td><?php $this->_("Cpe.label.yourusername");?></td>
+						</tr>
+						<tr>
+							<td><?php $this->_("Cpe.label.password");?></td>
+							<td><?php $this->_("Cpe.label.yourpassword");?></td>
+						</tr>
+						<tr>
+							<td><?php $this->_("Cpe.label.pop3port");?></td>
+							<td>110</td>
+						</tr>
+						<tr>
+							<td><?php $this->_("Cpe.label.imapport");?></td>
+							<td>143</td>
+						</tr>
+						<tr>
+							<td><?php $this->_("Cpe.label.smtpport");?></td>
+							<td>25</td>
+						</tr>
+						<tr>
+							<td><?php $this->_("Cpe.label.imapportssl");?></td>
+							<td>993</td>
+						</tr>
+						<tr>
+							<td><?php $this->_("Cpe.label.pop3portssl");?></td>
+							<td>995</td>
+						</tr>
+						<tr>
+							<td><?php $this->_("Cpe.label.smtpportssl");?></td>
+							<td>465</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="client_services_manage" class="panel panel-blesta content_section">
+	<div class="panel-heading">
+		<h3 class="panel-title"><?php $this->_('Cpe.subtitles.details.ftp'); ?></h3>
+	</div>
+	<div class="panel_content">
+		<div class="panel-body">
+			<div class="table-responsive">
+				<table class="table table-curved table-striped">
+					<thead>
+						<tr>
+							<th style="width: 50%;"><?php $this->_("Cpe.tab_client_stats.info_heading.field");?></th>
+							<th><?php $this->_("Cpe.tab_client_stats.info_heading.value");?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><?php $this->_("Cpe.label.ftphost");?></td>
+							<td>ftp.<?= $stats->account_info->acct[0]->domain; ?></td>
+						</tr>
+						<tr>
+							<td><?php $this->_("Cpe.label.ftpip");?></td>
+							<td><?= $stats->account_info->acct[0]->ip; ?></td>
+						</tr>
+						<tr>
+							<td><?php $this->_("Cpe.label.username");?></td>
+							<td><?php $this->Html->_($fields->cpanel_username); ?></td>
+						</tr>
+						<tr>
+							<td><?php $this->_("Cpe.label.password");?></td>
+							<td><?php $this->Html->_($fields->cpanel_password); ?></td>
+						</tr>
+						<tr>
+							<td><?php $this->_("Cpe.label.ftpport");?></td>
+							<td>21</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="client_services_manage" class="panel panel-blesta content_section">
+	<div class="panel-heading">
+		<h3 class="panel-title"><?php $this->_('Cpe.subtitles.details.cpanel'); ?></h3>
+	</div>
+	<div class="panel_content">
+		<div class="panel-body">
+			<div class="table-responsive">
+				<table class="table table-curved table-striped">
+					<thead>
+						<tr>
+							<th style="width: 50%;"><?php $this->_("Cpe.tab_client_stats.info_heading.field");?></th>
+							<th><?php $this->_("Cpe.tab_client_stats.info_heading.value");?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><?php $this->_("Cpe.label.cpaneladdress");?></td>
+							<td><a href="http://<?= $stats->account_info->acct[0]->domain; ?>/cpanel/">http://<?= $stats->account_info->acct[0]->domain; ?>/cpanel/</a></td>
+						</tr>
+						<tr>
+							<td><?php $this->_("Cpe.label.username");?></td>
+							<td><?php $this->Html->_($fields->cpanel_username); ?></td>
+						</tr>
+						<tr>
+							<td><?php $this->_("Cpe.label.password");?></td>
+							<td><?php $this->Html->_($fields->cpanel_password); ?></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="client_services_manage" class="panel panel-blesta content_section">
+	<div class="panel-heading">
+		<h3 class="panel-title"><?php $this->_('Cpe.titles.stats'); ?></h3>
+	</div>
+	<div class="panel_content">
+		<div class="panel-body">
+			<div class="table-responsive">
+				<table class="table table-curved table-striped">
+					<thead>
+						<tr>
+							<th style="width: 50%;"><?php $this->_("Cpe.tab_client_stats.info_heading.field");?></th>
+							<th><?php $this->_("Cpe.tab_client_stats.info_heading.value");?></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php
+					$keys = array("domain", "user", "ip", "plan", "maxftp", "maxpop", "maxsql", "maxsub", "maxparked", "maxaddons", "startdate");
+					foreach ($keys as $i => $key) : if (isset($this->stats->account_info->acct[0]->{$key})): ?>
+							<tr>
+								<td><?php $this->_("Cpe.tab_client_stats.info." . $key);?></td>
+								<td><?php $this->Html->_($this->stats->account_info->acct[0]->{$key});?></td>
+							</tr>
+					<?php endif; endforeach; ?>
+					</tbody>
+				</table>
+			</div>
+
+<?php echo $this->jsScripts; ?>

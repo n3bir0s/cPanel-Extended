@@ -1,0 +1,80 @@
+<?php
+//  CyanDark Incorporated
+//  Copyright (c) 2012-2016 CyanDark, Inc. All Rights Reserved.
+//
+//  This software is furnished under a license and may be used and copied
+//  only  in  accordance  with  the  terms  of such  license and with the
+//  inclusion of the above copyright notice.  This software  or any other
+//  copies thereof may not be provided or otherwise made available to any
+//  other person.  No title to and  ownership of the  software is  hereby
+//  transferred.
+//
+//  You may not reverse  engineer, decompile, defeat  license  encryption
+//  mechanisms, or  disassemble this software product or software product
+//  license. CyanDark may terminate this license if you don't comply with
+//  any of the  terms  and conditions  set  forth in our end user license
+//  agreement (EULA).  In such event, licensee  agrees to return licensor
+//  or  destroy all copies  of  software  upon termination of the license
+
+	echo $this->commonHeader;
+?>
+
+	<h4><?php $this->_('Cpe.subtitles.db.remote'); ?></h4>
+	<p><?php $this->_('Cpe.description.databases'); ?></p>
+	<div class="clearfix"></div>
+	<hr />
+
+	<h4><?php $this->_('Cpe.label.addhost'); ?></h4>
+	<div class="errorscontainer marbot10 martop10"></div>
+	<div class="row">
+		<div class="col-md-12">
+			<?php $this->Form->create(); ?>
+			<div class="form-group">
+				<?php
+				$this->Form->label($this->_('Cpe.subtitles.db.addhost', true), 'addhost_label');
+				?>
+				<?php
+				$this->Form->fieldText('addhost', $this->Html->ifSet($this->post['addhost']), array('id' => 'addhost', 'class' => "form-control"));
+				?>
+			</div>
+			<div class="clearfix"></div>
+			<div class="pull-right">
+				<button type="submit" class="btn btn-default"><i class="fa fa-plus-circle"></i> <?php $this->_('Cpe.label.addhost'); ?></button>
+			</div>
+			<?php $this->Form->end(); ?>
+		</div>
+	</div>
+
+	<hr />
+
+	<h4><?php $this->_('Cpe.subtitles.db.currenthosts'); ?></h4>
+	<div class="table-responsive">
+        <table class="table table-curved table-striped-alt">
+            <thead>
+                <tr>
+                    <th><?php $this->_('Cpe.th.host'); ?></th>
+                    <th><?php $this->_('Cpe.th.actions'); ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($this->hosts->cpanelresult->data as $host): ?>
+                <tr>
+                    <td><?php $this->Html->_($host->uri_host); ?></td>
+                    <td style="width: 120px;">
+                        <div class="btn-group">
+                            <a href="<?php echo $this->Html->safe($this->uri.'?delhost='.$host->uri_host); ?>" class="btn btn-default btn-sm"><i class="fa fa-ban"></i> <?php $this->_('Cpe.button.delete'); ?></a>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="expand_details modifyData" style="display: none;">
+                    <td class="subtable" colspan="5">
+
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="clearfix"></div>
+
+<?php echo $this->jsScripts; ?>

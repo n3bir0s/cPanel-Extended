@@ -1,6 +1,6 @@
-# cPanel Extended v 3.0.4
+# cPanel Extended v4.0.0
 
-<b>New!</b> Now with MX, AAAA and TXT Support. Compatible with Blesta 3.6.1
+<b>New!</b> Now with Quick Actions, Dashboard, Details Secction and Remote MySQL.
 
 cPanel Extended automates accounts provisioning and allows your clients to manage their web hosting accounts in the Blesta client area! The module eliminates the necessity of logging in to cPanel as it relocates many of its functionalities and advantages directly to your Blesta.
 
@@ -15,7 +15,7 @@ There are many reasons to invest in this gorgeous module and we presented you on
 <li>New Statistics Design</li>
 <li>WebDisk Support</li>
 <li>Install Any Script from Blesta (Softaculous)</li>
-<li>DNS Zone Editor</li>
+<li>DNS Zone Editor (Supports A, AAAA, MX, TXT and CNAME)</li>
 <li>Email Fowarding</li>
 <li>Preview of the Hosted Site</li>
 <li>Change Password from Blesta</li>

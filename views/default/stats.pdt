@@ -72,72 +72,6 @@
 
 <div id="client_services_manage" class="panel panel-blesta content_section">
 	<div class="panel-heading">
-		<h3 class="panel-title"><?php $this->_('Cpe.titles.shorcuts'); ?></h3>
-	</div>
-	<div class="panel_content">
-		<div class="panel-body">
-			<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>ftpaccounts/">
-				<div class="shortcut">
-					<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/FTP-accounts.png">
-					<br><font><?php $this->_("Cpe.subtitles.ftp.list");?></font>
-				</div>
-			</a>
-
-			<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>databases/">
-				<div class="shortcut">
-					<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/sql.png">
-					<br><font><?php $this->_("Cpe.databases");?></font>
-				</div>
-			</a>
-
-			<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>emails/">
-				<div class="shortcut">
-					<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/mail-service-control.png">
-					<br><font><?php $this->_("Cpe.emails");?></font>
-				</div>
-			</a>
-
-			<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>emailForwarder/">
-				<div class="shortcut">
-					<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/forwarders.png">
-					<br><font><?php $this->_("Cpe.emailforwarder");?></font>
-				</div>
-			</a>
-
-			<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>cron/">
-				<div class="shortcut">
-					<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/cron.png">
-					<br><font><?php $this->_("Cpe.cron");?></font>
-				</div>
-			</a>
-
-			<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>zoneeditor/">
-				<div class="shortcut">
-					<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/dns.png">
-					<br><font><?php $this->_("Cpe.dns_zone");?></font>
-				</div>
-			</a>
-
-			<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>subdomains/">
-				<div class="shortcut">
-					<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/subdomains.png">
-					<br><font><?php $this->_("Cpe.subdomains");?></font>
-				</div>
-			</a>
-
-			<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('stats/', '', $_SERVER['REQUEST_URI']); ?>ssl/">
-				<div class="shortcut">
-					<img src="<?= str_replace('client/',"",$this->base_uri) ?>components/modules/cpanelextended/views/default/images/icons/ssl.png">
-					<br><font><?php $this->_("Cpe.ssl");?></font>
-				</div>
-			</a>
-
-		</div>
-	</div>
-</div>
-
-<div id="client_services_manage" class="panel panel-blesta content_section">
-	<div class="panel-heading">
 		<h3 class="panel-title"><?php $this->_('Cpe.titles.stats'); ?></h3>
 	</div>
 	<div class="panel_content">
@@ -152,7 +86,7 @@
 					</thead>
 					<tbody>
 					<?php
-					$keys = array("domain", "user", "email", "ip", "plan", "theme", "maxftp", "maxpop", "maxsql", "maxsub", "maxparked", "maxaddons", "startdate");
+					$keys = array("domain", "user", "plan", "maxftp", "maxpop", "maxsql", "maxsub", "maxparked", "maxaddons");
 					foreach ($keys as $i => $key) : if (isset($this->stats->account_info->acct[0]->{$key})): ?>
 							<tr>
 								<td><?php $this->_("Cpe.tab_client_stats.info." . $key);?></td>

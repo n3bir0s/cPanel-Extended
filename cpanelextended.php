@@ -13,7 +13,7 @@ class cpanelextended extends Module {
 	/**
 	 * @var string The version of this module
 	 */
-	private static $version = "3.0.4";
+	private static $version = "4.0.0";
 	/**
 	 * @var string The authors of this module
 	 */
@@ -82,17 +82,25 @@ class cpanelextended extends Module {
 	 */
 	public function getClientTabs($package = null) {
 		return array(
+			'dashboard' => array(
+				'name' => Language::_("Cpe.dashboard", true),
+				'icon' => "fa fa-dashboard"
+			),
+			'details' => array(
+				'name' => Language::_("Cpe.details", true),
+				'icon' => "fa fa-info-circle"
+			),
 			'stats' => array(
 				'name' => Language::_("Cpe.stats", true),
-				'icon' => "fa fa-bar-chart-o"
+				'icon' => "fa fa-pie-chart"
 			),
-			'changePass' => array(
-				'name' => Language::_("Cpe.button.changepassword", true),
+			'changepass' => array(
+				'name' => Language::_("Cpe.changepass", true),
 				'icon' => "fa fa-key"
 			),
 			"ftpaccounts" => array(
 				'name' => Language::_("Cpe.ftp", true),
-				'icon' => "fa fa-edit"
+				'icon' => "fa fa-users"
 			),
 			"webdisk" => array(
 				'name' => Language::_("Cpe.webdisk", true),
@@ -102,11 +110,15 @@ class cpanelextended extends Module {
 				'name' => Language::_("Cpe.databases", true),
 				'icon' => "fa fa-database"
 			),
+			"remotedatabase" => array(
+				'name' => Language::_("Cpe.remotedatabase", true),
+				'icon' => "fa fa-database"
+			),
 			"emails" => array(
 				'name' => Language::_("Cpe.emails", true),
 				'icon' => "fa fa-envelope"
 			),
-			"emailForwarder" => array(
+			"emailforwarder" => array(
 				'name' => Language::_("Cpe.emailforwarder", true),
 				'icon' => "fa fa-share"
 			),
@@ -129,6 +141,10 @@ class cpanelextended extends Module {
 			"cron" => array(
 				'name' => Language::_("Cpe.cron", true),
 				'icon' => "fa fa-clock-o"
+			),
+			"ssh" => array(
+				'name' => Language::_("Cpe.ssh", true),
+				'icon' => "fa fa-terminal"
 			),
 			"ssl" => array(
 				'name' => Language::_("Cpe.ssl", true),
@@ -1257,6 +1273,7 @@ class cpanelextended extends Module {
 		$this->view           = new View("client_service_info", "default");
 		$this->view->base_uri = $this->base_uri;
 		$this->view->setDefaultView("components" . DS . "modules" . DS . "cpanelextended" . DS);
+		$this->uri  					= $this->base_uri . "services/manage/" . $service->id . "/";
 		// Load the helpers required for this view
 		Loader::loadHelpers($this, array(
 			"Form",
@@ -1265,6 +1282,7 @@ class cpanelextended extends Module {
 		$this->view->set("module_row", $row);
 		$this->view->set("package", $package);
 		$this->view->set("service", $service);
+		$this->view->set("service_uri", $this->uri);
 		$this->view->set("service_fields", $this->serviceFieldsToObject($service->fields));
 		return $this->view->fetch();
 	}
@@ -1494,6 +1512,52 @@ class cpanelextended extends Module {
 		return $this->view;
 	}
 	/**
+	 * Client Dashboard tab
+	 *
+	 * @param stdClass $package A stdClass object representing the current package
+	 * @param stdClass $service A stdClass object representing the current service
+	 * @param array $get Any GET parameters
+	 * @param array $post Any POST parameters
+	 * @param array $files Any FILES parameters
+	 * @return string The string representing the contents of this tab
+	 */
+	public function dashboard($package, $service, array $vars = null, array $post = null, array $files = null) {
+		$row        = $this->getModuleRow();
+		$fields     = $this->serviceFieldsToObject($service->fields);
+		$this->vars = $this->getPageVars($vars);
+		$this->prepareView("dashboard");
+		$stats             = $this->getStats($package, $service);
+		$this->view->stats = $stats;
+		$this->view->set("fields", $fields);
+		$this->view->set("stats", $stats);
+		$this->view->set("server", $row->meta->host_name);
+		$this->view->set("nameservers", $row->meta->name_servers);
+		return $this->view->fetch();
+	}
+	/**
+	 * Client Details tab
+	 *
+	 * @param stdClass $package A stdClass object representing the current package
+	 * @param stdClass $service A stdClass object representing the current service
+	 * @param array $get Any GET parameters
+	 * @param array $post Any POST parameters
+	 * @param array $files Any FILES parameters
+	 * @return string The string representing the contents of this tab
+	 */
+	public function details($package, $service, array $vars = null, array $post = null, array $files = null) {
+		$row        = $this->getModuleRow();
+		$fields     = $this->serviceFieldsToObject($service->fields);
+		$this->vars = $this->getPageVars($vars);
+		$this->prepareView("details");
+		$stats             = $this->getStats($package, $service);
+		$this->view->stats = $stats;
+		$this->view->set("fields", $fields);
+		$this->view->set("stats", $stats);
+		$this->view->set("server", $row->meta->host_name);
+		$this->view->set("nameservers", $row->meta->name_servers);
+		return $this->view->fetch();
+	}
+	/**
 	 * Client Statistics tab (bandwidth/disk usage)
 	 *
 	 * @param stdClass $package A stdClass object representing the current package
@@ -1580,7 +1644,7 @@ class cpanelextended extends Module {
 	 * @param array $files Any FILES parameters
 	 * @return string The string representing the contents of this tab
 	 */
-	public function changePass($package, $service, array $get = null, array $post = null, array $files = null) {
+	public function changepass($package, $service, array $get = null, array $post = null, array $files = null) {
 		$row        = $this->getModuleRow();
 		$fields     = $this->serviceFieldsToObject($service->fields);
 		$api        = $this->getApiByMeta($row->meta, $fields);
@@ -1726,7 +1790,7 @@ class cpanelextended extends Module {
 	 * @param array $files Any FILES parameters
 	 * @return string The string representing the contents of this tab
 	 */
-	public function emailForwarder($package, $service, array $get = null, array $post = null, array $files = null) {
+	public function emailforwarder($package, $service, array $get = null, array $post = null, array $files = null) {
 		global $out;
 		//Add Forwarder
 		if(isset($post['email']) && isset($post['fwdemail'])) {
@@ -1770,7 +1834,7 @@ class cpanelextended extends Module {
 		$this->log($row->meta->host_name . "|sendApi2Request", serialize($params), "input", true);
 		//Parse Response
 		$response = $this->parseResponse($api->sendApi2Request("Email", "listforwards", $params));
-		$this->prepareView("emailForwarder");
+		$this->prepareView("emailforwarder");
 		$this->view->set("response", $response);
 		$this->view->set("row", $row);
 		$this->view->set("fields", $fields);
@@ -1874,6 +1938,15 @@ class cpanelextended extends Module {
 			return $api->getResultMessage();
 		}
 	}
+	/**
+	 * Manage Databases
+	 *
+	 * @param type $package
+	 * @param type $service
+	 * @param array $vars
+	 *
+	 * @return string
+	 */
 	public function databases($package, $service, array $vars = array(), array $post = array()) {
 		$row        = $this->getModuleRow();
 		$fields     = $this->serviceFieldsToObject($service->fields);
@@ -1978,6 +2051,48 @@ class cpanelextended extends Module {
 			//$this->view->uri = $this->uri;
 			$this->view->dboptions   = $this->DataStructure->create("Array")->numericToKey($this->view->databases->cpanelresult->data, "db", "db");
 			$this->view->useroptions = $this->DataStructure->create("Array")->numericToKey($this->view->users->cpanelresult->data, "user", "user");
+			return $this->view->fetch();
+		} else {
+			return $api->getResultMessage();
+		}
+	}
+	/**
+	 * Manage Remote MySQL
+	 *
+	 * @param type $package
+	 * @param type $service
+	 * @param array $vars
+	 *
+	 * @return string
+	 */
+	public function remotedatabase($package, $service, array $vars = array(), array $post = array()) {
+		$row        = $this->getModuleRow();
+		$fields     = $this->serviceFieldsToObject($service->fields);
+		$api        = $this->getApiByMeta($row->meta, $fields);
+		$vars       = $this->getPageVars($vars);
+		$this->vars = $vars;
+		$this->uri  = $this->base_uri . "services/manage/" . $vars->serviceid . "/" . $vars->pagename . '/';
+
+		//Add Host
+		if(!empty($post['addhost']) && count(explode('.', $post['addhost'])) > 2){
+			$params         = array(
+				'host' => $post['addhost']
+			);
+			$this->log($row->meta->host_name . "|sendApi2Request", serialize($params), "input", true);
+			$response = $this->parseResponse($api->sendApi2Request("MysqlFE", "authorizehost", $params));
+		}
+
+		//Remove Host
+		if(!empty($_GET['delhost'])){
+			$params         = array(
+				'host' => $_GET['delhost']
+			);
+			$this->log($row->meta->host_name . "|sendApi2Request", serialize($params), "input", true);
+			$response = $this->parseResponse($api->sendApi2Request("MysqlFE", "deauthorizehost", $params));
+		}
+		if($api->sendApi2Request("MysqlFE", "listhosts")->isSuccess()) {
+			$this->prepareView("remotedatabase", compact("fields"));
+			$this->view->hosts   = $api->getResponse();
 			return $this->view->fetch();
 		} else {
 			return $api->getResultMessage();
@@ -2501,6 +2616,48 @@ class cpanelextended extends Module {
 		} else {
 			return $api->getResultMessage();
 		}
+	}
+	/**
+	 * Manage SSH Access
+	 *
+	 * @param type $package
+	 * @param type $service
+	 * @param array $vars
+	 *
+	 * @return string
+	 */
+	public function ssh($package, $service, array $vars = array(), array $post = array()) {
+		$row        = $this->getModuleRow();
+		$fields     = $this->serviceFieldsToObject($service->fields);
+		$api        = $this->getApiByMeta($row->meta, $fields);
+		$vars       = $this->getPageVars($vars);
+		$this->vars = $vars;
+		$this->uri  = $this->base_uri . "services/manage/" . $vars->serviceid . "/" . $vars->pagename . '/';
+
+		//Authorize Key
+		if(!empty($post['keyfiles'])){
+			$params         = array(
+				'key' => $post['keyfiles'],
+				'action' => 'authorize'
+			);
+			$this->log($row->meta->host_name . "|sendApi2Request", serialize($params), "input", true);
+			$response = $this->parseResponse($api->sendApi2Request("SSH", "authkey", $params));
+		}
+
+		//Import Key
+		if(!empty($post['keyname']) && !empty($post['keypassphrase']) && !empty($post['keyfile'])){
+			$params         = array(
+				'key' => $post['keyfile'],
+				'name' => $post['keyname'],
+				'pass' => $post['keypassphrase']
+			);
+			$this->log($row->meta->host_name . "|sendApi2Request", serialize($params), "input", true);
+			$response = $this->parseResponse($api->sendApi2Request("SSH", "importkey", $params));
+		}
+
+		$this->prepareView("ssh", compact("fields"));
+		$this->view->hosts   = $api->getResponse();
+		return $this->view->fetch();
 	}
 	/**
 	 * SSL
