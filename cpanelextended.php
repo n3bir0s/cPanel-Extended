@@ -621,16 +621,6 @@ class cpanelextended extends Module {
 						)
 					),
 					'message' => Language::_("Cpe.!error.cpanel_domain.format", true)
-				),
-				'test' => array(
-					'rule' => array(
-						"substr_compare",
-						"test",
-						0,
-						4,
-						true
-					),
-					'message' => Language::_("Cpe.!error.cpanel_domain.test", true)
 				)
 			),
 			'cpanel_username' => array(
@@ -641,14 +631,6 @@ class cpanelextended extends Module {
 						"/^[a-z]([a-z0-9])*$/i"
 					),
 					'message' => Language::_("Cpe.!error.cpanel_username.format", true)
-				),
-				'test' => array(
-					'if_set' => true,
-					'rule' => array(
-						"matches",
-						"/^(?!test)/"
-					),
-					'message' => Language::_("Cpe.!error.cpanel_username.test", true)
 				),
 				'length' => array(
 					'if_set' => true,
@@ -737,6 +719,9 @@ class cpanelextended extends Module {
 				$username .= substr($pool, mt_rand(0, $pool_size - 1), 1);
 			}
 			$length = strlen($username);
+		}
+		if(strpos($username,'test') !== false){
+			$username = 'u'.rand(00, 99).$username;
 		}
 		return substr($username, 0, min($length, 8));
 	}
