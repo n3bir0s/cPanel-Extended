@@ -69,9 +69,7 @@ class cpanelextended extends Module {
 	 * @return array An array of tabs in the format of method => title. Example: array('methodName' => "Title", 'methodName2' => "Title2")
 	 */
 	public function getAdminTabs($package) {
-		return array(
-		//'tabStats' => Language::_("Cpe.tab_stats", true)
-			);
+		return array();
 	}
 	/**
 	 * Returns all tabs to display to a client when managing a service whose
@@ -640,15 +638,6 @@ class cpanelextended extends Module {
 						8
 					),
 					'message' => Language::_("Cpe.!error.cpanel_username.length", true)
-				),
-				'license_valid' => array(
-					'rule' => array(
-						array(
-							$this,
-							"validateLicenseKey"
-						)
-					),
-					'message' => null
 				)
 			),
 			'cpanel_password' => array(
@@ -679,7 +668,7 @@ class cpanelextended extends Module {
 				unset($rules['cpanel_password']);
 			// Validate domain if given
 			$rules['cpanel_domain']['format']['if_set'] = true;
-			$rules['cpanel_domain']['test']['if_set']   = true;
+
 		}
 		$this->Input->setRules($rules);
 		return $this->Input->validates($vars);
@@ -721,7 +710,9 @@ class cpanelextended extends Module {
 			$length = strlen($username);
 		}
 		if(strpos($username,'test') !== false){
-			$username = 'u'.rand(00, 99).$username;
+			$username = 'u'.$username;
+		} else {
+			$username = 'u'.explode(".", $host_name)[1].$username;
 		}
 		return substr($username, 0, min($length, 8));
 	}
@@ -1148,15 +1139,9 @@ class cpanelextended extends Module {
 	 */
 	public function getEmailTags() {
 		return array(
-			'module' => array(
-				"*"
-			),
-			'package' => array(
-				"*"
-			),
-			'service' => array(
-				"*"
-			)
+			'module' => array('host_name', 'name_servers'),
+			'package' => array('type', 'package', 'acl'),
+			'service' => array('cpanel_username', 'cpanel_password', 'cpanel_domain')
 		);
 	}
 	/**
@@ -2789,7 +2774,8 @@ class cpanelextended extends Module {
 		$api        = $this->getApiByMeta($row->meta, $fields);
 		$this->vars = $this->getPageVars($vars);
 		//Import the Softaculous API
-		include('api/installapi.php');
+		Loader::load(dirname(__FILE__) . DS . "api" . DS . "installapi.php");
+		//include('api/installapi.php');
 		if(isset($_POST['soft']) && isset($_POST['softdomain']) && isset($_POST['softdb']) && isset($_POST['dbusername']) && isset($_POST['dbuserpass']) && isset($_POST['admin_username']) && isset($_POST['admin_pass']) && isset($_POST['admin_email']) && isset($_POST['language']) && isset($_POST['site_name']) && isset($_POST['site_desc'])) {
 			@set_time_limit(100);
 			$new                         = new Soft_Install();
