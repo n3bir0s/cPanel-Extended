@@ -93,9 +93,53 @@
 								<td><?php $this->Html->_($this->stats->account_info->acct[0]->{$key});?></td>
 							</tr>
 					<?php endif; endforeach; ?>
-					</tbody>
-				</table>
+
+			<?php
+			$i = 0;
+			foreach ($stats_v as $key => $value) {
+			  if($stats_v[$key]['value'] !== null && $stats_v[$key]['max'] == null) {
+			           if($i == 0){
+			?>
+			            <?php
+			            $num = 1;
+			            if(isset ($name_servers) && count($name_servers) > 0){
+			            foreach ($name_servers as $nmkey => $nmvalue) {
+			            ?>
+			            <tr>
+			                <td><?php $this->_("Cpe.label.nameservers");echo " - ".$num; ?></td>
+			                <td><?php $this->Html->_($name_servers[$nmkey]);?></td>
+			            </tr>
+			            <?php $num++;} } ?>
+			     <?php } ?>
+			            <tr>
+			                <td><?php $this->Html->_($stats_v[$key]['name']);?></td>
+			                <td><?php $this->Html->_($stats_v[$key]['value']);?></td>
+			            </tr>
+							<?php
+			                        if($i == 5){
+						?>
+			        </tbody>
+			    </table>
 			</div>
+
+			<hr />
+
+			<?php
+			  }
+			  } else if($stats_v[$key]['value'] == null && $stats_v[$key]['max'] !== null) {
+			?>
+			<p><strong><?php $this->Html->_($stats_v[$key]['name']);?>: <span class="badge"><?php $this->Html->_($stats_v[$key]['count']);?> / <?php $this->Html->_($stats_v[$key]['max']);?></span></strong></p>
+			<div class="progress">
+			    <div class="progress-bar progress-bar-striped active <?php $this->Html->_($stats_v[$key]['class']);?>" role="progressbar" aria-valuenow="<?php $this->Html->_($stats_v[$key]['percent']);?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php $this->Html->_($stats_v[$key]['percent']);?>%;">
+			    </div>
+			</div>
+			<?php
+
+			  }
+			  $i++;
+			}
+
+			?>
 
 <script>
 /**** Disk Usage Gauge ****/

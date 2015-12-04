@@ -18,6 +18,18 @@ $lang['Cpe.ttl.address'] = "Address";
 $lang['Cpe.titles.shorcuts'] = 'Quick Shortcuts';
 $lang['Cpe.titles.preview'] = 'Preview';
 $lang['Cpe.softaculous'] = "Softaculous";
+$lang['Cpe.softaculous.installations'] = "Installations";
+$lang['Cpe.softaculous.backups'] = "Backups";
+$lang['Cpe.softaculous.install_new_app'] = "Install New App";
+$lang['Cpe.softaculous.url'] = "URL";
+$lang['Cpe.softaculous.site_database'] = "Site Database";
+$lang['Cpe.softaculous.version'] = "Version";
+$lang['Cpe.softaculous.options'] = "Options";
+$lang['Cpe.softaculous.backup'] = "Backup";
+$lang['Cpe.softaculous.upgrade'] = "Upgrade";
+$lang['Cpe.softaculous.delete'] = "Delete";
+$lang['Cpe.softaculous.restore'] = "Restore";
+$lang['Cpe.softaculous.file_name'] = "File Name";
 $lang['Cpe.softaculous.app'] = "App";
 $lang['Cpe.softaculous.database_user'] = "Database User";
 $lang['Cpe.softaculous.database_pass'] = "Database Password";
@@ -31,7 +43,6 @@ $lang['Cpe.softaculous.install'] = "Install";
 $lang['Cpe.softaculous.installing'] = "Installing";
 $lang['Cpe.softaculous.features'] = "Features";
 $lang['Cpe.softaculous.installed_succeful'] = "Installed Successful";
-$lang['Cpe.webdisk'] = "WebDisk";
 $lang['Cpe.webdisk.add'] = "Add WebDisk";
 $lang['Cpe.description.webdisk'] = "Create a Web Disk account to manage, navigate, upload, and download the files on your web server. Web Disks are relative to your account’s home directory.";
 $lang['Cpe.webdisk.perms'] = "Permissions";
@@ -44,6 +55,8 @@ $lang['Cpe.details'] = "Details";
 $lang['Cpe.stats'] = "Statistics";
 $lang['Cpe.changepass'] = "Change Password";
 $lang['Cpe.ftp'] = "FTP Accounts";
+$lang['Cpe.webdisk'] = "WebDisk";
+$lang['Cpe.backups'] = "Backups";
 $lang['Cpe.databases'] = "Databases";
 $lang['Cpe.remotedatabase'] = "Remote MySQL";
 $lang['Cpe.emails'] = "E-Mails";
@@ -53,11 +66,11 @@ $lang['Cpe.subdomains'] = "Subdomains";
 $lang['Cpe.parkeddomains'] = "Parked Domains";
 $lang['Cpe.addondomains'] = "Addon Domains";
 $lang['Cpe.cron'] = "Cron Jobs";
+$lang['Cpe.blockip'] = "Block IP";
 $lang['Cpe.ssh'] = "SSH Access";
 $lang['Cpe.ssl'] = "SSL Management";
 $lang['Cpe.loginto'] = "Switch";
 $lang['Cpe.dns_zone'] = "DNS Zone Editor";
-
 
 // Section titles
 $lang['Cpe.titles.stats'] = "Statistics For The Account";
@@ -74,6 +87,7 @@ $lang['Cpe.titles.loginto']   = "Switch";
 // Section descriptions
 $lang['Cpe.description.ssh'] = "SSH, or Secure Shell, is a protocol used to securely log onto remote systems. It is the most common way to access remote Linux and Unix-like servers, such as VPS instances.";
 $lang['Cpe.description.ftp'] = "FTP accounts allow you to access your website's files through a protocol called FTP. You will need a third-party FTP program to access your files. You can log into via FTP by entering.";
+$lang['Cpe.description.backups'] = "Download a zipped copy of your entire site or a part of your site that you can save to your computer. When you backup your website, you have an extra copy of your information in case something happens to your host.";
 $lang['Cpe.description.databases'] = "MySQL Databases allow you to store lots of information in an easy to access manner. The databases themselves are not easily read by humans. MySQL databases are required by many web applications including some bulletin boards, content management systems, and others. To use a database, you'll need to create it. Only MySQL Users (different than mail or other users) that have privileges to access a database can read from or write to that database.";
 $lang['Cpe.description.emails'] = "In this area you can manage the email accounts associated with your domains.";
 $lang['Cpe.description.emailforwarders'] = "Send a copy of any incoming email from one address to another. For example, forward joe@example.com to joseph@example.com so that you only have one inbox to check. ";
@@ -83,11 +97,11 @@ Subdomains are relative to your account's home directory.";
 $lang['Cpe.description.addondomains'] = "An addon domain allows visitors to reach a subdomain of your site by typing the addon domain's URL into a browser. This means that you can host additional domains from your account, if allowed by your hosting provider. Addon Domains are relative to your account's home directory.";
 $lang['Cpe.description.parkeddomains'] = "Parked Domains (Domain pointers) allow you to 'point' or 'park' additional domain names to your existing hosting account. This will allow users to also reach your website when entering the 'parked' or 'pointed' domain into their browsers.";
 $lang['Cpe.description.cron'] = "Cron jobs allow you to automate certain commands or scripts on your site. You can set a command or script to run at a specific time every day, week, etc. For example, you could set a cron job to delete temporary files every week to free up disk space.<br><br><strong style=\"color: red;\">Warning:</strong> You need to have a good knowledge of Linux commands before you can use cron jobs effectively. Check your script with your hosting administrator before adding a cron job.";
+$lang['Cpe.description.blockip'] = "This feature allows you to block a range of IP addresses or a single IP address so that it can access your site.";
 $lang['Cpe.description.sslkeys'] = "SSL Certificates have a key pair: a public and a private key. These keys work together to establish an encrypted connection. You can generate the secure key, or you can import the private key.";
 $lang['Cpe.description.sslcsr'] = "Certificate Signing Request is a message sent from an applicant to a certificate authority in order to apply for a digital identity certificate. Before you can order your SSL Certificates, you must first generate a CSR (Certificate Signing Request) on your server.";
 $lang['Cpe.description.sslcrt'] = "For SSL to work a valid signed SSL certificate is required. The certificate contains subject, which is the identity of the certificate/website owner. You can generate the certificate key, or you can import them.";
 $lang['Cpe.description.dns_zone'] = "Create and edit zone records to control how DNS functions. For example, if you want a subdomain to point to another domain, add a new CNAME record.";
-
 
 // Section subtitles
 $lang['Cpe.subtitles.nameservers.pointip'] = "You can point your domain to: ";
@@ -251,6 +265,12 @@ $lang['Cpe.label.acl'] = "Access Control List (if Reseller)";
 $lang['Cpe.label.dedip'] = "Dedicated IP";
 $lang['Cpe.label.keysnotavlb'] = "Keys and Certificate are not available";
 $lang['Cpe.label.email'] = "Email";
+$lang['Cpe.label.generate_backup'] = "Generate Backup";
+$lang['Cpe.label.download'] = "Download";
+$lang['Cpe.label.no_results'] = "No Results";
+$lang['Cpe.label.destination'] = "Destination";
+$lang['Cpe.label.port'] = "Port";
+$lang['Cpe.label.add_new'] = "Add New";
 
 // Tooltip
 $lang['Cpe.tooltip.quota'] = "Provide a quota in megabytes, 0 means unlimited";
@@ -344,6 +364,9 @@ $lang['Cpe.th.command'] = "Command";
 $lang['Cpe.th.domain'] = "Domain";
 $lang['Cpe.th.expire'] = "Expire Date";
 $lang['Cpe.th.host'] = "Host";
+$lang['Cpe.th.options'] = "Options";
+$lang['Cpe.th.start_ip'] = "Start IP";
+$lang['Cpe.th.end_ip'] = "End IP";
 
 // Misc
 $lang['Cpe.misc.genpasswordtext'] = "Your generated password is: ";

@@ -320,7 +320,7 @@ class cPanelApi
 
         foreach($data as $key => $value)
         {
-            $args['arg-'.$argcount] = urlencode($value);
+            $args['arg-'.$argcount] = $value;
             $argcount++;
         }
 

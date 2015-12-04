@@ -68,6 +68,14 @@
 					</a>
 				</div>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
+					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>backups/">
+						<div class="icon-panel">
+							<img src="<?php echo $this->view_dir;?>images/icons/create_archive.png">
+							<span><?php $this->_("Cpe.backups");?></span>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<form method="post" id="file_manager" action="<?php echo $this->Html->safe(sprintf('https://%s:2083/login/', $server)); ?>" target="_blank">
 						<input type="hidden" name="user" value="<?php $this->Html->_($fields->cpanel_username); ?>">
 						<input type="hidden" name="pass" value="<?php $this->Html->_($fields->cpanel_password); ?>">
@@ -171,6 +179,14 @@
 					</a>
 				</div>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
+					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>ipblocker/">
+						<div class="icon-panel">
+							<img src="<?php echo $this->view_dir;?>images/icons/firewall.png">
+							<span><?php $this->_("Cpe.blockip");?></span>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>ssh/">
 						<div class="icon-panel">
 							<img src="<?php echo $this->view_dir;?>images/icons/console.png">
@@ -187,7 +203,7 @@
 					</a>
 				</div>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
-					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>softaculous/">
+					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>manageapps/">
 						<div class="icon-panel">
 							<img src="<?php echo $this->view_dir;?>images/icons/software_box.png">
 							<span><?php $this->_("Cpe.softaculous");?></span>

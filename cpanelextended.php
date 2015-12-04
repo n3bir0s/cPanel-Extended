@@ -13,7 +13,7 @@ class cpanelextended extends Module {
 	/**
 	 * @var string The version of this module
 	 */
-	private static $version = "4.0.0";
+	private static $version = "4.1.0";
 	/**
 	 * @var string The authors of this module
 	 */
@@ -104,6 +104,10 @@ class cpanelextended extends Module {
 				'name' => Language::_("Cpe.webdisk", true),
 				'icon' => "fa fa-hdd-o"
 			),
+			"backups" => array(
+				'name' => Language::_("Cpe.backups", true),
+				'icon' => "fa fa-upload"
+			),
 			"databases" => array(
 				'name' => Language::_("Cpe.databases", true),
 				'icon' => "fa fa-database"
@@ -140,6 +144,10 @@ class cpanelextended extends Module {
 				'name' => Language::_("Cpe.cron", true),
 				'icon' => "fa fa-clock-o"
 			),
+			"ipblocker" => array(
+				'name' => Language::_("Cpe.blockip", true),
+				'icon' => "fa fa-fire"
+			),
 			"ssh" => array(
 				'name' => Language::_("Cpe.ssh", true),
 				'icon' => "fa fa-terminal"
@@ -148,9 +156,9 @@ class cpanelextended extends Module {
 				'name' => Language::_("Cpe.ssl", true),
 				'icon' => "fa fa-lock"
 			),
-			"softaculous" => array(
+			"manageapps" => array(
 				'name' => Language::_("Cpe.softaculous", true),
-				'icon' => "fa fa-bolt"
+				'icon' => "fa fa-archive"
 			),
 			"loginto" => array(
 				'name' => Language::_("Cpe.loginto", true),
@@ -1538,12 +1546,37 @@ class cpanelextended extends Module {
 	 * @return string The string representing the contents of this tab
 	 */
 	public function stats($package, $service, array $vars = null, array $post = null, array $files = null) {
+		$row        = $this->getModuleRow();
+		$fields     = $this->serviceFieldsToObject($service->fields);
+		$api        = $this->getApiByMeta($row->meta, $fields);
+
 		$this->vars = $this->getPageVars($vars);
 		$this->prepareView("stats");
-		$stats             = $this->getStats($package, $service);
-		$this->view->stats = $stats;
-		//	$this->view->set("stats", $stats);
-		//	$this->view->set("user_type", $package->meta->type);
+		$stats             	= $this->getStats($package, $service);
+		$stats_v						= $api->sendApi2Request("StatsBar", "stat", array("display" => "hostname|dedicatedip|sharedip|hostingpackage|operatingsystem|cpanelversion|phpversion|diskusage|bandwidthusage|ftpaccounts|emailaccounts|sqldatabases|parkeddomains|addondomains|subdomains"))->getResponse();
+		$this->view->stats 	= $stats;
+
+    $user_stats = array();
+    foreach ($stats_v->cpanelresult->data as $key => $value) {
+        $user_stats[$stats_v->cpanelresult->data[$key]->name] = array(
+            "name" => isset($stats_v->cpanelresult->data[$key]->item) ? $stats_v->cpanelresult->data[$key]->item : null,
+            "max" => isset($stats_v->cpanelresult->data[$key]->max) ? $stats_v->cpanelresult->data[$key]->max : null,
+            "count" => isset($stats_v->cpanelresult->data[$key]->count) ? $stats_v->cpanelresult->data[$key]->count : null,
+            "value" => isset($stats_v->cpanelresult->data[$key]->value) ? $stats_v->cpanelresult->data[$key]->value : null,
+            "percent" => isset($stats_v->cpanelresult->data[$key]->percent) ? $stats_v->cpanelresult->data[$key]->percent : null,
+            "units" => isset($stats_v->cpanelresult->data[$key]->units) ? $stats_v->cpanelresult->data[$key]->units : null,
+        );
+        if (isset($stats_v->cpanelresult->data[$key]->percent) && $stats_v->cpanelresult->data[$key]->percent >= 75) {
+            $user_stats[$stats_v->cpanelresult->data[$key]->name]['class'] = "progress-bar-danger";
+        } else if (isset($stats_v->cpanelresult->data[$key]->percent) && $stats_v->cpanelresult->data[$key]->percent >= 50) {
+            $user_stats[$stats_v->cpanelresult->data[$key]->name]['class'] = "progress-bar-warning";
+        } else {
+            $user_stats[$stats_v->cpanelresult->data[$key]->name]['class'] = "";
+        }
+    }
+
+		$this->view->set("stats_v", $user_stats);
+		$this->view->set("name_servers", $row->meta->name_servers);
 		return $this->view->fetch();
 	}
 	/**
@@ -2588,6 +2621,128 @@ class cpanelextended extends Module {
 		}
 	}
 	/**
+	 * Manage Blocked IP's
+	 *
+	 * @param type $package
+	 * @param type $service
+	 * @param array $vars
+	 *
+	 * @return string
+	 */
+	public function ipblocker($package, $service, array $get = null, array $post = null, array $files = null) {
+		if (isset($get[2])) {
+			if ($get[2] === "addnew") {
+				if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+					$this->view = new View("backups", "default");
+					$this->view->setDefaultView("components" . DS . "modules" . DS . "cpanelextended" . DS);
+					$view_dir = str_replace('client/', '', $this->base_uri) . $this->view->view_path . 'views/' . $this->view->view . '/';
+					Loader::loadHelpers($this, array(
+						"Form",
+						"Html"
+					));
+					$fields = $this->serviceFieldsToObject($service->fields);
+					$row    = $this->getModuleRow();
+					$api    = $this->getApiByMeta($row->meta, $fields);
+
+					if(isset($post) && !empty($post)) {
+						if($post['ip'] !== "") {
+							Loader::loadModels($this, array(
+								"Services"
+							));
+							$add_new = $api->sendApi1Request("DenyIp", "adddenyip", $post);
+							$this->log($row->meta->host_name . "|Add New Denied IP", serialize("adddenyip"), "input", true);
+							if(isset($add_new->cpanelresult->error) && !empty($add_new->cpanelresult->error)) {
+								$error = array(
+									0 => array(
+										"result" => $add_new->cpanelresult->error
+									)
+								);
+								echo "<div class='alert alert-danger alert-dismissable'>
+												<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+												<p>{$error[0]['result']}</p>
+											</div>";
+							} else {
+								echo "<div class='alert alert-success alert-dismissable'>
+												<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+												<p>" . Language::_("Cpe.misc.success", true) . "</p>
+											</div>";
+							}
+						} else {
+							$error = array(
+								0 => array(
+									"result" => Language::_("Cpe.!error.api.internal", true)
+								)
+							);
+							echo "<div class='alert alert-danger alert-dismissable'>
+											<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+											<p>{$error[0]['result']}</p>
+										</div>";
+						}
+					} else {
+						$this->Form->create("", array(
+							'onsubmit' => 'return false',
+							'id' => 'addform',
+							'autocomplete' => "off"
+						));
+						echo " <script type='text/javascript' src='" . $view_dir . "javascript/main.js'></script>
+											<div class='modal-body'>
+											<div class='div_response'></div>";
+						echo '<div class="form-group">
+				   					<label>' . Language::_("Cpe.label.ipaddress", true) . '</label>
+				    				<input type="text" class="form-control" value="" id="ip" name="ip" placeholder="e.g: 192.168.0.1"></div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" name="cancel" class="btn btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> ' . Language::_("Cpe.label.close", true) . '</button>
+										<button type="button" class="btn btn-primary" name="add_new" id="addnewsubmit"><i class="fa fa-plus-circle"></i> ' . Language::_("Cpe.blockip", true) . '</button>
+									</div>
+									<script type="text/javascript">
+									    $(document).ready(function() {
+									        $("#addnewsubmit").click(function () {
+									    var form = $("#addform").serialize();
+									    doAjaxPost("' . $this->base_uri . "services/manage/" . $service->id . "/ipblocker/addnew/?" . '"+ form, form);
+									        });
+									    });
+									</script>';
+						$this->Form->end();
+					}
+					exit();
+				}
+			}
+		} else {
+			$this->view = new View("ip_blocker", "default");
+			$this->view->base_uri = $this->base_uri;
+			Loader::loadHelpers($this, array("Form", "Html"));
+
+			$row        = $this->getModuleRow();
+			$fields     = $this->serviceFieldsToObject($service->fields);
+			$api        = $this->getApiByMeta($row->meta, $fields);
+
+			if (isset($post['delete_denyip'])) {
+				 if (!empty($post['ip'])) {
+						 $delete_email = $api->sendApi1Request("DenyIp", "deldenyip", $post);
+						 $this->log($row->meta->host_name . "|Delete Denied IP", serialize("deldenyip"), "input", true);
+				 } else {
+						 $error = array(
+								 0 => array(
+										 "result" => Language::_("tastycpanel.empty_invalid_values", true)
+								 )
+						 );
+						 $this->Input->setErrors($error[0]);
+				 }
+			}
+
+			$ipblocker_list = $api->sendApi2Request("DenyIp", "listdenyips")->getResponse();
+		 	$this->view->set("module_row", $row);
+			$this->view->set("service_fields", $fields);
+			$this->view->set("ipblocker_list", $ipblocker_list->cpanelresult->data);
+			$this->view->set("type", $package->meta->type);
+			$this->view->set("service_id", $service->id);
+
+			$this->view->setDefaultView("components" . DS . "modules" . DS . "cpanelextended" . DS);
+		 	return $customfiles . $this->view->fetch();
+		}
+	}
+	/**
 	 * Manage SSH Access
 	 *
 	 * @param type $package
@@ -2607,8 +2762,8 @@ class cpanelextended extends Module {
 		//Authorize Key
 		if(!empty($post['keyfiles'])){
 			$params         = array(
-				'key' => $post['keyfiles'],
-				'action' => 'authorize'
+				'key' 		=> $post['keyfiles'],
+				'action' 	=> 'authorize'
 			);
 			$this->log($row->meta->host_name . "|sendApi2Request", serialize($params), "input", true);
 			$response = $this->parseResponse($api->sendApi2Request("SSH", "authkey", $params));
@@ -2617,9 +2772,9 @@ class cpanelextended extends Module {
 		//Import Key
 		if(!empty($post['keyname']) && !empty($post['keypassphrase']) && !empty($post['keyfile'])){
 			$params         = array(
-				'key' => $post['keyfile'],
-				'name' => $post['keyname'],
-				'pass' => $post['keypassphrase']
+				'key' 	=> $post['keyfile'],
+				'name' 	=> $post['keyname'],
+				'pass' 	=> $post['keypassphrase']
 			);
 			$this->log($row->meta->host_name . "|sendApi2Request", serialize($params), "input", true);
 			$response = $this->parseResponse($api->sendApi2Request("SSH", "importkey", $params));
@@ -2731,11 +2886,8 @@ class cpanelextended extends Module {
 		$api3     = clone $api;
 		$api4     = clone $api;
 		$request1 = $api->sendApi2Request("SSL", "listkeys");
-		//$this->parseResponse($request1->getCleanResponse());
 		$request2 = $api3->sendApi2Request("SSL", "listcrts");
-		//$this->parseResponse($request2->getCleanResponse());
 		$request3 = $api4->sendApi2Request("SSL", "listcsrs");
-		//$this->parseResponse($request3->getCleanResponse());
 		if($request1->isSuccess() and $request2->isSuccess() and $request3->isSuccess() and !$this->Input->errors()) {
 			$domains['']                     = 'Select a domain';
 			$domains[$fields->cpanel_domain] = $fields->cpanel_domain;
@@ -2768,87 +2920,202 @@ class cpanelextended extends Module {
 	 * @param array $vars
 	 * @param array $post
 	 */
-	public function softaculous($package, $service, array $vars = array(), array $post = array()) {
-		$row        = $this->getModuleRow();
-		$fields     = $this->serviceFieldsToObject($service->fields);
-		$api        = $this->getApiByMeta($row->meta, $fields);
-		$this->vars = $this->getPageVars($vars);
-		//Import the Softaculous API
-		Loader::load(dirname(__FILE__) . DS . "api" . DS . "installapi.php");
-		//include('api/installapi.php');
-		if(isset($_POST['soft']) && isset($_POST['softdomain']) && isset($_POST['softdb']) && isset($_POST['dbusername']) && isset($_POST['dbuserpass']) && isset($_POST['admin_username']) && isset($_POST['admin_pass']) && isset($_POST['admin_email']) && isset($_POST['language']) && isset($_POST['site_name']) && isset($_POST['site_desc'])) {
-			@set_time_limit(100);
-			$new                         = new Soft_Install();
-			$new->login                  = 'https://' . urlencode($fields->cpanel_username) . ':' . urlencode($fields->cpanel_password) . '@' . $row->meta->host_name . ':2083/frontend/x3/softaculous/index.live.php';
-			$new->data['softdomain']     = $_POST['softdomain'];
-			$new->data['softdirectory']  = $_POST['softdirectory'];
-			$new->data['softdb']         = $_POST['softdb'];
-			$new->data['dbusername']     = $_POST['dbusername'];
-			$new->data['dbuserpass']     = $_POST['dbuserpass'];
-			$new->data['admin_username'] = $_POST['admin_username'];
-			$new->data['admin_pass']     = $_POST['admin_pass'];
-			$new->data['admin_email']    = $_POST['admin_email'];
-			$new->data['language']       = $_POST['language'];
-			$new->data['site_name']      = $_POST['site_name'];
-			$new->data['site_desc']      = $_POST['site_desc'];
-			$res                         = $new->install($_POST['soft']);
-			$response                    = str_replace('<html><head><META HTTP-EQUIV="refresh" CONTENT="2;URL=', "", $res);
-			$response                    = str_replace('">', "", $response);
-			$response                    = str_replace('</head><body></body></html>', "", $response);
-			/*
-			//Send Request over curl and get Token
-			$random_cookie = rand(000000, 999999);
+	public function manageapps($package, $service, array $get = null, array $post = null, array $files = null) {
+		if(isset($get[2])) {
+			if($get[2] === "installapps") {
+				if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+					$this->view = new View("manageapps_softaculous", "default");
+					$this->view->setDefaultView("components" . DS . "modules" . DS . "cpanelextended" . DS);
+					$view_dir = str_replace('client/', '', $this->base_uri) . $this->view->view_path . 'views/' . $this->view->view . '/';
+					Loader::loadHelpers($this, array(
+						"Form",
+						"Html"
+					));
 
-			$ch = curl_init();
-			$url = 'https://'.$row->meta->host_name.':2083/login/';
-			curl_setopt($ch, CURLOPT_URL, $url );
-			curl_setopt($ch, CURLOPT_HEADER, 0);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
-			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($ch, CURLOPT_POST, 1);
-			curl_setopt($ch, CURLOPT_COOKIEJAR, dirname(__FILE__).'/' . $random_cookie . '.txt');
-			curl_setopt($ch, CURLOPT_COOKIEFILE,  dirname(__FILE__).'/' . $random_cookie . '.txt');
-			curl_setopt($ch, CURLOPT_POSTFIELDS, array(
-			'user' => $fields->cpanel_username,
-			'pass' => $fields->cpanel_password,
-			'goto_uri' => $response,
+					$row    	= $this->getModuleRow();
+					$fields 	= $this->serviceFieldsToObject($service->fields);
+					$api  		= $this->getsoftaApi($package, $service, $row->meta->host_name, $fields->cpanel_username, $fields->cpanel_password);
+
+					if(isset($post) && !empty($post)) {
+						if($post['softdomain'] !== "" && $post['softdirectory'] !== "" && $post['admin_username'] !== "" && $post['admin_pass'] !== "" && $post['admin_email'] !== "" && $post['softdb'] !== "" && $post['dbusername'] !== "" && $post['dbuserpass'] !== "" && $post['language'] !== "" && $post['site_name'] !== "" && $post['site_desc'] !== "") {
+							Loader::loadModels($this, array(
+								"Services"
+							));
+							$install_script = $api->install($post['scriptid'], $post);
+							$res            = unserialize($install_script);
+							if(empty($res['error'])) {
+								echo "<div class='alert alert-success alert-dismissable'>
+												<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+												<p>" . Language::_("Cpe.misc.success", true) . "</p>
+											</div>";
+							} else {
+								foreach($res['error'] as $key => $value) {
+									echo "<div class='alert alert-danger alert-dismissable'>
+													<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+													<p>{$res['error'][$key]}</p>
+												</div>";
+								}
+							}
+						} else {
+							$error = array(
+								0 => array(
+									"result" => Language::_("Cpe.!error.api.internal", true)
+								)
+							);
+							echo "<div class='alert alert-danger alert-dismissable'>
+											<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+											<p>{$error[0]['result']}</p>
+										</div>";
+						}
+					} else {
+						$this->Form->create("", array(
+							'onsubmit' => 'return false',
+							'id' => 'addform',
+							'autocomplete' => "off"
+						));
+						echo "<script type='text/javascript' src='" . $view_dir . "javascript/main.js'></script>
+									<div class='modal-body'>
+									<div class='div_response'></div>";
+						echo '<div class="form-group">
+				   <label>' . Language::_("Cpe.softaculous.app", true) . '</label>
+				<select name="scriptid" id="scriptid" class="form-control">
+				' . $this->scriptsavailable($package, $service) . '
+				</select>
+				</div>
+				<div class="form-group">
+				   <label>' . Language::_("Cpe.label.domain", true) . '</label>
+				<select name="softdomain" id="softdomain" class="form-control">
+				' . $this->getAvailableDomains($package, $service) . '
+				</select>
+				</div>
+				<div class="form-group">
+				   <label>' . Language::_("Cpe.label.directory", true) . '</label>
+				    <input type="text" class="form-control" value="" id="softdirectory" name="softdirectory" placeholder=""></div>
+				<div class="form-group">
+				   <label>' . Language::_("Cpe.softaculous.admin_user", true) . '</label>
+				    <input type="text" class="form-control" value="" id="admin_username" name="admin_username" placeholder=""></div>
+				<div class="form-group">
+				   <label>' . Language::_("Cpe.softaculous.admin_pass", true) . '</label>
+				    <input type="password" class="form-control" value="" id="admin_pass" name="admin_pass" placeholder=""></div>
+				<div class="form-group">
+				   <label>' . Language::_("Cpe.softaculous.admin_email", true) . '</label>
+				    <input type="text" class="form-control" value="" id="admin_email" name="admin_email" placeholder=""></div>
+				<div class="form-group">
+				   <label>' . Language::_("Cpe.label.dbname", true) . '</label>
+				<div class="input-group">
+				  <span class="input-group-addon" id="dir_s">' . $fields->cpanel_username . '_</span>
+				    <input type="text" class="form-control" value="" id="softdb" name="softdb" placeholder=""></div>
+				</div>
+				<div class="form-group">
+				   <label>' . Language::_("Cpe.softaculous.database_user", true) . '</label>
+				<div class="input-group">
+				  <span class="input-group-addon" id="dir_s">' . $fields->cpanel_username . '_</span>
+				    <input type="text" class="form-control" value="" id="dbusername" name="dbusername" placeholder=""></div>
+				</div>
+				<div class="form-group">
+				   <label>' . Language::_("Cpe.softaculous.database_pass", true) . '</label>
+				    <input type="password" class="form-control" value="" id="dbuserpass" name="dbuserpass" placeholder=""></div>
+				<div class="form-group">
+				   <label>' . Language::_("Cpe.softaculous.site_name", true) . '</label>
+				    <input type="text" class="form-control" value="" id="site_name" name="site_name" placeholder=""></div>
+				<div class="form-group">
+				   <label>' . Language::_("Cpe.softaculous.site_desc", true) . '</label>
+				    <input type="text" class="form-control" value="" id="site_desc" name="site_desc" placeholder=""></div>
+				<div class="form-group">
+				   <label>' . Language::_("Cpe.softaculous.language", true) . '</label>
+				<select name="language" id="language" class="form-control">
+				<option value="en">English</option>
+				<option value="ar">Arabic</option>
+				<option value="bg_BG">Bulgarian</option>
+				<option value="ca">Catalan</option>
+				<option value="zh_CN">Chinese(Simplified)</option>
+				<option value="zh_TW">Chinese(Traditional)</option>
+				<option value="hr">Croatian</option>
+				<option value="cs_CZ">Czech</option>
+				<option value="da_DK">Danish</option>
+				<option value="nl_NL">Dutch</option>
+				<option value="fi">Finnish</option>
+				<option value="fr_FR">French</option>
+				<option value="de_DE">German</option>
+				<option value="el">Greek</option>
+				<option value="he_IL">Hebrew</option>
+				<option value="hu_HU">Hungarian</option>
+				<option value="id_ID">Indonesian</option>
+				<option value="it_IT">Italian</option>
+				<option value="ja">Japanese</option>
+				<option value="ko_KR">Korean</option>
+				<option value="nb_NO">Norwegian</option>
+				<option value="fa_IR">Persian</option>
+				<option value="pl_PL">Polish</option>
+				<option value="pt_PT">Portuguese</option>
+				<option value="pt_BR">Portuguese-BR</option>
+				<option value="ro_RO">Romanian</option>
+				<option value="ru_RU">Russian</option>
+				<option value="sl_SI">Slovenian</option>
+				<option value="es_ES">Spanish</option>
+				<option value="sv_SE">Swedish</option>
+				<option value="th">Thai</option>
+				<option value="tr_TR">Turkish</option>
+				<option value="uk">Ukrainian</option>
+				</select>
+				</div>
+
+				</div>
+				<div class="modal-footer">
+				<button type="button" name="cancel" class="btn btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> ' . Language::_("Cpe.label.close", true) . '</button>
+				<button type="button" class="btn btn-primary" name="add_new" id="addnewsubmit"><i class="fa fa-plus-circle"></i> ' . Language::_("Cpe.softaculous.install", true) . '</button>
+				</div>
+				<script type="text/javascript">
+				    $(document).ready(function() {
+				        $("#addnewsubmit").click(function () {
+				    var form = $("#addform").serialize();
+				    doAjaxPost("' . $this->base_uri . "services/manage/" . $service->id . "/manageapps/installapps/?" . '"+ form, form);
+				        });
+				    });
+				</script>';
+						$this->Form->end();
+					}
+					exit();
+				}
+			}
+		} else {
+			$this->view           = new View("manageapps_softaculous", "default");
+			$this->view->base_uri = $this->base_uri;
+			Loader::loadHelpers($this, array(
+				"Form",
+				"Html"
 			));
-			$result_redir = curl_exec($ch);
-			$result_redir = str_replace('<html><head><META HTTP-EQUIV="refresh" CONTENT="2;URL=',"",$result_redir);
-			$result_redir = str_replace('">',"",$result_redir);
-			$result_redir = str_replace('</head><body></body></html>',"",$result_redir);
-			$result_redir = 'https://'.$row->meta->host_name.':2083'.$result_redir;
-			//curl_close($ch);
-
-			//Send Request to Softaculous
-
-			$ch = curl_init();
-			$url = $result_redir;
-			curl_setopt($ch, CURLOPT_URL, $url );
-			curl_setopt($ch, CURLOPT_HEADER, 0);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
-			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($ch, CURLOPT_COOKIEJAR, dirname(__FILE__).'/' . $random_cookie . '.txt');
-			curl_setopt($ch, CURLOPT_COOKIEFILE,  dirname(__FILE__).'/' . $random_cookie . '.txt');
-			$result_exe = curl_exec($ch);
-			print_r($result_exe);
-			curl_close($ch);
-			*/
+			$row    = $this->getModuleRow();
+			$fields = $this->serviceFieldsToObject($service->fields);
+			$api    = $this->getsoftaApi($package, $service, $row->meta->host_name, $fields->cpanel_username, $fields->cpanel_password);
+			if(isset($post['submitremovebu'])) {
+				$remove_backup = $api->remove_backup($post['filename']);
+			} else if(isset($post['submitmakebu'])) {
+				$make_backup = $api->backup($post['installid']);
+			} else if(isset($post['submitrestorebu'])) {
+				$restore = $api->restore($post['filename']);
+			} else if(isset($post['submitdeleteinstall'])) {
+				$remove = $api->remove($post['installid']);
+			} else if(isset($post['submitupgrade'])) {
+				$upgrade = $api->upgrade($post['installid']);
+			}
+			$getallscripts  = $api->list_scripts();
+			$result_backups = $api->list_backups();
+			$installations  = $api->installations();
+			$this->view->set("result_backups", $result_backups);
+			$this->view->set("availabledomain", $this->getAvailableDomains($package, $service));
+			$this->view->set("availablescripts", $this->scriptsavailable($package, $service));
+			$this->view->set("user_type", $package->meta->type);
+			$this->view->set("module_row", $row);
+			$this->view->set("service_fields", $fields);
+			$this->view->set("installations", $installations);
+			$this->view->set("listscripts", $api->scripts);
+			$this->view->set("cpdomain", $fields->domain_name);
+			$this->view->set("cpusername", $fields->username);
+			$this->view->set("service_id", $service->id);
+			$this->view->setDefaultView("components" . DS . "modules" . DS . "cpanelextended" . DS);
+			return $customfiles . $this->view->fetch();
 		}
-		$this->prepareView("softaculous");
-		$this->view->set("res", $res);
-		$this->view->set("response", $response);
-		$this->view->set("resp", $resp);
-		$this->view->set("row", $row);
-		$this->view->set("fields", $fields);
-		$this->view->server    = $row;
-		$this->view->fields    = $fields;
-		$this->view->cpanelurl = $api->buildUrl();
-		return $this->view->fetch();
 	}
 	/**
 	 * WebDisk
@@ -2902,6 +3169,168 @@ class cpanelextended extends Module {
 		$this->view->fields    = $fields;
 		$this->view->cpanelurl = $api->buildUrl();
 		return $this->view->fetch();
+	}
+	/**
+	 * Allow you to manage and create your backups.
+	 *
+	 * @param type $package
+	 * @param type $service
+	 * @param array $vars
+	 * @param array $post
+	 */
+	public function backups($package, $service, array $get = null, array $post = null, array $files = null) {
+		if (isset($get[2])) {
+			if ($get[2] === "addnew") {
+				if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+					$this->view = new View("backups", "default");
+					$this->view->setDefaultView("components" . DS . "modules" . DS . "cpanelextended" . DS);
+					$view_dir = str_replace('client/', '', $this->base_uri) . $this->view->view_path . 'views/' . $this->view->view . '/';
+					Loader::loadHelpers($this, array(
+						"Form",
+						"Html"
+					));
+					$fields = $this->serviceFieldsToObject($service->fields);
+					$row    = $this->getModuleRow();
+					$api    = $this->getApiByMeta($row->meta, $fields);
+					if(isset($post) && !empty($post)) {
+						if($post['dest'] !== "") {
+							$input = array(
+								"dest" => $post['dest'],
+								"server" => $post['server'],
+								"user" => $post['user'],
+								"pass" => $post['pass'],
+								"email" => $post['email'],
+								"port" => $post['port'],
+								"rdir" => $post['rdir']
+							);
+							if($post['dest'] !== "homedir") {
+								if($post['server'] !== "" && $post['user'] !== "" && $post['pass'] !== "" && $post['port'] !== "" && $post['rdir'] !== "") {
+									Loader::loadModels($this, array(
+										"Services"
+									));
+									$add_new = $api->sendApi1Request("Fileman", "fullbackup", $input);
+									$this->log($row->meta->host_name . "|Generate New Backup", serialize("fullbackup"), "input", true);
+									echo "<div class='alert alert-success alert-dismissable' style='margin-top: 0px;'>
+																						<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+																						<p>" . Language::_("Cpe.misc.success", true) . "</p>
+																					</div>";
+								} else {
+									$error = array(
+										0 => array(
+											"result" => Language::_("Cpe.!error.api.internal", true)
+										)
+									);
+									echo "<div class='alert alert-danger alert-dismissable' style='margin-top: 0px;'>
+																											<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+																											<p>{$error[0]['result']}</p>
+																											</div>";
+								}
+							} else {
+								Loader::loadModels($this, array(
+									"Services"
+								));
+								$add_new = $api->sendApi1Request("Fileman", "fullbackup", $input);
+								$this->log($row->meta->host_name . "|Generate New Backup", serialize("fullbackup"), "input", true);
+								echo "<div class='alert alert-success alert-dismissable' style='margin-top: 0px;'>
+																					<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+																					<p>" . Language::_("Cpe.misc.success", true) . "</p>
+																					</div>";
+							}
+						} else {
+							$error = array(
+								0 => array(
+									"result" => Language::_("Cpe.!error.api.internal", true)
+								)
+							);
+							echo "<div class='alert alert-danger alert-dismissable' style='margin-top: 0px;'>
+																						<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+																						<p>{$error[0]['result']}</p>
+																					</div>";
+						}
+					} else {
+						$this->Form->create("", array(
+							'onsubmit' => 'return false',
+							'id' => 'addform',
+							'autocomplete' => "off"
+						));
+						echo "
+								<script type='text/javascript' src='" . $view_dir . "javascript/main.js'></script>
+								<div class='modal-body'>
+								<div class='div_response'></div>";
+						echo '<div class="form-group">
+								   <label>' . Language::_("Cpe.label.email", true) . '</label>
+								    <input type="email" class="form-control" value="" id="email" name="email" placeholder=""></div>
+								<div class="form-group">
+								   <label>' . Language::_("Cpe.label.destination", true) . '</label>
+								<select name="dest" id="dest" class="form-control">
+								                <option value="homedir" selected="selected">Home Directory</option>
+								                <option value="ftp">Remote FTP Server</option>
+								                <option value="passiveftp">Remote FTP Server (passive mode transfer):</option>
+								                <option value="scp">Secure Copy (SCP)</option>
+								</select>
+								</div>
+								<div id="access_data" style="display:none;">
+								<div class="form-group">
+								   <label>' . Language::_("Cpe.service_info.server", true) . '</label>
+								    <input type="text" class="form-control" value="" id="server" name="server" placeholder=""></div>
+								<div class="form-group">
+								   <label>' . Language::_("Cpe.label.username", true) . '</label>
+								    <input type="text" class="form-control" value="" id="user" name="user" placeholder=""></div>
+								<div class="form-group">
+								   <label>' . Language::_("Cpe.label.password", true) . '</label>
+								    <input type="password" class="form-control" value="" id="pass" name="pass" placeholder=""></div>
+								<div class="form-group">
+								   <label>' . Language::_("Cpe.label.port", true) . '</label>
+								    <input type="text" class="form-control" value="" id="port" name="port" placeholder=""></div>
+								<div class="form-group">
+								   <label>' . Language::_("Cpe.label.directory", true) . '</label>
+								    <input type="text" class="form-control" value="" id="rdir" name="rdir" placeholder=""></div>
+								</div>
+								</div>
+								<div class="modal-footer">
+								<button type="button" name="cancel" class="btn btn-default" data-dismiss="modal"><i class="fa fa-ban"></i> ' . Language::_("Cpe.label.close", true) . '</button>
+								<button type="button" class="btn btn-primary" name="add_new" id="addnewsubmit"><i class="fa fa-plus-circle"></i> ' . Language::_("Cpe.label.generate_backup", true) . '</button>
+								</div>
+
+								<script type="text/javascript">
+								    $(document).ready(function() {
+								        $("#addnewsubmit").click(function () {
+								    var form = $("#addform").serialize();
+								    doAjaxPost("' . $this->base_uri . "services/manage/" . $service->id . "/backups/addnew/?" . '"+ form, form);
+								        });
+								        $("#dest").change(function () {
+								        if($(this).val() !== "homedir"){
+								    $("#access_data").css("display","block");
+								    } else {
+								    $("#access_data").css("display","none");
+								    }
+								        });
+								    });
+								</script>';
+						$this->Form->end();
+					}
+					exit();
+				}
+			}
+		} else {
+			$this->view = new View("backups", "default");
+			$this->view->base_uri = $this->base_uri;
+			Loader::loadHelpers($this, array("Form", "Html"));
+
+			$fields	= $this->serviceFieldsToObject($service->fields);
+			$row		= $this->getModuleRow();
+			$api		= $this->getApiByMeta($row->meta, $fields);
+
+			$backups_list = $api->sendApi2Request("Backups", "listfullbackups")->getResponse();
+			$this->view->set("module_row", $row);
+			$this->view->set("service_fields", $fields);
+			$this->view->set("backups_list", $backups_list->cpanelresult->data);
+			$this->view->set("type", $package->meta->type);
+			$this->view->set("service_id", $service->id);
+
+			$this->view->setDefaultView("components" . DS . "modules" . DS . "cpanelextended" . DS);
+			return $this->view->fetch();
+		}
 	}
 	/**
 	 * Allow you to login to one of the services: cPanel, phpMyAdmin, webMail
@@ -3020,13 +3449,55 @@ class cpanelextended extends Module {
 		}
 	}
 	/**
-	 * Checks whether license key is valid one
-	 * !! Removed since applied license rights to Blesta.
+	 * Connects to the Softaculous API
 	 *
-	 * @return boolean True or False
+	 * @return object Softaculous API
 	 */
-	public function validateLicenseKey() {
-		return true;
+	private function getsoftaApi($package, $service = NULL, $host, $user, $pass, $apitype = NULL) {
+		Loader::load(dirname(__FILE__) . DS . "api" . DS . "softaculous_api.php");
+		$api 		= new Softaculous_API();
+		$stats 	= $this->getStats($package, $service);
+		if ($apitype === "addService") {
+				$api->login = "https://{$user}:{$pass}@{$host}:2083/frontend/".$stats->account_info->acct[0]->theme."/softaculous/index.live.php";
+		} else {
+				$api->login = "https://{$user}:{$pass}@{$host}:2083/frontend/".$stats->account_info->acct[0]->theme."/softaculous/index.live.php";
+		}
+		return $api;
+	}
+	/**
+	 * Get all Avaialables Domains in cPanel
+	 *
+	 * @return array Available Domains
+	 */
+	private function getAvailableDomains($package, $service) {
+		$row        = $this->getModuleRow();
+		$fields     = $this->serviceFieldsToObject($service->fields);
+		$api        = $this->getApiByMeta($row->meta, $fields);
+
+		$get_domains = $api->sendApi2Request("Email", "listmaildomains")->getResponse();
+		$select_option = "";
+		foreach ($get_domains->cpanelresult->data as $key => $value) {
+				$select_option .= "<option value='{$get_domains->cpanelresult->data[$key]->domain}'>{$get_domains->cpanelresult->data[$key]->domain}</option>";
+		}
+		return $select_option;
+	}
+	/**
+	 * Get all available scripts in Softaculous
+	 *
+	 * @return array Available Domains
+	 */
+	 private function scriptsavailable($package, $service) {
+		$row = $this->getModuleRow($package->module_row);
+		$service_fields = $this->serviceFieldsToObject($service->fields);
+		$api = $this->getsoftaApi($package, $service, $row->meta->hostname, $service_fields->username, $service_fields->password);
+
+		$api->list_scripts();
+		$result = $api->scripts;
+		$select_option = "";
+		foreach ($result as $key => $value) {
+				$select_option .= "<option value='{$result[$key]['sid']}'>{$result[$key]['name']}</option>";
+		}
+		return $select_option;
 	}
 	/**
 	 * Verifies whether or not the givne str is a URL

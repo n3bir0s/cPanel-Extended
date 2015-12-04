@@ -390,7 +390,6 @@ span.error {
 	margin-top: 0px !important;
 	margin-bottom: 0px !important;
 }
-
 .row.no-space .col-lg-2, .row.no-space .col-md-3, .row.no-space .col-sm-3, .row.no-space .col-xs-6{
 	padding: 0 10px 0 0;
 }
@@ -406,6 +405,7 @@ span.error {
 	cursor: pointer;
 	background: #FAFAFA;
 	border: 1px solid #E0E0E0;
+	margin: 3px 0 3px 0;
 }
 .expand_details .icon-panel{
 	margin-bottom: 0px !important;
@@ -421,8 +421,8 @@ span.error {
 }
 .section-line{
 	margin-top: 0px;
-	margin-bottom: 15px;
+	margin-bottom: 10px;
 }
-.row.no-space .col-md-2 a, .row.no-space .col-md-2 a:hover{
+.row.no-space .col-sm-3 a, .row.no-space .col-sm-3 a:hover, .row.no-space .col-md-3 a, .row.no-space .col-md-3 a:hover, .row.no-space .col-xs-6 a, .row.no-space .col-xs-6 a:hover, .row.no-space .col-lg-2 a, .row.no-space .col-lg-2 a:hover{
 	text-decoration: none !important;
 }

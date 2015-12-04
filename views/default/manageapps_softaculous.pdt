@@ -1,0 +1,194 @@
+<?php
+//  CyanDark Incorporated
+//  Copyright (c) 2012-2016 CyanDark, Inc. All Rights Reserved.
+//
+//  This software is furnished under a license and may be used and copied
+//  only  in  accordance  with  the  terms  of such  license and with the
+//  inclusion of the above copyright notice.  This software  or any other
+//  copies thereof may not be provided or otherwise made available to any
+//  other person.  No title to and  ownership of the  software is  hereby
+//  transferred.
+//
+//  You may not reverse  engineer, decompile, defeat  license  encryption
+//  mechanisms, or  disassemble this software product or software product
+//  license. CyanDark may terminate this license if you don't comply with
+//  any of the  terms  and conditions  set  forth in our end user license
+//  agreement (EULA).  In such event, licensee  agrees to return licensor
+//  or  destroy all copies  of  software  upon termination of the license
+
+echo $this->commonHeader;
+?>
+
+<script type="text/javascript" src="<?php echo $this->view_dir;?>javascript/main.js"></script>
+
+<h4><?php $this->_('Cpe.softaculous'); ?></h4>
+<p><?php $this->_('Cpe.softaculous.description'); ?></p>
+<div class="clearfix"></div>
+
+<div role="tabpanel" style="margin-top: 10px;">
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#apps_area" aria-controls="apps_area" role="tab" data-toggle="tab"><?php $this->_("Cpe.softaculous.installations");?></a></li>
+        <li role="presentation"><a href="#backups_area" aria-controls="backups_area" role="tab" data-toggle="tab"><?php $this->_("Cpe.softaculous.backups");?></a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="apps_area">
+            <div class="table-responsive">
+                <table class="table table-curved table-striped">
+                    <thead>
+                        <tr>
+                            <th><?php $this->_("Cpe.softaculous.app");?></th>
+                            <th><?php $this->_("Cpe.softaculous.url");?></th>
+                            <th><?php $this->_("Cpe.softaculous.site_database");?></th>
+                            <th><?php $this->_("Cpe.softaculous.version");?></th>
+                            <th><?php $this->_("Cpe.softaculous.options");?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+     <?php
+     if(count($installations) > 0 ) {
+                        foreach ($installations as $key => $value) {
+                            foreach ($installations[$key] as $inid => $insval) {
+
+				?>
+                        <tr>
+                            <td><?php
+                            if(!empty($listscripts)){
+                          echo $listscripts[$installations[$key][$inid]['sid']]["name"];
+                            }
+                            ?>
+                            </td>
+                            <td><a href="<?php echo $installations[$key][$inid]['softurl']; ?>" target="_blank"><?php echo $installations[$key][$inid]['softurl']; ?></a></td>
+                            <td><?php echo $installations[$key][$inid]['softdb']; ?></td>
+                            <td><?php echo $installations[$key][$inid]['ver']; ?></td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-cogs"></i> <?php $this->_("Cpe.softaculous.options");?>
+                                        <span class="caret"></span>
+                                    </button>
+
+																		<?php $this->Form->create("",array('id'=>"upgradeinstall","class"=>"hrefform"));
+																		$this->Form->fieldHidden("installid", "{$installations[$key][$inid]['insid']}", array());
+																		$this->Form->fieldHidden("submitupgrade", "", array());
+				                            ?>
+																		<?php $this->Form->end(); ?>
+
+																		<?php $this->Form->create("",array('id'=>"createbu","class"=>"hrefform"));
+																		$this->Form->fieldHidden("installid", "{$installations[$key][$inid]['insid']}", array());
+																		$this->Form->fieldHidden("submitmakebu", "", array());
+																		?>
+																		<?php $this->Form->end(); ?>
+
+																		<?php $this->Form->create("",array('id'=>"deleteinstall","class"=>"hrefform"));
+																		$this->Form->fieldHidden("installid", "{$installations[$key][$inid]['insid']}", array());
+																		$this->Form->fieldHidden("submitdeleteinstall", "", array());
+																		?>
+																		<?php $this->Form->end(); ?>
+
+																		<ul class="dropdown-menu" role="menu">
+																			<li><a href="#" onclick="$('#upgradeinstall').submit();"><i class="fa fa-upload fa-fw"></i> <?php $this->_("Cpe.softaculous.upgrade");?></a></li>
+																			<li><a href="#" onclick="$('#createbu').submit();"><i class="fa fa-hdd-o fa-fw"></i> <?php $this->_("Cpe.softaculous.backup");?></a></li>
+																			<li><a href="#" onclick="$('#deleteinstall').submit();"><i class="fa fa-ban fa-fw"></i> <?php $this->_("Cpe.softaculous.delete");?></a></li>
+                                    </ul>
+                                </div>
+
+
+                            </td>
+
+				<?php
+     } } } else {
+?>
+                        <tr>
+                            <td colspan="6" align="center"><?php $this->_("Cpe.label.no_results");?></td>
+                        </tr>
+            <?php
+     }			?>
+                    </tbody>
+                </table>
+								<button type="button" id="add_new" class="btn btn-default pull-right"><i class="fa fa-plus-circle"></i> <?php $this->_("Cpe.softaculous.install_new_app");?></button>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="backups_area">
+
+            <div class="table-responsive">
+                <table class="table table-curved table-striped">
+                    <thead>
+                        <tr>
+                            <th><?php $this->_("Cpe.softaculous.backup");?></th>
+                            <th><?php $this->_("Cpe.softaculous.file_name");?></th>
+                            <th><?php $this->_("Cpe.softaculous.options");?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+			<?php
+                        if(count($result_backups) > 0 ) {
+                            foreach ($result_backups as $key => $value) {
+                            foreach ($result_backups[$key] as $inid => $insval) {
+                               foreach ($result_backups[$key][$inid] as $bid => $bval) {
+
+
+				?>
+                        <tr>
+                            <td><a href="<?php echo $result_backups[$key][$inid][$bid]['softurl']; ?>" target="_blank"><?php echo $result_backups[$key][$inid][$bid]['softurl']; ?></a></td>
+                            <td>
+                       <?php echo $result_backups[$key][$inid][$bid]['name']; ?>
+                            </td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-cogs"></i> <?php $this->_("Cpe.softaculous.options");?>
+                                        <span class="caret"></span>
+                                    </button>
+
+																		<?php $this->Form->create("",array('id'=>"restorebackup","class"=>"hrefform"));
+																		$this->Form->fieldHidden("filename", "{$result_backups[$key][$inid][$bid]['name']}", array());
+																		$this->Form->fieldHidden("submitrestorebu", "", array());
+																		?>
+																		<?php $this->Form->end(); ?>
+
+																		<?php $this->Form->create("",array('id'=>"removebu","class"=>"hrefform"));
+																		$this->Form->fieldHidden("filename", "{$result_backups[$key][$inid][$bid]['name']}", array());
+																		$this->Form->fieldHidden("submitremovebu", "", array());
+																		?>
+																		<?php $this->Form->end(); ?>
+
+																		<ul class="dropdown-menu" role="menu">
+																			<li><a href="#" onclick="$('#restorebackup').submit();"><i class="fa fa-upload fa-fw"></i> <?php $this->_("Cpe.softaculous.restore");?></a></li>
+																			<li><a href="#" onclick="$('#removebu').submit();"><i class="fa fa-ban fa-fw"></i> <?php $this->_("Cpe.softaculous.delete");?></a></li>
+																		</ul>
+																		
+                                </div>
+                            </td>
+
+                        </tr>
+				<?php
+                        }
+                          }
+                             }
+                                    } else {
+                                        ?>
+                        <tr>
+                            <td colspan="5" align="center"><?php $this->_("Cpe.label.no_results");?></td>
+                        </tr>
+            <?php
+     }			?>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#add_new").click(function () {
+            doAjaxRmv("<?php echo $this->Html->_($this->base_uri, true) ."services/manage/".$service_id."/manageapps/installapps/";?>", "<?php $this->_("Cpe.softaculous.install_new_app");?>");
+        });
+    });
+</script>
