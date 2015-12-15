@@ -30,6 +30,7 @@
 				<button class="btn btn-default btn-block" type="submit"><i class="fa fa-cogs"></i> cPanel</button>
 			</form>
 		</div>
+		<?php if($package->meta->databases == 'true' || $package->meta->remotedatabase == 'true'){ ?>
 		<div class="col-md-6">
 			<form method="post" action="<?php echo $this->Html->safe(sprintf('https://%s:2083/login/', $this->server->meta->host_name)); ?>" target="_blank">
 				<input type="hidden" name="user" value="<?php $this->Html->_($this->fields->cpanel_username); ?>">
@@ -38,8 +39,10 @@
 				<button class="btn btn-default btn-block" type="submit"><i class="fa fa-database"></i> phpMyAdmin</button>
 			</form>
 		</div>
+		<?php } ?>
 	</div>
 	<div class="row">
+		<?php if($package->meta->emails == 'true' || $package->meta->emailforwarder == 'true'){ ?>
 		<div class="col-md-6">
 			<form method="post" action="<?php echo $this->Html->safe(sprintf('https://%s:2096/login/', $this->server->meta->host_name)); ?>" target="_blank">
 				<input type="hidden" name="user" value="<?php $this->Html->_($this->fields->cpanel_username); ?>">
@@ -47,6 +50,8 @@
 				<button class="btn btn-default btn-block" type="submit"><i class="fa fa-envelope"></i> Webmail</button>
 			</form>
 		</div>
+		<?php } ?>
+		<?php if($package->meta->ftpaccounts == 'true' || $package->meta->webdisk == 'true' || $package->meta->backups == 'true'){ ?>
 		<div class="col-md-6">
 			<form method="post" action="<?php echo $this->Html->safe(sprintf('https://%s:2083/login/', $this->server->meta->host_name)); ?>" target="_blank">
 				<input type="hidden" name="user" value="<?php $this->Html->_($this->fields->cpanel_username); ?>">
@@ -55,8 +60,10 @@
 				<button class="btn btn-default btn-block" type="submit"><i class="fa fa-cloud"></i> File Manager</button>
 			</form>
 		</div>
+		<?php } ?>
 	</div>
 	<div class="row">
+		<?php if($package->meta->softaculous == 'true'){ ?>
 		<div class="col-md-6">
 			<form method="post" action="<?php echo $this->Html->safe(sprintf('https://%s:2083/login/', $this->server->meta->host_name)); ?>" target="_blank">
 				<input type="hidden" name="user" value="<?php $this->Html->_($this->fields->cpanel_username); ?>">
@@ -65,6 +72,7 @@
 				<button class="btn btn-default btn-block" type="submit"><i class="fa fa-download"></i> Softaculous</button>
 			</form>
 		</div>
+		<?php } ?>
 		<?php if($this->vars['package']->meta->type == 'reseller'){ ?>
 		<div class="col-md-6">
 			<form method="post" action="<?php echo $this->Html->safe(sprintf('https://%s:2087/login/', $this->server->meta->host_name)); ?>" target="_blank">
