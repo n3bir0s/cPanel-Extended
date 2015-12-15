@@ -109,8 +109,8 @@ echo $this->commonHeader;
      }			?>
                     </tbody>
                 </table>
-								<button type="button" id="add_new" class="btn btn-default pull-right"><i class="fa fa-plus-circle"></i> <?php $this->_("Cpe.softaculous.install_new_app");?></button>
             </div>
+						<button type="button" id="add_new" class="btn btn-default pull-right"><i class="fa fa-plus-circle"></i> <?php $this->_("Cpe.softaculous.install_new_app");?></button>
         </div>
         <div role="tabpanel" class="tab-pane" id="backups_area">
 
@@ -160,7 +160,7 @@ echo $this->commonHeader;
 																			<li><a href="#" onclick="$('#restorebackup').submit();"><i class="fa fa-upload fa-fw"></i> <?php $this->_("Cpe.softaculous.restore");?></a></li>
 																			<li><a href="#" onclick="$('#removebu').submit();"><i class="fa fa-ban fa-fw"></i> <?php $this->_("Cpe.softaculous.delete");?></a></li>
 																		</ul>
-																		
+
                                 </div>
                             </td>
 

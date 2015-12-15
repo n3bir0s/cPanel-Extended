@@ -18,10 +18,11 @@
 
 	echo $this->commonHeader;
 ?>
-
+			<?php if($package->meta->details == 'true' || $package->meta->statistics == 'true' || $package->meta->changepass == 'true'){ ?>
 			<h4><i class="icon fa fa-info-circle" aria-hidden="true"></i> <?php $this->_("Cpe.label.account");?></h4>
 			<hr class="section-line">
 			<div class="row no-space">
+				<?php if($package->meta->details == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>details/">
 						<div class="icon-panel">
@@ -30,6 +31,8 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
+				<?php if($package->meta->statistics == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>stats/">
 						<div class="icon-panel">
@@ -38,6 +41,8 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
+				<?php if($package->meta->changepass == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>changepass/">
 						<div class="icon-panel">
@@ -46,11 +51,15 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
 			</div>
+			<?php } ?>
 
+			<?php if($package->meta->ftpaccounts == 'true' || $package->meta->webdisk == 'true' || $package->meta->backups == 'true'){ ?>
 			<h4><i class="icon fa fa-folder" aria-hidden="true"></i> <?php $this->_("Cpe.label.files");?></h4>
 			<hr class="section-line">
 			<div class="row no-space">
+				<?php if($package->meta->ftpaccounts == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>ftpaccounts/">
 						<div class="icon-panel">
@@ -59,6 +68,8 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
+				<?php if($package->meta->webdisk == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>webdisk/">
 						<div class="icon-panel">
@@ -67,6 +78,8 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
+				<?php if($package->meta->backups == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>backups/">
 						<div class="icon-panel">
@@ -75,6 +88,7 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<form method="post" id="file_manager" action="<?php echo $this->Html->safe(sprintf('https://%s:2083/login/', $server)); ?>" target="_blank">
 						<input type="hidden" name="user" value="<?php $this->Html->_($fields->cpanel_username); ?>">
@@ -87,10 +101,13 @@
 					</div>
 				</div>
 			</div>
+			<?php } ?>
 
+			<?php if($package->meta->databases == 'true' || $package->meta->remotedatabase == 'true'){ ?>
 			<h4><i class="icon fa fa-database" aria-hidden="true"></i> <?php $this->_("Cpe.databases");?></h4>
 			<hr class="section-line">
 			<div class="row no-space">
+				<?php if($package->meta->databases == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>databases/">
 						<div class="icon-panel">
@@ -99,6 +116,8 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
+				<?php if($package->meta->remotedatabase == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>remotedatabase/">
 						<div class="icon-panel">
@@ -107,11 +126,15 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
 			</div>
+			<?php } ?>
 
+			<?php if($package->meta->emails == 'true' || $package->meta->emailforwarder == 'true'){ ?>
 			<h4><i class="icon fa fa-envelope" aria-hidden="true"></i> <?php $this->_("Cpe.emails");?></h4>
 			<hr class="section-line">
 			<div class="row no-space">
+				<?php if($package->meta->emails == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>emails/">
 						<div class="icon-panel">
@@ -120,6 +143,8 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
+				<?php if($package->meta->emailforwarder == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>emailforwarder/">
 						<div class="icon-panel">
@@ -128,11 +153,15 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
 			</div>
+			<?php } ?>
 
+			<?php if($package->meta->subdomains == 'true' || $package->meta->parkeddomains == 'true' || $package->meta->addondomains == 'true' || $package->meta->dnszone == 'true'){ ?>
 			<h4><i class="icon fa fa-globe" aria-hidden="true"></i> <?php $this->_("Cpe.th.domain");?></h4>
 			<hr class="section-line">
 			<div class="row no-space">
+				<?php if($package->meta->subdomains == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>subdomains/">
 						<div class="icon-panel">
@@ -141,6 +170,8 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
+				<?php if($package->meta->parkeddomains == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>parkeddomains/">
 						<div class="icon-panel">
@@ -149,6 +180,8 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
+				<?php if($package->meta->addondomains == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>addondomains/">
 						<div class="icon-panel">
@@ -157,6 +190,8 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
+				<?php if($package->meta->dnszone == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>zoneeditor/">
 						<div class="icon-panel">
@@ -165,11 +200,15 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
 			</div>
+			<?php } ?>
 
+			<?php if($package->meta->cron == 'true' || $package->meta->blockip == 'true' || $package->meta->ssh == 'true' || $package->meta->ssl == 'true' || $package->meta->softaculous == 'true' || $package->meta->loginto == 'true'){ ?>
 			<h4><i class="icon fa fa-cogs" aria-hidden="true"></i> <?php $this->_("Cpe.label.advanced");?></h4>
 			<hr class="section-line">
 			<div class="row no-space">
+				<?php if($package->meta->cron == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>cron/">
 						<div class="icon-panel">
@@ -178,6 +217,8 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
+				<?php if($package->meta->blockip == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>ipblocker/">
 						<div class="icon-panel">
@@ -186,6 +227,8 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
+				<?php if($package->meta->ssh == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>ssh/">
 						<div class="icon-panel">
@@ -194,6 +237,8 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
+				<?php if($package->meta->ssl == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>ssl/">
 						<div class="icon-panel">
@@ -202,6 +247,8 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
+				<?php if($package->meta->softaculous == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>manageapps/">
 						<div class="icon-panel">
@@ -210,6 +257,8 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
+				<?php if($package->meta->loginto == 'true'){ ?>
 				<div class="col-md-3 col-sm-3 col-xs-6 col-lg-2">
 					<a href="//<?= $_SERVER['HTTP_HOST'].str_replace('dashboard/', '', $_SERVER['REQUEST_URI']); ?>loginto/">
 						<div class="icon-panel">
@@ -218,7 +267,8 @@
 						</div>
 					</a>
 				</div>
+				<?php } ?>
 			</div>
-
+			<?php } ?>
 
 <?php echo $this->jsScripts; ?>

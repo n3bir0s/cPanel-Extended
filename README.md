@@ -1,4 +1,4 @@
-# cPanel Extended v4.1.0
+# cPanel Extended v4.2.0
 
 <b>New!</b> Now with Quick Actions, Dashboard, Details Section, Block IP, Backups, New Softaculous and Remote MySQL.
 
@@ -19,5 +19,7 @@ There are many reasons to invest in this gorgeous module and we presented you on
 <li>Email Fowarding</li>
 <li>Preview of the Hosted Site</li>
 <li>Change Password from Blesta</li>
+<li>Set Reseller Limits from Blesta</li>
+<li>Disable or Enable Specific secctions for Specific Packages</li>
 </ul>
 <b>Note:</b> Remember, Rename the folder to "cpanelextended" before to upload.

@@ -271,6 +271,12 @@ $lang['Cpe.label.no_results'] = "No Results";
 $lang['Cpe.label.destination'] = "Destination";
 $lang['Cpe.label.port'] = "Port";
 $lang['Cpe.label.add_new'] = "Add New";
+$lang['Cpe.label.enable'] = "Enable";
+$lang['Cpe.label.disable'] = "Disable";
+$lang['Cpe.label.usernamefield'] = "Username Field";
+$lang['Cpe.label.passwordfield'] = "Password Field";
+$lang['Cpe.label.diskreseller'] = "Disk Space Reseller Limit";
+$lang['Cpe.label.bandreseller'] = "Bandwidth Reseller Limit";
 
 // Tooltip
 $lang['Cpe.tooltip.quota'] = "Provide a quota in megabytes, 0 means unlimited";

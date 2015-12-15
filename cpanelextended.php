@@ -13,7 +13,7 @@ class cpanelextended extends Module {
 	/**
 	 * @var string The version of this module
 	 */
-	private static $version = "4.1.0";
+	private static $version = "4.2.0";
 	/**
 	 * @var string The authors of this module
 	 */
@@ -79,92 +79,134 @@ class cpanelextended extends Module {
 	 * @return array An array of tabs in the format of method => title. Example: array('methodName' => "Title", 'methodName2' => "Title2")
 	 */
 	public function getClientTabs($package = null) {
-		return array(
-			'dashboard' => array(
+		if($package->meta->dashboard == 'true'){
+			$tabs["dashboard"] = array(
 				'name' => Language::_("Cpe.dashboard", true),
 				'icon' => "fa fa-dashboard"
-			),
-			'details' => array(
+			);
+		}
+		if($package->meta->details == 'true'){
+			$tabs["details"] = array(
 				'name' => Language::_("Cpe.details", true),
 				'icon' => "fa fa-info-circle"
-			),
-			'stats' => array(
+			);
+		}
+		if($package->meta->statistics == 'true'){
+			$tabs["stats"] = array(
 				'name' => Language::_("Cpe.stats", true),
 				'icon' => "fa fa-pie-chart"
-			),
-			'changepass' => array(
+			);
+		}
+		if($package->meta->changepass == 'true'){
+			$tabs["changepass"] = array(
 				'name' => Language::_("Cpe.changepass", true),
 				'icon' => "fa fa-key"
-			),
-			"ftpaccounts" => array(
+			);
+		}
+		if($package->meta->ftpaccounts == 'true'){
+			$tabs["ftpaccounts"] = array(
 				'name' => Language::_("Cpe.ftp", true),
 				'icon' => "fa fa-users"
-			),
-			"webdisk" => array(
+			);
+		}
+		if($package->meta->webdisk == 'true'){
+			$tabs["webdisk"] = array(
 				'name' => Language::_("Cpe.webdisk", true),
 				'icon' => "fa fa-hdd-o"
-			),
-			"backups" => array(
+			);
+		}
+		if($package->meta->backups == 'true'){
+			$tabs["backups"] = array(
 				'name' => Language::_("Cpe.backups", true),
 				'icon' => "fa fa-upload"
-			),
-			"databases" => array(
+			);
+		}
+		if($package->meta->databases == 'true'){
+			$tabs["databases"] = array(
 				'name' => Language::_("Cpe.databases", true),
 				'icon' => "fa fa-database"
-			),
-			"remotedatabase" => array(
+			);
+		}
+		if($package->meta->remotedatabase == 'true'){
+			$tabs["remotedatabase"] = array(
 				'name' => Language::_("Cpe.remotedatabase", true),
 				'icon' => "fa fa-database"
-			),
-			"emails" => array(
+			);
+		}
+		if($package->meta->emails == 'true'){
+			$tabs["emails"] = array(
 				'name' => Language::_("Cpe.emails", true),
 				'icon' => "fa fa-envelope"
-			),
-			"emailforwarder" => array(
+			);
+		}
+		if($package->meta->emailforwarder == 'true'){
+			$tabs["emailforwarder"] = array(
 				'name' => Language::_("Cpe.emailforwarder", true),
 				'icon' => "fa fa-share"
-			),
-			"subdomains" => array(
+			);
+		}
+		if($package->meta->subdomains == 'true'){
+			$tabs["subdomains"] = array(
 				'name' => Language::_("Cpe.subdomains", true),
 				'icon' => "fa fa-globe fa-flip-horizontal"
-			),
-			"parkeddomains" => array(
+			);
+		}
+		if($package->meta->parkeddomains == 'true'){
+			$tabs["parkeddomains"] = array(
 				'name' => Language::_("Cpe.parkeddomains", true),
 				'icon' => "fa fa-globe"
-			),
-			"addondomains" => array(
+			);
+		}
+		if($package->meta->addondomains == 'true'){
+			$tabs["addondomains"] = array(
 				'name' => Language::_("Cpe.addondomains", true),
 				'icon' => "fa fa-globe"
-			),
-			"zoneeditor" => array(
+			);
+		}
+		if($package->meta->dnszone == 'true'){
+			$tabs["zoneeditor"] = array(
 				'name' => Language::_("Cpe.dns_zone", true),
 				'icon' => "fa fa-sitemap"
-			),
-			"cron" => array(
+			);
+		}
+		if($package->meta->cron == 'true'){
+			$tabs["cron"] = array(
 				'name' => Language::_("Cpe.cron", true),
 				'icon' => "fa fa-clock-o"
-			),
-			"ipblocker" => array(
+			);
+		}
+		if($package->meta->blockip == 'true'){
+			$tabs["ipblocker"] = array(
 				'name' => Language::_("Cpe.blockip", true),
 				'icon' => "fa fa-fire"
-			),
-			"ssh" => array(
+			);
+		}
+		if($package->meta->ssh == 'true'){
+			$tabs["ssh"] = array(
 				'name' => Language::_("Cpe.ssh", true),
 				'icon' => "fa fa-terminal"
-			),
-			"ssl" => array(
+			);
+		}
+		if($package->meta->ssl == 'true'){
+			$tabs["ssl"] = array(
 				'name' => Language::_("Cpe.ssl", true),
 				'icon' => "fa fa-lock"
-			),
-			"manageapps" => array(
+			);
+		}
+		if($package->meta->softaculous == 'true'){
+			$tabs["manageapps"] = array(
 				'name' => Language::_("Cpe.softaculous", true),
 				'icon' => "fa fa-archive"
-			),
-			"loginto" => array(
+			);
+		}
+		if($package->meta->loginto == 'true'){
+			$tabs["loginto"] = array(
 				'name' => Language::_("Cpe.loginto", true),
 				'icon' => "fa fa-sign-in"
-			)
-		);
+			);
+		}
+		
+		return $tabs;
 	}
 	public function getLogo() {
 		return "views/default/images/logo.png";
@@ -350,11 +392,27 @@ class cpanelextended extends Module {
 			if($this->Input->errors())
 				return;
 			// If reseller and we have an ACL set, update the reseller's ACL
-			if($package->meta->type == "reseller" && $package->meta->acl != "")
-				$api->setacls(array(
-					'reseller' => $params['username'],
-					'acllist' => $package->meta->acl
-				));
+			if($package->meta->type == "reseller"){
+				if($package->meta->acl != ""){
+					$api->setacls(array(
+						'reseller' => $params['username'],
+						'acllist' => $package->meta->acl
+					));
+				}
+				// Set Space Limit for Resellers
+				if(!empty($package->meta->diskreseller) && !empty($package->meta->bandreseller)){
+					Loader::load(dirname(__FILE__) . DS . "api" . DS . "xmlapi.php");
+					$xmlapi = new xmlapi($row->meta->host_name, $row->meta->user_name, $row->meta->password);
+					$params         = array(
+						'user' 						=> $vars['cpanel_username'],
+						'enable_resource_limits' 	=> 1,
+						'diskspace_limit' 			=> $package->meta->diskreseller,
+						'bandwidth_limit'			=> $package->meta->bandreseller
+					);
+					$this->log($row->meta->host_name . "|setresellerlimits", serialize($params), "input", true);
+					$response = $xmlapi->setresellerlimits($params);
+				}
+			}
 		}
 		// Return service fields
 		return array(
@@ -1014,52 +1072,75 @@ class cpanelextended extends Module {
 		)));
 		$fields->setField($package);
 
+		$usernamefield = $fields->label(Language::_('Cpe.label.usernamefield', true), "cpanel_usernamefield");
+		$usernamefield->attach($fields->fieldSelect("meta[usernamefield]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['usernamefield'])));
+		$fields->setField($usernamefield);
+
+		$passwordfield = $fields->label(Language::_('Cpe.label.passwordfield', true), "cpanel_passwordfield");
+		$passwordfield->attach($fields->fieldSelect("meta[passwordfield]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['passwordfield'])));
+		$fields->setField($passwordfield);
+
 		$quota = $fields->label(Language::_('Cpe.label.webquota', true), "cpanel_quota");
 		$quota->attach($fields->fieldText("meta[webquota]", $this->Html->ifSet($vars->meta['webquota']), array(
 			"style" => "width: 75px;"
 		)));
 		$quota->attach($fields->tooltip(Language::_('Cpe.tooltip.quota', true)));
 		$fields->setField($quota);
+		
 		$bw = $fields->label(Language::_('Cpe.label.bandwidth', true), "cpanel_bw");
 		$bw->attach($fields->fieldText("meta[bandwidth]", $this->Html->ifSet($vars->meta['bandwidth']), array(
 			"style" => "width: 75px;"
 		)));
 		$bw->attach($fields->tooltip(Language::_('Cpe.bandwidth.tooltip')));
 		$fields->setField($bw);
+		
 		$shell = $fields->label(Language::_('Cpe.label.shellacc', true), "cpanel_shell");
 		$shell->attach($fields->fieldCheckbox("meta[shellaccess]", 1, $this->Html->ifSet($vars->meta['shellaccess'], false)));
 		$fields->setField($shell);
+		
 		$cgi = $fields->label(Language::_('Cpe.label.cgiacc', true), "cpanel_cgi");
 		$cgi->attach($fields->fieldCheckbox("meta[cgi]", 1, $this->Html->ifSet($vars->meta['cgi'], false)));
 		$fields->setField($cgi);
+		
 		$frontpageext = $fields->label(Language::_('Cpe.label.frontpageext', true), "cpanel_fpe");
 		$frontpageext->attach($fields->fieldCheckbox("meta[frontpageext]", 1, $this->Html->ifSet($vars->meta['frontpageext'], false)));
 		$fields->setField($frontpageext);
+		
 		$cptheme = $fields->label(Language::_('Cpe.label.cptheme', true), "cpanel_theme");
 		$cptheme->attach($fields->fieldText("meta[cptheme]", $this->Html->ifSet($vars->meta['cptheme']), array(
 			"style" => "width: 75px;"
 		)));
 		$fields->setField($cptheme);
+		
 		$maxftp = $fields->label(Language::_('Cpe.label.maxftp', true), "cpanel_maxftp");
 		$maxftp->attach($fields->fieldText("meta[maxftp]", $this->Html->ifSet($vars->meta['maxftp']), array(
 			"style" => "width: 75px;"
 		)));
 		$fields->setField($maxftp);
+		
 		$maxsql = $fields->label(Language::_('Cpe.label.maxsql', true), "cpanel_maxsql");
 		$maxsql->attach($fields->fieldText("meta[maxsql]", $this->Html->ifSet($vars->meta['maxsql']), array(
 			"style" => "width: 75px;"
 		)));
 		$fields->setField($maxsql);
+		
 		$maxpop = $fields->label(Language::_('Cpe.label.maxpop', true), "cpanel_maxpop");
 		$maxpop->attach($fields->fieldText("meta[maxpop]", $this->Html->ifSet($vars->meta['maxpop']), array(
 			"style" => "width: 75px;"
 		)));
 		$fields->setField($maxpop);
+		
 		$dedicatedip = $fields->label(Language::_('Cpe.label.dedip', true), "cpanel_dedicatedip");
 		$dedicatedip->attach($fields->fieldCheckbox("meta[dedicatedip]", 1, $this->Html->ifSet($vars->meta['dedicatedip'], false)));
 		$fields->setField($dedicatedip);
-
-		$maxdb = $fields->label("Max SQL Databases", "cpanel_maxdatabases");
+		
+		$maxdb = $fields->label(Language::_('Cpe.label.maxsql', true), "cpanel_maxdatabases");
 		$maxdb->attach($fields->fieldText("meta[maxdatabases]", $this->Html->ifSet($vars->meta['maxdatabases']), array("style" => "width: 75px;")));
 		$fields->setField($maxdb);
 
@@ -1084,12 +1165,176 @@ class cpanelextended extends Module {
 			"reseller" => "reseller"
 		), $this->Html->ifSet($vars->meta['type'])));
 		$fields->setField($type);
+
+		$diskreseller = $fields->label(Language::_('Cpe.label.diskreseller', true), "cpanel_diskreseller");
+		$diskreseller->attach($fields->fieldText("meta[diskreseller]", $this->Html->ifSet($vars->meta['diskreseller']), array(
+			"style" => "width: 75px;"
+		)));
+		$diskreseller->attach($fields->tooltip(Language::_('Cpe.tooltip.quota', true)));
+		$fields->setField($diskreseller);
+
+		$bandreseller = $fields->label(Language::_('Cpe.label.bandreseller', true), "cpanel_bandreseller");
+		$bandreseller->attach($fields->fieldText("meta[bandreseller]", $this->Html->ifSet($vars->meta['bandreseller']), array(
+			"style" => "width: 75px;"
+		)));
+		$bandreseller->attach($fields->tooltip(Language::_('Cpe.tooltip.quota', true)));
+		$fields->setField($bandreseller);
+
 		// Set the cPanel package as a selectable option
 		$acl = $fields->label(Language::_('Cpe.label.acl', true), "cpanel_acl");
 		$acl->attach($fields->fieldSelect("meta[acl]", $acls, $this->Html->ifSet($vars->meta['acl']), array(
 			'id' => "cpanel_acl"
 		)));
 		$fields->setField($acl);
+		
+		// Enable/Disable Sections
+		$dashboard = $fields->label(Language::_('Cpe.dashboard', true), "cpanel_dashboard");
+		$dashboard->attach($fields->fieldSelect("meta[dashboard]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['dashboard'])));
+		$fields->setField($dashboard);
+		
+		$details = $fields->label(Language::_('Cpe.details', true), "cpanel_details");
+		$details->attach($fields->fieldSelect("meta[details]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['details'])));
+		$fields->setField($details);
+		
+		$statistics = $fields->label(Language::_('Cpe.stats', true), "cpanel_statistics");
+		$statistics->attach($fields->fieldSelect("meta[statistics]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['statistics'])));
+		$fields->setField($statistics);
+		
+		$changepass = $fields->label(Language::_('Cpe.changepass', true), "cpanel_changepass");
+		$changepass->attach($fields->fieldSelect("meta[changepass]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['changepass'])));
+		$fields->setField($changepass);
+		
+		$ftpaccounts = $fields->label(Language::_('Cpe.ftp', true), "cpanel_ftpaccounts");
+		$ftpaccounts->attach($fields->fieldSelect("meta[ftpaccounts]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['ftpaccounts'])));
+		$fields->setField($ftpaccounts);
+		
+		$webdisk = $fields->label(Language::_('Cpe.webdisk', true), "cpanel_webdisk");
+		$webdisk->attach($fields->fieldSelect("meta[webdisk]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['webdisk'])));
+		$fields->setField($webdisk);
+
+		$backups = $fields->label(Language::_('Cpe.backups', true), "cpanel_backups");
+		$backups->attach($fields->fieldSelect("meta[backups]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['backups'])));
+		$fields->setField($backups);
+		
+		$databases = $fields->label(Language::_('Cpe.databases', true), "cpanel_databases");
+		$databases->attach($fields->fieldSelect("meta[databases]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['databases'])));
+		$fields->setField($databases);
+		
+		$remotedatabase = $fields->label(Language::_('Cpe.remotedatabase', true), "cpanel_remotedatabase");
+		$remotedatabase->attach($fields->fieldSelect("meta[remotedatabase]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['remotedatabase'])));
+		$fields->setField($remotedatabase);
+		
+		$emails = $fields->label(Language::_('Cpe.emails', true), "cpanel_emails");
+		$emails->attach($fields->fieldSelect("meta[emails]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['emails'])));
+		$fields->setField($emails);
+
+		$emailforwarder = $fields->label(Language::_('Cpe.emailforwarder', true), "cpanel_emailforwarder");
+		$emailforwarder->attach($fields->fieldSelect("meta[emailforwarder]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['emailforwarder'])));
+		$fields->setField($emailforwarder);
+
+		$subdomains = $fields->label(Language::_('Cpe.subdomains', true), "cpanel_subdomains");
+		$subdomains->attach($fields->fieldSelect("meta[subdomains]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['subdomains'])));
+		$fields->setField($subdomains);
+
+		$parkeddomains = $fields->label(Language::_('Cpe.subdomains', true), "cpanel_subdomains");
+		$parkeddomains->attach($fields->fieldSelect("meta[parkeddomains]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['subdomains'])));
+		$fields->setField($parkeddomains);
+
+		$addondomains = $fields->label(Language::_('Cpe.addondomains', true), "cpanel_addondomains");
+		$addondomains->attach($fields->fieldSelect("meta[addondomains]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['addondomains'])));
+		$fields->setField($addondomains);
+
+		$dnszone = $fields->label(Language::_('Cpe.dns_zone', true), "cpanel_dnszone");
+		$dnszone->attach($fields->fieldSelect("meta[dnszone]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['dnszone'])));
+		$fields->setField($dnszone);
+
+		$cron = $fields->label(Language::_('Cpe.cron', true), "cpanel_cron");
+		$cron->attach($fields->fieldSelect("meta[cron]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['cron'])));
+		$fields->setField($cron);
+
+		$blockip = $fields->label(Language::_('Cpe.blockip', true), "cpanel_blockip");
+		$blockip->attach($fields->fieldSelect("meta[blockip]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['blockip'])));
+		$fields->setField($blockip);
+
+		$ssh = $fields->label(Language::_('Cpe.ssh', true), "cpanel_ssh");
+		$ssh->attach($fields->fieldSelect("meta[ssh]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['ssh'])));
+		$fields->setField($ssh);
+
+		$ssl = $fields->label(Language::_('Cpe.ssl', true), "cpanel_ssl");
+		$ssl->attach($fields->fieldSelect("meta[ssl]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['ssl'])));
+		$fields->setField($ssl);
+
+		$softaculous = $fields->label(Language::_('Cpe.softaculous', true), "cpanel_softaculous");
+		$softaculous->attach($fields->fieldSelect("meta[softaculous]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['softaculous'])));
+		$fields->setField($softaculous);
+
+		$loginto = $fields->label(Language::_('Cpe.loginto', true), "cpanel_loginto");
+		$loginto->attach($fields->fieldSelect("meta[loginto]", array(
+			"true" => Language::_('Cpe.label.enable', true),
+			"false" => Language::_('Cpe.label.disable', true)
+		), $this->Html->ifSet($vars->meta['loginto'])));
+		$fields->setField($loginto);
+
 		return $fields;
 	}
 	public function getCorrectModuleRow($vars) {
@@ -1117,20 +1362,7 @@ class cpanelextended extends Module {
 	 *
 	 */
 	public function getPackageRules() {
-		$rules = array(
-			'module_row' => array(
-				'license_valid' => array(
-					'rule' => array(
-						array(
-							$this,
-							"validateLicenseKey"
-						)
-					),
-					'message' => null
-				)
-			)
-		);
-		return $rules;
+		return null;
 	}
 	/**
 	 * Returns an array of key values for fields stored for a module, package,
@@ -1172,22 +1404,35 @@ class cpanelextended extends Module {
 		)));
 		// Set the label as a field
 		$fields->setField($domain);
-		// Create password label
-		$password = $fields->label(Language::_('Cpe.label.password', true), "cpanel_password");
-		// Create password field and attach to password label
-		$password->attach($fields->fieldPassword("cpanel_password", array(
-			'id' => "cpanel_password"
-		)));
-		// Set the label as a field
-		$fields->setField($password);
-		// Confirm password label
-		$confirm_password = $fields->label(Language::_('Cpe.label.passwordconfirm', true), "cpanel_confirm_password");
-		// Create confirm password field and attach to password label
-		$confirm_password->attach($fields->fieldPassword("cpanel_confirm_password", array(
-			'id' => "cpanel_confirm_password"
-		)));
-		// Set the label as a field
-		$fields->setField($confirm_password);
+		
+		if($package->meta->usernamefield == 'true'){
+			// Create username label
+			$username = $fields->label(Language::_('Cpe.label.username', true), "cpanel_username");
+			// Create username field and attach to username label
+			$username->attach($fields->fieldText("cpanel_username", $this->Html->ifSet($vars->cpanel_username), array('id'=>"cpanel_username")));
+			// Set the label as a field
+			$fields->setField($username);
+		}
+
+		if($package->meta->passwordfield == 'true'){
+			// Create password label
+			$password = $fields->label(Language::_('Cpe.label.password', true), "cpanel_password");
+			// Create password field and attach to password label
+			$password->attach($fields->fieldPassword("cpanel_password", array(
+				'id' => "cpanel_password"
+			)));
+			// Set the label as a field
+			$fields->setField($password);
+			
+			// Confirm password label
+			$confirm_password = $fields->label(Language::_('Cpe.label.passwordconfirm', true), "cpanel_confirm_password");
+			// Create confirm password field and attach to password label
+			$confirm_password->attach($fields->fieldPassword("cpanel_confirm_password", array(
+				'id' => "cpanel_confirm_password"
+			)));
+			// Set the label as a field
+			$fields->setField($confirm_password);
+		}
 		return $fields;
 	}
 	/**
@@ -1314,15 +1559,6 @@ class cpanelextended extends Module {
 					'rule' => "isEmpty",
 					'negate' => true,
 					'message' => Language::_("Cpe.!error.servername.empty", true)
-				),
-				'license_valid' => array(
-					'rule' => array(
-						array(
-							$this,
-							"validateLicenseKey"
-						)
-					),
-					'message' => null
 				)
 			),
 			'host_name' => array(
@@ -1508,6 +1744,7 @@ class cpanelextended extends Module {
 		$this->view->stats = $stats;
 		$this->view->set("fields", $fields);
 		$this->view->set("stats", $stats);
+		$this->view->set("package", $package);
 		$this->view->set("server", $row->meta->host_name);
 		$this->view->set("nameservers", $row->meta->name_servers);
 		return $this->view->fetch();

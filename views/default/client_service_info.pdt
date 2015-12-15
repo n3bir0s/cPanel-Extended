@@ -19,6 +19,7 @@
 
 <link rel="stylesheet" type="text/css" href="<?php echo $this->view_dir;?>css/cpanelextended.css">
 <div class="row no-space">
+	<?php if($package->meta->dashboard == 'true'){ ?>
 	<div class="col-md-3 col-sm-3 col-xs-3 col-lg-2">
 		<a href="<?= $service_uri; ?>details/">
 			<div class="icon-panel">
@@ -27,6 +28,8 @@
 			</div>
 		</a>
 	</div>
+	<?php } ?>
+	<?php if($package->meta->details == 'true'){ ?>
 	<div class="col-md-3 col-sm-3 col-xs-3 col-lg-2">
 		<a href="<?= $service_uri; ?>dashboard/">
 			<div class="icon-panel">
@@ -35,6 +38,8 @@
 			</div>
 		</a>
 	</div>
+	<?php } ?>
+	<?php if($package->meta->changepass == 'true'){ ?>
 	<div class="col-md-3 col-sm-3 col-xs-3 col-lg-2">
 		<a href="<?= $service_uri; ?>changepass/">
 			<div class="icon-panel">
@@ -43,6 +48,8 @@
 			</div>
 		</a>
 	</div>
+	<?php } ?>
+	<?php if($package->meta->ftpaccounts == 'true' || $package->meta->webdisk == 'true' || $package->meta->backups == 'true'){ ?>
 	<div class="col-md-3 col-sm-3 col-xs-3 col-lg-2">
 		<form method="post" id="file_manager" action="<?= $this->Html->safe("https://" . $this->Html->ifSet($module_row->meta->host_name) . ":2083/login/"); ?>" target="_blank">
 			<input type="hidden" name="user" value="<?= $this->Html->ifSet($service_fields->cpanel_username); ?>">
@@ -54,6 +61,8 @@
 			<span><?php $this->_("Cpe.label.filemanager");?></span>
 		</div>
 	</div>
+	<?php } ?>
+	<?php if($package->meta->loginto == 'true'){ ?>
 	<div class="col-md-3 col-sm-3 col-xs-3 col-lg-2">
 		<form method="post" id="cpanel" action="<?= $this->Html->safe("https://" . $this->Html->ifSet($module_row->meta->host_name) . ":2083/login/"); ?>" target="_blank">
 			<input type="hidden" name="user" value="<?= $this->Html->ifSet($service_fields->cpanel_username); ?>">
@@ -64,4 +73,5 @@
 			<span><?php $this->_("Cpe.loginto");?></span>
 		</div>
 	</div>
+	<?php } ?>
 </div>

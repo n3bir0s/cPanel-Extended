@@ -62,8 +62,8 @@ echo $this->commonHeader;
     <?php } ?>
         </tbody>
     </table>
-		<button type="button" id="add_new" class="btn btn-default pull-right"><i class="fa fa-plus-circle"></i> <?php $this->_("Cpe.label.generate_backup");?></button>
 </div>
+<button type="button" id="add_new" class="btn btn-default pull-right"><i class="fa fa-plus-circle"></i> <?php $this->_("Cpe.label.generate_backup");?></button>
 
 <script type="text/javascript">
   $(document).ready(function () {

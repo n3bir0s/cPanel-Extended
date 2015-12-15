@@ -53,7 +53,7 @@ $lang['Cpe.softaculous.description'] = "Instala aplicaciones web de manera autom
 $lang['Cpe.label.files'] = "Archivos";
 $lang['Cpe.label.filemanager'] = "Administrador de Archivos";
 $lang['Cpe.label.advanced'] = "Avanzado";
-$lang['Cpe.dashboard'] = "Tablero de Comandos";
+$lang['Cpe.dashboard'] = "Escritorio";
 $lang['Cpe.details'] = "Detalles";
 $lang['Cpe.stats'] = "Estadísticas";
 $lang['Cpe.changepass'] = "Cambiar Contraseña";
@@ -272,6 +272,12 @@ $lang['Cpe.label.no_results'] = "Sin Resultados";
 $lang['Cpe.label.destination'] = "Destino";
 $lang['Cpe.label.port'] = "Puerto";
 $lang['Cpe.label.add_new'] = "Añadir";
+$lang['Cpe.label.enable'] = "Activar";
+$lang['Cpe.label.disable'] = "Desactivar";
+$lang['Cpe.label.usernamefield'] = "Campo de Usuario";
+$lang['Cpe.label.passwordfield'] = "Campo de Contraseña";
+$lang['Cpe.label.diskreseller'] = "Espacio de Revendedor";
+$lang['Cpe.label.bandreseller'] = "Ancho de Banda de Revendedor";
 
 // Tooltip
 $lang['Cpe.tooltip.quota'] = "Proporcionar una cuota en megabytes, 0 indica que es ilimitada";
