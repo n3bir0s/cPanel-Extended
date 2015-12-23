@@ -382,13 +382,12 @@ span.error {
 	display: inline-block;
 	color: #ddd;
 }
-.btn{
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
 #dns_zone_editor .table .btn{
 	margin-top: 0px !important;
 	margin-bottom: 0px !important;
+}
+.row.no-space{
+    margin: 0px !important;
 }
 .row.no-space .col-lg-2, .row.no-space .col-md-3, .row.no-space .col-sm-3, .row.no-space .col-xs-6{
 	padding: 0 10px 0 0;

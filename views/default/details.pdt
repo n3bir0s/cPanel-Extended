@@ -18,9 +18,10 @@
 
 	echo $this->commonHeader;
 ?>
-			<div class="alert alert-primary" role="alert">
+			<div class="alert alert-info" role="alert">
 				<?php $this->_("Cpe.subtitles.nameservers.pointip");?><strong><?= $stats->account_info->acct[0]->ip; ?></strong>
 			</div>
+            <br>
 			<div class="table-responsive">
 				<table class="table table-curved table-striped">
 					<thead>

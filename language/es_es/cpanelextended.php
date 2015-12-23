@@ -51,7 +51,7 @@ $lang['Cpe.softaculous.description'] = "Instala aplicaciones web de manera autom
 
 // Sections
 $lang['Cpe.label.files'] = "Archivos";
-$lang['Cpe.label.filemanager'] = "Administrador de Archivos";
+$lang['Cpe.label.filemanager'] = "Adm. de Archivos";
 $lang['Cpe.label.advanced'] = "Avanzado";
 $lang['Cpe.dashboard'] = "Escritorio";
 $lang['Cpe.details'] = "Detalles";
