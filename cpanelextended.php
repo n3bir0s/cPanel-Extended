@@ -1272,7 +1272,7 @@ class cpanelextended extends Module {
 		), $this->Html->ifSet($vars->meta['subdomains'])));
 		$fields->setField($subdomains);
 
-		$parkeddomains = $fields->label(Language::_('Cpe.subdomains', true), "cpanel_subdomains");
+		$parkeddomains = $fields->label(Language::_('Cpe.parkeddomains', true), "cpanel_parkeddomains");
 		$parkeddomains->attach($fields->fieldSelect("meta[parkeddomains]", array(
 			"true" => Language::_('Cpe.label.enable', true),
 			"false" => Language::_('Cpe.label.disable', true)
