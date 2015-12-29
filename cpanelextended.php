@@ -13,7 +13,7 @@ class cpanelextended extends Module {
 	/**
 	 * @var string The version of this module
 	 */
-	private static $version = "4.2.0";
+	private static $version = "4.2.1";
 	/**
 	 * @var string The authors of this module
 	 */
@@ -68,7 +68,7 @@ class cpanelextended extends Module {
 	 * @param stdClass $package A stdClass object representing the selected package
 	 * @return array An array of tabs in the format of method => title. Example: array('methodName' => "Title", 'methodName2' => "Title2")
 	 */
-	public function getAdminTabs($package) {
+	public function getAdminTabs($package = null) {
 		return array();
 	}
 	/**
@@ -381,6 +381,10 @@ class cpanelextended extends Module {
 		$this->validateService($package, $vars);
 		if($this->Input->errors())
 			return;
+        // Generate Password if the Field is Hidden
+        if($package->meta->passwordfield != 'true'){
+            $params['password'] = $this->generatePassword();
+        }
 		// Only provision the service if 'use_module' is true
 		if($vars['use_module'] == "true") {
 			$masked_params             = $params;
@@ -725,8 +729,12 @@ class cpanelextended extends Module {
 				)
 			)
 		);
-		if(!isset($vars['cpanel_domain']) || strlen($vars['cpanel_domain']) < 4)
+		if(!isset($vars['cpanel_domain']) || strlen($vars['cpanel_domain']) < 4){
 			unset($rules['cpanel_domain']['test']);
+        }
+        if($package->meta->passwordfield != 'true'){
+			unset($rules['cpanel_password']);
+        }
 		if($edit) {
 			// If this is an edit and no password given then don't evaluate password
 			// since it won't be updated
@@ -3756,5 +3764,23 @@ class cpanelextended extends Module {
 			return false;
 		return $this->Input->matches($host_name, "/^([a-z0-9]|[a-z0-9][a-z0-9\-]{0,61}[a-z0-9])(\.([a-z0-9]|[a-z0-9][a-z0-9\-]{0,61}[a-z0-9]))+$/");
 	}
+	/**
+	 * Generates a Secure Password
+	 *
+	 * @param integer $length The desired length of the Password
+	 * @return string Return a Secure Password
+	 */
+    public function generatePassword($length = 8) {
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $count = mb_strlen($chars);
+        for ($i = 0, $result = ''; $i < $length; $i++) {
+            $index = rand(0, $count - 1);
+            $result .= mb_substr($chars, $index, 1);
+        }
+        $result = sha1(rand().time().$result).$result;
+        $result = str_shuffle($result);
+        $result = substr($result, 0, $length);
+        return $result;
+    }
 }
 ?>
