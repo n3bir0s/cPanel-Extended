@@ -785,8 +785,6 @@ class cpanelextended extends Module {
 		}
 		if(strpos($username,'test') !== false){
 			$username = 'u'.$username;
-		} else {
-			$username = 'u'.explode(".", $host_name)[1].$username;
 		}
 		return substr($username, 0, min($length, 8));
 	}
