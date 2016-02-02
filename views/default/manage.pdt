@@ -19,7 +19,6 @@
 		$link_buttons = array(
 			array('name'=>$this->_("Cpe.add_module_row", true), 'attributes'=>array('href'=>$this->base_uri . "settings/company/modules/addrow/" . $module->id)),
 			array('name'=>$this->_("Cpe.add_module_group", true), 'attributes'=>array('href'=>$this->base_uri . "settings/company/modules/addgroup/" . $module->id)),
-                        //array('name'=> 'Check connection...', 'attributes'=>array('href'=> '#', 'id' => 'cPanelExtendedCheckConnection'))
 		);
 
 		$this->Widget->clear();
@@ -35,6 +34,7 @@
 		$num_rows = count($this->Html->ifSet($module->rows));
 		if ($num_rows > 0) {
 		?>
+
 		<table class="table">
 			<tr class="heading_row">
 				<td><span><?php $this->_("Cpe.manage.module_rows_heading.name");?></span></td>
@@ -49,9 +49,18 @@
 				<td><?php $this->Html->_($module->rows[$i]->meta->server_name);?></td>
 				<td><?php $this->Html->_($module->rows[$i]->meta->host_name);?></td>
 				<td><?php $this->_("Cpe.manage.module_rows.count", false, $this->Html->ifSet($module->rows[$i]->meta->account_count, 0), ($this->Html->ifSet($module->rows[$i]->meta->account_limit) == "" ? "∞" : $module->rows[$i]->meta->account_limit));?></td>
-				<td>
+
+                <td>
 					<a href="<?php echo $this->Html->safe($this->base_uri . "settings/company/modules/editrow/" . $this->Html->ifSet($module->id) . "/" . $this->Html->ifSet($module->rows[$i]->id) . "/");?>"><?php $this->_("Cpe.manage.module_rows.edit");?></a>
+					<?php
+					$this->Form->create($this->base_uri . "settings/company/modules/deleterow/");
+					$this->Form->fieldHidden("id", $this->Html->ifSet($module->id));
+					$this->Form->fieldHidden("row_id", $this->Html->ifSet($module->rows[$i]->id));
+					?>
 					<a href="<?php echo $this->Html->safe($this->base_uri . "settings/company/modules/deleterow/" . $this->Html->ifSet($module->id) . "/" . $this->Html->ifSet($module->rows[$i]->id) . "/");?>" class="manage" rel="<?php echo $this->Html->safe($this->_("Cpe.manage.module_rows.confirm_delete", true));?>"><?php $this->_("Cpe.manage.module_rows.delete");?></a>
+					<?php
+					$this->Form->end();
+					?>
 				</td>
 			</tr>
 			<?php
@@ -112,10 +121,7 @@
 		}
 		$this->Widget->end();
 		?>
-                <?php /* $this->Widget->clear(); $this->Widget->create('Default server status'); */ ?>
-                <!--<h4><span>Server status</span></h4>
-                <?php //echo $debug; ?>
-                <?php $this->Widget->end(); ?>-->
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#manage_cpanel a.manage[rel]').blestaModalConfirm({base_url: '<?php echo $this->base_uri;?>', close: '<?php $this->_("AppController.modal.text_close");?>'});

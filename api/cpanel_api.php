@@ -179,6 +179,16 @@ class cPanelApi
         return $this->sendRequest('json-api/passwd', $params);
     }
 
+    /**
+     * List all accounts
+     *
+     * @param array $params
+     */
+
+    public function listAccounts($params)
+    {
+        return $this->sendRequest('json-api/listaccts', $params);
+    }
 
     /**
      * Change an user package
@@ -272,7 +282,7 @@ class cPanelApi
 
     public function checkConnection()
     {
-        if(empty($this->hostname) or empty($this->serverusername) or (empty($this->serverpassword) and empty($this->key))) return false;
+        if(empty($this->hostname) or empty($this->serverusername) or empty($this->key)) return false;
 
         $request = $this->sendRequest('/json-api/version');
         $response = $request->getResponse();

@@ -5,6 +5,7 @@
 
 // Basics
 $lang['Cpe.name'] = "cPanel Extendido";
+$lang['Cpe.update_available'] = "ACTUALIZACION DISPONIBLE";
 $lang['Cpe.module_row'] = "Servidor";
 $lang['Cpe.module_row_plural'] = "Servidores";
 $lang['Cpe.module_group'] = "Grupo de Servidores";

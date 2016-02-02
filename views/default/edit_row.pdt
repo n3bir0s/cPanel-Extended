@@ -66,10 +66,10 @@
 						$this->Form->label($this->_("Cpe.row_meta.use_ssl", true), "use_ssl", array('class'=>"inline"));
 						?>
 					</li>
-                                        <li>
+                    <li>
 						<?php
-						$this->Form->label("Port number", "port_number");
-						$this->Form->fieldText("port_number", $this->Html->ifSet($vars->port_number, 2083), array("style" => "width: 90px;"));
+						$this->Form->label($this->_("Cpe.row_meta.port_number", true), "port_number");
+						$this->Form->fieldText("port_number", $this->Html->ifSet($vars->port_number, 2087), array("style" => "width: 90px;"));
 						?>
 					</li>
 					<li>
@@ -80,80 +80,7 @@
 					</li>
 				</ul>
 			</div>
-			<!--
-                        <div class="title_row">
-				<h3>Abbilities</h3>
-			</div>
-
-                        <div class="pad">
-                             <ul>
-                                    <li>
-                                        <?php
-                                            $this->Form->label("Web Space Quota (in MB)", "web_quota");
-                                            $this->Form->fieldText("web_quota", $this->Html->ifSet($vars->web_quota), array("style" => "width: 165px;"));
-
-                                        ?>
-                                    </li>
-
-                                    <li>
-                                        <?php
-                                            $this->Form->label("Bandwidth Limit (in MB)", "bandwidth_limit");
-                                            $this->Form->fieldText("bandwidth_limit", $this->Html->ifSet($vars->bandwidth_limit), array("style" => "width: 165px;"));
-
-                                        ?>
-                                    </li>
-                                    <li>
-                                        <?php
-                                            $this->Form->label("Shell acceess", "shell_access");
-                                            $this->Form->fieldCheckbox("shell_access", "true", $this->Html->ifSet($vars->shell_access, "false") == "true")
-                                        ?>
-                                        <span>Tick to grant access</span>
-                                    </li>
-                                    <li>
-                                        <?php
-                                            $this->Form->label("CGI acceess", "cgi_access");
-                                            $this->Form->fieldCheckbox("cgi_access", "true", $this->Html->ifSet($vars->cgi_access, "false") == "true")
-                                        ?>
-                                        <span>Tick to grant access</span>
-                                    </li>
-                                    <li>
-                                        <?php
-                                            $this->Form->label("Dedicated IP", "dedicated_ip");
-                                            $this->Form->fieldCheckbox("dedicated_ip", "true", $this->Html->ifSet($vars->dedicated_ip, "false") == "true")
-                                        ?>
-                                        <span>Tick to grant a dedicated IP</span>
-                                    </li>
-                                    <li>
-                                        <?php
-                                            $this->Form->label("Max SQL accounts", "max_sql");
-                                            $this->Form->fieldText("max_sql", $this->Html->ifSet($vars->max_sql), array("style" => "width: 165px;"));
-
-                                        ?>
-                                    </li>
-                                    <li>
-                                        <?php
-                                            $this->Form->label("Max FTP accounts", "max_ftp");
-                                            $this->Form->fieldText("max_ftp", $this->Html->ifSet($vars->max_ftp), array("style" => "width: 165px;"));
-
-                                        ?>
-                                    </li>
-                                    <li>
-                                        <?php
-                                            $this->Form->label("Max Subdomains", "max_subdomains");
-                                            $this->Form->fieldText("max_subdomains", $this->Html->ifSet($vars->max_subdomains), array("style" => "width: 165px;"));
-
-                                        ?>
-                                    </li>
-                                    <li>
-                                        <?php
-                                            $this->Form->label("Max Parked Domains", "max_parkeddomains");
-                                            $this->Form->fieldText("max_parkeddomains", $this->Html->ifSet($vars->max_parkeddomains), array("style" => "width: 165px;"));
-
-                                        ?>
-                                    </li>
-                             </ul>
-                        </div>
-                         -->
+			
 			<div class="title_row">
 				<h3><?php $this->_("Cpe.edit_row.name_servers_title");?></h3>
 			</div>
