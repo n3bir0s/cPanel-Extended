@@ -127,7 +127,7 @@ class cPanelApi
     public function __construct($hostname, $username = 'root', $password = '', $port = 2087, $usessl = true, $key = '', $currentUsername = '')
     {
         $this->hostname         = $hostname;
-        $this->ip               = $ip;
+        // $this->ip               = $ip;
         $this->serverusername   = $username;
         $this->serverpassword   = $password;
         $this->username         = $currentUsername;
