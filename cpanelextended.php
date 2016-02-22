@@ -975,6 +975,7 @@ class cpanelextended extends Module {
 		$meta = array();
 		if($this->Input->validates($vars)) {
 			// Return all package meta fields
+			
 			foreach($vars['meta'] as $key => $value) {
 				$meta[] = array(
 					'key' => $key,
@@ -1096,6 +1097,44 @@ class cpanelextended extends Module {
 	 */
 	public function deleteModuleRow($module_row) {
 	}
+	
+	/**
+	 * Fetches a listing of all ACLs configured in cPanel for the given server
+	 *
+	 * @param stdClass $module_row A stdClass object representing a single server
+	 * @return array An array of ACLS in key/value pair
+	 */
+	private function getCpanelAcls($module_row) {
+		if (!isset($this->DataStructure))
+			Loader::loadHelpers($this, array("DataStructure"));
+		if (!isset($this->ArrayHelper))
+			$this->ArrayHelper = $this->DataStructure->create("Array");
+		
+		if (!isset($this->Json) || !($this->Json instanceof Json)){
+			Loader::loadComponents($this, array("Json"));
+		}
+		$api = $this->getApiByMeta($module_row->meta);
+		
+		$listacls = $api->listacls();
+		
+		try {
+			$keys = (array)$this->Json->decode($listacls)->acls;
+
+			$acls = array();
+			foreach ($keys as $key => $value) {
+				$acls[$key] = $key;
+			}
+			return $acls;
+		}
+		catch (Exception $e) {
+			// API request failed
+		}
+		
+		return array();
+	}
+	
+
+	
 	/**
 	 * Returns all fields used when adding/editing a package, including any
 	 * javascript to execute when the page is rendered with these fields.
@@ -1134,22 +1173,27 @@ class cpanelextended extends Module {
 		$acls     = array(
 			"" => Language::_('Cpe.label.default', true)
 		);
+		//$acls = array('' => Language::_("Cpanel.package_fields.acl_default", true));
 		if($row) {
 			$pkglist  = $api->listpkgs()->getResponse();
-			$aclslist = $api->listacls()->getResponse();
+			//$aclslist = $api->listacls()->getResponse();
+
 			//Generate a list with all ACLS
-			$keys     = (array) $this->Json->decode($api->listacls())->acls;
+			//$keys     = (array) $this->Json->decode($api->listacls())->acls;
+			$keys = $this->getCpanelAcls($row);
 			$acls     = array(
 				"" => Language::_('Cpe.label.default', true)
 			);
+			
 			foreach($keys as $key => $value) {
 				$acls[$key] = $key;
-			}
-			//$fields->setHtml($this->debug($acls));
+			} 
+			
 			$packages = array(
 				"" => Language::_('Cpe.label.defaultpackage', true)
 			) + $this->ArrayHelper->numericToKey($pkglist->package, "name", "name");
 		}
+		file_put_contents('vars.txt', print_r($vars,true));
 		$fields->setHtml(Language::_('Cpe.misc.packageaddhint', true));
 		// Set the cPanel package as a selectable option
 		$package = $fields->label(Language::_('Cpe.label.package', true), "cpanel_package");
@@ -1384,6 +1428,7 @@ class cpanelextended extends Module {
 			"false" => Language::_('Cpe.label.disable', true)
 		), $this->Html->ifSet($vars->meta['loginto'])));
 		$fields->setField($loginto);
+		file_put_contents('fields.txt', print_r($fields,true));
 		return $fields;
 	}
 	public function getCorrectModuleRow($vars) {
