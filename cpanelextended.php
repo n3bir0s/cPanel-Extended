@@ -1474,7 +1474,8 @@ class cpanelextended extends Module {
 	public function getEmailTags() {
 		return array(
 			'module' => array(
-				'host_name'
+				'host_name',
+				'name_servers'
 			),
 			'package' => array(
 				'type',
